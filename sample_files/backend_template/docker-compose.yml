@@ -1,0 +1,176 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16
+    container_name: ${PROJECT_NAME:-project}_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app_db}
+      POSTGRES_USER: ${POSTGRES_USER:-app_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app_user} -d ${POSTGRES_DB:-app_db}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - app_network
+
+  # Redis Cache & Message Queue
+  redis:
+    image: redis:7-alpine
+    container_name: ${PROJECT_NAME:-project}_redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - app_network
+
+  # Neo4j Graph Database
+  neo4j:
+    image: neo4j:5
+    container_name: ${PROJECT_NAME:-project}_neo4j
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-neo4j_password}
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*
+      NEO4J_dbms_memory_heap_initial__size: 512m
+      NEO4J_dbms_memory_heap_max__size: 1G
+    ports:
+      - "${NEO4J_HTTP_PORT:-7474}:7474"
+      - "${NEO4J_BOLT_PORT:-7687}:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7474/db/data/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - app_network
+
+  # Jaeger for OpenTelemetry Tracing
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: ${PROJECT_NAME:-project}_jaeger
+    ports:
+      - "${JAEGER_UI_PORT:-16686}:16686"
+      - "${JAEGER_OTLP_GRPC_PORT:-4317}:4317"
+      - "${JAEGER_OTLP_HTTP_PORT:-4318}:4318"
+    environment:
+      COLLECTOR_OTLP_ENABLED: true
+    networks:
+      - app_network
+
+  # Application Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-project}_backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      # Database
+      DATABASE_URL: postgresql://${POSTGRES_USER:-app_user}:${POSTGRES_PASSWORD:-app_password}@postgres:5432/${POSTGRES_DB:-app_db}
+      
+      # Redis
+      REDIS_URL: redis://redis:6379/0
+      
+      # Neo4j
+      NEO4J_URL: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD:-neo4j_password}
+      
+      # OpenTelemetry
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+      OTEL_SERVICE_NAME: ${PROJECT_NAME:-project}-backend
+      
+      # Application
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-me}
+      
+      # LLM APIs (provide via .env file)
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    volumes:
+      - ./app:/app/app
+      - ./checkpoints:/app/checkpoints
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+    networks:
+      - app_network
+    restart: unless-stopped
+    # Uncomment for development with hot reload
+    # command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker (uncomment if using background tasks)
+  # celery_worker:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: ${PROJECT_NAME:-project}_celery_worker
+  #   command: celery -A app.core.celery worker --loglevel=info
+  #   environment:
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-app_user}:${POSTGRES_PASSWORD:-app_password}@postgres:5432/${POSTGRES_DB:-app_db}
+  #     REDIS_URL: redis://redis:6379/0
+  #   volumes:
+  #     - ./app:/app/app
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   networks:
+  #     - app_network
+  #   restart: unless-stopped
+
+  # Celery Beat (uncomment if using scheduled tasks)
+  # celery_beat:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: ${PROJECT_NAME:-project}_celery_beat
+  #   command: celery -A app.core.celery beat --loglevel=info
+  #   environment:
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-app_user}:${POSTGRES_PASSWORD:-app_password}@postgres:5432/${POSTGRES_DB:-app_db}
+  #     REDIS_URL: redis://redis:6379/0
+  #   volumes:
+  #     - ./app:/app/app
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   networks:
+  #     - app_network
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  neo4j_data:
+  neo4j_logs:
+
+networks:
+  app_network:
+    driver: bridge
