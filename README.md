@@ -1,289 +1,814 @@
-<a name="readme-top"></a>
-
-<p align="center">
-  <a href="https://anythingllm.com"><img src="https://github.com/Mintplex-Labs/anything-llm/blob/master/images/wordmark.png?raw=true" alt="AnythingLLM logo"></a>
-</p>
-
-<div align='center'>
-<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Mintplex-Labs%2Fanything-llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-</div>
-
-<p align="center">
-    <b>AnythingLLM:</b> The all-in-one AI app you were looking for.<br />
-    Chat with your docs, use AI Agents, hyper-configurable, multi-user, & no frustrating setup required.
-</p>
-
-<p align="center">
-  <a href="https://discord.gg/6UyHPeGZAC" target="_blank">
-      <img src="https://img.shields.io/badge/chat-mintplex_labs-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
-  </a> |
-  <a href="https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE" target="_blank">
-      <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="License">
-  </a> |
-  <a href="https://docs.anythingllm.com" target="_blank">
-    Docs
-  </a> |
-   <a href="https://my.mintplexlabs.com/aio-checkout?product=anythingllm" target="_blank">
-    Hosted Instance
-  </a>
-</p>
-
-<p align="center">
-  <b>English</b> · <a href='./locales/README.zh-CN.md'>简体中文</a> · <a href='./locales/README.ja-JP.md'>日本語</a>
-</p>
-
-<p align="center">
-👉 AnythingLLM for desktop (Mac, Windows, & Linux)! <a href="https://anythingllm.com/download" target="_blank"> Download Now</a>
-</p>
-
-A full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as a reference during chatting. This application allows you to pick and choose which LLM or Vector Database you want to use as well as supporting multi-user management and permissions.
-
-![Chatting](https://github.com/Mintplex-Labs/anything-llm/assets/16845892/cfc5f47c-bd91-4067-986c-f3f49621a859)
-
-<details>
-<summary><kbd>Watch the demo!</kbd></summary>
-
-[![Watch the video](/images/youtube.png)](https://youtu.be/f95rGD9trL0)
-
-</details>
-
-### Product Overview
-
-AnythingLLM is a full-stack application where you can use commercial off-the-shelf LLMs or popular open source LLMs and vectorDB solutions to build a private ChatGPT with no compromises that you can run locally as well as host remotely and be able to chat intelligently with any documents you provide it.
-
-AnythingLLM divides your documents into objects called `workspaces`. A Workspace functions a lot like a thread, but with the addition of containerization of your documents. Workspaces can share documents, but they do not talk to each other so you can keep your context for each workspace clean.
-
-## Cool features of AnythingLLM
-
-- 🆕 [**Full MCP-compatibility**](https://docs.anythingllm.com/mcp-compatibility/overview)
-- 🆕 [**No-code AI Agent builder**](https://docs.anythingllm.com/agent-flows/overview)
-- 🖼️ **Multi-modal support (both closed and open-source LLMs!)**
-- [**Custom AI Agents**](https://docs.anythingllm.com/agent/custom/introduction)
-- 👤 Multi-user instance support and permissioning _Docker version only_
-- 🦾 Agents inside your workspace (browse the web, etc)
-- 💬 [Custom Embeddable Chat widget for your website](https://github.com/Mintplex-Labs/anythingllm-embed/blob/main/README.md) _Docker version only_
-- 📖 Multiple document type support (PDF, TXT, DOCX, etc)
-- Simple chat UI with Drag-n-Drop functionality and clear citations.
-- 100% Cloud deployment ready.
-- Works with all popular [closed and open-source LLM providers](#supported-llms-embedder-models-speech-models-and-vector-databases).
-- Built-in cost & time-saving measures for managing very large documents compared to any other chat UI.
-- Full Developer API for custom integrations!
-- Much more...install and find out!
-
-### Supported LLMs, Embedder Models, Speech models, and Vector Databases
-
-**Large Language Models (LLMs):**
-
-- [Any open-source llama.cpp compatible model](/server/storage/models/README.md#text-generation-llm-selection)
-- [OpenAI](https://openai.com)
-- [OpenAI (Generic)](https://openai.com)
-- [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
-- [AWS Bedrock](https://aws.amazon.com/bedrock/)
-- [Anthropic](https://www.anthropic.com/)
-- [NVIDIA NIM (chat models)](https://build.nvidia.com/explore/discover)
-- [Google Gemini Pro](https://ai.google.dev/)
-- [Hugging Face (chat models)](https://huggingface.co/)
-- [Ollama (chat models)](https://ollama.ai/)
-- [LM Studio (all models)](https://lmstudio.ai)
-- [LocalAI (all models)](https://localai.io/)
-- [Together AI (chat models)](https://www.together.ai/)
-- [Fireworks AI  (chat models)](https://fireworks.ai/)
-- [Perplexity (chat models)](https://www.perplexity.ai/)
-- [OpenRouter (chat models)](https://openrouter.ai/)
-- [DeepSeek (chat models)](https://deepseek.com/)
-- [Mistral](https://mistral.ai/)
-- [Groq](https://groq.com/)
-- [Cohere](https://cohere.com/)
-- [KoboldCPP](https://github.com/LostRuins/koboldcpp)
-- [LiteLLM](https://github.com/BerriAI/litellm)
-- [Text Generation Web UI](https://github.com/oobabooga/text-generation-webui)
-- [Apipie](https://apipie.ai/)
-- [xAI](https://x.ai/)
-- [Novita AI (chat models)](https://novita.ai/model-api/product/llm-api?utm_source=github_anything-llm&utm_medium=github_readme&utm_campaign=link)
-- [PPIO](https://ppinfra.com?utm_source=github_anything-llm)
-- [Moonshot AI](https://www.moonshot.ai/)
+## FYI: Agentic System Project Scaffold 
+
+This scaffold provides a complete project structure template for building modern agentic systems with  multi-agent coordination, and comprehensive observability. Features git worktree-based development, Claude Code integration, defensive security hooks, and automated TTS notifications.
+
+
+## About this project:
+A prompt manager that allows users to create & manage  prompt templates.
+It gives some useful features such as available as a chrome ext, on the go (phone app or PWA) and allow users to plug in LLM API to use LLM to optimise their prompt further or to execute the prompt for them.
+We may also build up additional features to target niche markets (users who need a "movie script builder" companion or users who want to build up prompt workflow pipeline)
+
+
+## Note:
+The current frontend branch was built with React Native and Expo framework, although we don't necessary need to stick with that
+PWA can be consider as an option (as it's easier to implement and maintain), 
+Some ref projects under / demo_projects that we can use to build our app if we decide to go with Web / PWA route
+- next_js: good one, it's a full scale web app
+- vite_demo: good one,  it's a full scale web app with some demonstration of the chrome ext
+- vite_demo_with_demo_components: this is a light weight web app (fewer features) but it has  "demo" page with all the style/components with 4 different schemes
+If we decide to build up the web app with the PWA route, it's strongly recommend to follow the style guideline here, and build up the layout similar to next_js or vite_demo or something else
+
+
+## 🚀 QUICK ONBOARDING
+
+### Vibe coding with the project
+Ask Claude Code to analyse the feature to be build
+Ask Claude Code to review the ROADMAP  shared/docs/ROADMAP.md
+Ask Claude code to update the ROADMAP, TASKS, and Task Break Down in shared/docs/task_management accordingly
+Follow Roadmap to create new worktree from the current main branch (e.g: frontend_main) to work on the new stage/feature 
+Then commit git to that branch 
+Then come back to the main worktree (e.g: frontend_main) and merge to that tree
+Also ensure to ask Claude to update ROADMAP and TASK list to ensure they are up-to-date
+Rinse and repeate
+
+
+### Git Worktree Structure & Development Process
+
+This project uses **git worktrees** for parallel feature development. Each worktree is an isolated working directory that allows multiple branches to be worked on simultaneously.
 
-**Embedder models:**
+#### 📂 Folder Structure
+```
+project_root/
+├── .git/                    # Main git repository
+├── shared/                  # Shared resources across all branches
+│   ├── docs/               # Project documentation
+│   ├── scripts/            # Setup and utility scripts
+│   └── CLAUDE.md           # Main development guidelines
+├── worktrees/              # Isolated development environments
+│   ├── backend/            # Backend feature branches
+│   │   ├── backend_main/   # Main backend branch
+│   │   ├── backend_v0p1_p1_content/    # Content generation feature
+│   │   ├── backend_v0p1_p2_analytics/  # Analytics feature
+│   │   └── backend_v0p1_p3_reddit/     # Reddit automation feature
+│   └── frontend/           # Frontend feature branches
+│       ├── frontend_main/  # Main frontend branch
+│       ├── frontend_v0p1_p4_builder/   # Visual builder feature
+│       └── frontend_v0p1_p4_platform/  # Platform features
+└── sample_files/           # Template files for new branches
+```
 
-- [AnythingLLM Native Embedder](/server/storage/models/README.md) (default)
-- [OpenAI](https://openai.com)
-- [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
-- [LocalAI (all)](https://localai.io/)
-- [Ollama (all)](https://ollama.ai/)
-- [LM Studio (all)](https://lmstudio.ai)
-- [Cohere](https://cohere.com/)
+#### 🔄 Step-by-Step Development Process
 
-**Audio Transcription models:**
+**1. Initialize Git Repository (First Time Only)**
+```bash
+# Start in your project directory
+cd /path/to/your/project
 
-- [AnythingLLM Built-in](https://github.com/Mintplex-Labs/anything-llm/tree/master/server/storage/models#audiovideo-transcription) (default)
-- [OpenAI](https://openai.com/)
+# Initialize git if not already done
+git init
+git add .
+git commit -m "Initial scaffold setup with modern agentic system architecture"
 
-**TTS (text-to-speech) support:**
+# Create main branches (foundation for worktrees)
+git branch backend_main
+git branch frontend_main
+```
 
-- Native Browser Built-in (default)
-- [PiperTTSLocal - runs in browser](https://github.com/rhasspy/piper)
-- [OpenAI TTS](https://platform.openai.com/docs/guides/text-to-speech/voice-options)
-- [ElevenLabs](https://elevenlabs.io/)
-- Any OpenAI Compatible TTS service.
+**2. Create Git Worktree for New Feature**
+```bash
+# From project root - create backend feature branch
+git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_main
 
-**STT (speech-to-text) support:**
+# Or create frontend feature branch  
+git worktree add worktrees/frontend/frontend_v0p1_p4_builder -b frontend_v0p1_p4_builder frontend_main
 
-- Native Browser Built-in (default)
+# Verify worktree was created
+git worktree list
+ls -la worktrees/backend/backend_v0p1_p1_content/
+```
 
-**Vector Databases:**
+**3. Set Up New Frontend Worktree**
+```bash
+# Create symlinks to shared resources
+bash ../../../shared/scripts/install-commands.sh
 
-- [LanceDB](https://github.com/lancedb/lancedb) (default)
-- [PGVector](https://github.com/pgvector/pgvector)
-- [Astra DB](https://www.datastax.com/products/datastax-astra)
-- [Pinecone](https://pinecone.io)
-- [Chroma](https://trychroma.com)
-- [Weaviate](https://weaviate.io)
-- [Qdrant](https://qdrant.tech)
-- [Milvus](https://milvus.io)
-- [Zilliz](https://zilliz.com)
+# Verify setup
+ls -la ./  # Should see package.json, src/, etc.
+ls -la ./docs_shared  # Should link to shared/docs
+```
 
-### Technical Overview
+**4. Work on Feature in Worktree**
+```bash
+# Start development server
+npm start
+# App runs on http://localhost:8081
 
-This monorepo consists of six main sections:
+# Make your changes to the feature
+# Edit files in src/, app/, components/, etc.
 
-- `frontend`: A viteJS + React frontend that you can run to easily create and manage all your content the LLM can use.
-- `server`: A NodeJS express server to handle all the interactions and do all the vectorDB management and LLM interactions.
-- `collector`: NodeJS express server that processes and parses documents from the UI.
-- `docker`: Docker instructions and build process + information for building from source.
-- `embed`: Submodule for generation & creation of the [web embed widget](https://github.com/Mintplex-Labs/anythingllm-embed).
-- `browser-extension`: Submodule for the [chrome browser extension](https://github.com/Mintplex-Labs/anythingllm-extension).
+# Test your changes
+npm test
 
-## 🛳 Self-Hosting
+# Check git status (only shows files in this worktree)
+git status
+```
 
-Mintplex Labs & the community maintain a number of deployment methods, scripts, and templates that you can use to run AnythingLLM locally. Refer to the table below to read how to deploy on your preferred environment or to automatically deploy.
-| Docker | AWS | GCP | Digital Ocean | Render.com |
-|----------------------------------------|----|-----|---------------|------------|
-| [![Deploy on Docker][docker-btn]][docker-deploy] | [![Deploy on AWS][aws-btn]][aws-deploy] | [![Deploy on GCP][gcp-btn]][gcp-deploy] | [![Deploy on DigitalOcean][do-btn]][do-deploy] | [![Deploy on Render.com][render-btn]][render-deploy] |
+**5. Commit Your Work**
+```bash
 
-| Railway  |  RepoCloud | Elestio |
-| --- | --- | --- |
-| [![Deploy on Railway][railway-btn]][railway-deploy] | [![Deploy on RepoCloud][repocloud-btn]][repocloud-deploy] | [![Deploy on Elestio][elestio-btn]][elestio-deploy] |
 
-[or set up a production AnythingLLM instance without Docker →](./BARE_METAL.md)
+# Commit with descriptive message
+git commit -m "Implement visual workflow builder
 
-## How to setup for development
+- Added drag-and-drop interface
+- Created component library
+- Added responsive design
+- Tests passing (15/15)
 
-- `yarn setup` To fill in the required `.env` files you'll need in each of the application sections (from root of repo).
-  - Go fill those out before proceeding. Ensure `server/.env.development` is filled or else things won't work right.
-- `yarn dev:server` To boot the server locally (from root of repo).
-- `yarn dev:frontend` To boot the frontend locally (from root of repo).
-- `yarn dev:collector` To then run the document collector (from root of repo).
+🤖 Generated with [Claude Code](https://claude.ai/code)
 
-[Learn about documents](./server/storage/documents/DOCUMENTS.md)
+Co-Authored-By: Claude <noreply@anthropic.com>"
 
-[Learn about vector caching](./server/storage/vector-cache/VECTOR_CACHE.md)
+# Push your branch
+git push -u origin frontend_v0p1_p4_builder
+```
 
-## External Apps & Integrations
 
-_These are apps that are not maintained by Mintplex Labs, but are compatible with AnythingLLM. A listing here is not an endorsement._
 
-- [Midori AI Subsystem Manager](https://io.midori-ai.xyz/subsystem/anythingllm/) - A streamlined and efficient way to deploy AI systems using Docker container technology.
-- [Coolify](https://coolify.io/docs/services/anythingllm/) - Deploy AnythingLLM with a single click.
-- [GPTLocalhost for Microsoft Word](https://gptlocalhost.com/demo/) - A local Word Add-in for you to use AnythingLLM in Microsoft Word.
 
-## Telemetry & Privacy
 
-AnythingLLM by Mintplex Labs Inc contains a telemetry feature that collects anonymous usage information.
 
-<details>
-<summary><kbd>More about Telemetry & Privacy for AnythingLLM</kbd></summary>
 
-### Why?
 
-We use this information to help us understand how AnythingLLM is used, to help us prioritize work on new features and bug fixes, and to help us improve AnythingLLM's performance and stability.
+=================================
 
-### Opting out
+#### 🎯 Branch Naming Convention
+Follow this pattern: `{stack}_{version}_{phase}_{feature}`
 
-Set `DISABLE_TELEMETRY` in your server or docker .env settings to "true" to opt out of telemetry. You can also do this in-app by going to the sidebar > `Privacy` and disabling telemetry.
+**Examples:**
+- ✅ `backend_v0p1_p1_content` (Backend, Version 0.1, Phase 1, Content feature)
+- ✅ `frontend_v0p1_p4_builder` (Frontend, Version 0.1, Phase 4, Builder feature)
+- ✅ `backend_v0p1_p2_analytics` (Backend, Version 0.1, Phase 2, Analytics feature)
+- ❌ `feature-new-ui` (doesn't follow convention)
+- ❌ `backend_week2_content` (avoid week numbers)
 
-### What do you explicitly track?
+#### 🔧 Worktree Management Commands
+```bash
+# List all worktrees
+git worktree list
 
-We will only track usage details that help us make product and roadmap decisions, specifically:
+# Remove completed worktree (after merging)
+git worktree remove worktrees/backend/backend_v0p1_p1_content
+git branch -d backend_v0p1_p1_content  # Delete the branch
 
-- Type of your installation (Docker or Desktop)
+# Move worktree to different location
+git worktree move worktrees/backend/old_name worktrees/backend/new_name
 
-- When a document is added or removed. No information _about_ the document. Just that the event occurred. This gives us an idea of use.
+# Repair worktree links (if paths change)
+git worktree repair
+```
 
-- Type of vector database in use. This helps us prioritize changes when updates arrive for that provider.
+#### 🚦 Safe Development Practices
 
-- Type of LLM provider & model tag in use. This helps us prioritize changes when updates arrive for that provider or model, or combination thereof. eg: reasoning vs regular, multi-modal models, etc.
+**✅ DO:**
+- Work in worktrees for all feature development
+- Commit only files related to your feature
+- Use descriptive branch names following the convention
+- Test thoroughly before committing
+- Update documentation as you develop
 
-- When a chat is sent. This is the most regular "event" and gives us an idea of the daily-activity of this project across all installations. Again, only the **event** is sent - we have no information on the nature or content of the chat itself.
+**❌ DON'T:**
+- Use `git add .` (add files selectively)
+- Work directly in project root for features
+- Mix multiple features in one branch
+- Commit without testing
+- Hardcode project names (use environment variables)
 
-You can verify these claims by finding all locations `Telemetry.sendTelemetry` is called. Additionally these events are written to the output log so you can also see the specific data which was sent - if enabled. **No IP or other identifying information is collected**. The Telemetry provider is [PostHog](https://posthog.com/) - an open-source telemetry collection service.
+#### 🎯 Next Steps After Setup
+1. **Navigate to your worktree**: `cd worktrees/frontend/your_branch_name`
+2. **Start development**: `npm start` or `python main.py`
+3. **Use Claude commands**: `/workhere`, `/devgo`, `/testgo`
+4. **Follow TDD approach**: Write tests first, then implement
+5. **Commit regularly**: Small, focused commits with good messages
 
-We take privacy very seriously, and we hope you understand that we want to learn how our tool is used, without using annoying popup surveys, so we can build something worth using. The anonymous data is _never_ shared with third parties, ever.
+## 🆕 What's New in v2.0
 
-[View all telemetry events in source code](https://github.com/search?q=repo%3AMintplex-Labs%2Fanything-llm%20.sendTelemetry\(&type=code)
+- **LangGraph Integration**: Complete workflow orchestration framework
+- **Multi-Agent Coordination**: Interface-driven agent management system
+- **Modern Architecture**: Updated FastAPI backend with async SQLAlchemy, Redis, Neo4j
+- **OpenTelemetry Observability**: Distributed tracing with Jaeger integration
+- **Enhanced Frontend**: React 18 with TanStack Query, Zustand, Tailwind CSS
+- **Docker Compose Stack**: PostgreSQL, Redis, Neo4j, Jaeger out-of-the-box
+- **Tool Ecosystem**: Categorized tool framework for extensible functionality
+- **Configuration Management**: Secure environment variable handling with validation
 
-</details>
+## ⚡ Quick Start
 
-## 👋 Contributing
+1. **Copy this scaffold** to your new project directory
+2. **Install prerequisites** (see Installation section below)
+3. **Initialize git repository** in the new directory
+4. **Run setup script** to configure worktrees and symlinks
+5. **Start developing** with enhanced documentation structure and context-aware commands
 
-- [Contributing to AnythingLLM](./CONTRIBUTING.md) - How to contribute to AnythingLLM.
 
-## 💖 Sponsors
 
-### Premium Sponsors
 
-<!-- premium-sponsors (reserved for $100/mth sponsors who request to be called out here and/or are non-private sponsors) -->
-<a href="https://www.dcsdigital.co.uk" target="_blank">
-  <img src="https://a8cforagenciesportfolio.wordpress.com/wp-content/uploads/2024/08/logo-image-232621379.png" height="100px" alt="User avatar: DCS DIGITAL" />
-</a>
-<!-- premium-sponsors -->
 
-### All Sponsors
 
-<!-- all-sponsors --><a href="https://github.com/jaschadub"><img src="https:&#x2F;&#x2F;github.com&#x2F;jaschadub.png" width="60px" alt="User avatar: Jascha" /></a><a href="https://github.com/KickingAss2024"><img src="https:&#x2F;&#x2F;github.com&#x2F;KickingAss2024.png" width="60px" alt="User avatar: KickAss" /></a><a href="https://github.com/ShadowArcanist"><img src="https:&#x2F;&#x2F;github.com&#x2F;ShadowArcanist.png" width="60px" alt="User avatar: ShadowArcanist" /></a><a href="https://github.com/AtlasVIA"><img src="https:&#x2F;&#x2F;github.com&#x2F;AtlasVIA.png" width="60px" alt="User avatar: Atlas" /></a><a href="https://github.com/cope"><img src="https:&#x2F;&#x2F;github.com&#x2F;cope.png" width="60px" alt="User avatar: Predrag Stojadinović" /></a><a href="https://github.com/DiegoSpinola"><img src="https:&#x2F;&#x2F;github.com&#x2F;DiegoSpinola.png" width="60px" alt="User avatar: Diego Spinola" /></a><a href="https://github.com/PortlandKyGuy"><img src="https:&#x2F;&#x2F;github.com&#x2F;PortlandKyGuy.png" width="60px" alt="User avatar: Kyle" /></a><a href="https://github.com/peperunas"><img src="https:&#x2F;&#x2F;github.com&#x2F;peperunas.png" width="60px" alt="User avatar: Giulio De Pasquale" /></a><a href="https://github.com/jasoncdavis0"><img src="https:&#x2F;&#x2F;github.com&#x2F;jasoncdavis0.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/macstadium"><img src="https:&#x2F;&#x2F;github.com&#x2F;macstadium.png" width="60px" alt="User avatar: MacStadium" /></a><a href="https://github.com/armlynobinguar"><img src="https:&#x2F;&#x2F;github.com&#x2F;armlynobinguar.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/MikeHago"><img src="https:&#x2F;&#x2F;github.com&#x2F;MikeHago.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/maaisde"><img src="https:&#x2F;&#x2F;github.com&#x2F;maaisde.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/mhollier117"><img src="https:&#x2F;&#x2F;github.com&#x2F;mhollier117.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/pleabargain"><img src="https:&#x2F;&#x2F;github.com&#x2F;pleabargain.png" width="60px" alt="User avatar: Dennis" /></a><a href="https://github.com/broichan"><img src="https:&#x2F;&#x2F;github.com&#x2F;broichan.png" width="60px" alt="User avatar: Michael Hamilton, Ph.D." /></a><a href="https://github.com/azim-charaniya"><img src="https:&#x2F;&#x2F;github.com&#x2F;azim-charaniya.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/gabriellemon"><img src="https:&#x2F;&#x2F;github.com&#x2F;gabriellemon.png" width="60px" alt="User avatar: TernaryLabs" /></a><a href="https://github.com/CelaDaniel"><img src="https:&#x2F;&#x2F;github.com&#x2F;CelaDaniel.png" width="60px" alt="User avatar: Daniel Cela" /></a><a href="https://github.com/altrsadmin"><img src="https:&#x2F;&#x2F;github.com&#x2F;altrsadmin.png" width="60px" alt="User avatar: Alesso" /></a><a href="https://github.com/bitjungle"><img src="https:&#x2F;&#x2F;github.com&#x2F;bitjungle.png" width="60px" alt="User avatar: Rune Mathisen" /></a><a href="https://github.com/pcrossleyAC"><img src="https:&#x2F;&#x2F;github.com&#x2F;pcrossleyAC.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/saroj-pattnaik"><img src="https:&#x2F;&#x2F;github.com&#x2F;saroj-pattnaik.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/techmedic5"><img src="https:&#x2F;&#x2F;github.com&#x2F;techmedic5.png" width="60px" alt="User avatar: Alan" /></a><a href="https://github.com/ddocta"><img src="https:&#x2F;&#x2F;github.com&#x2F;ddocta.png" width="60px" alt="User avatar: Damien Peters" /></a><a href="https://github.com/dcsdigital"><img src="https:&#x2F;&#x2F;github.com&#x2F;dcsdigital.png" width="60px" alt="User avatar: DCS Digital" /></a><a href="https://github.com/pm7y"><img src="https:&#x2F;&#x2F;github.com&#x2F;pm7y.png" width="60px" alt="User avatar: Paul Mcilreavy" /></a><a href="https://github.com/tilwolf"><img src="https:&#x2F;&#x2F;github.com&#x2F;tilwolf.png" width="60px" alt="User avatar: Til Wolf" /></a><a href="https://github.com/ozzyoss77"><img src="https:&#x2F;&#x2F;github.com&#x2F;ozzyoss77.png" width="60px" alt="User avatar: Leopoldo Crhistian Riverin Gomez" /></a><a href="https://github.com/AlphaEcho11"><img src="https:&#x2F;&#x2F;github.com&#x2F;AlphaEcho11.png" width="60px" alt="User avatar: AJEsau" /></a><a href="https://github.com/svanomm"><img src="https:&#x2F;&#x2F;github.com&#x2F;svanomm.png" width="60px" alt="User avatar: Steven VanOmmeren" /></a><a href="https://github.com/socketbox"><img src="https:&#x2F;&#x2F;github.com&#x2F;socketbox.png" width="60px" alt="User avatar: Casey Boettcher" /></a><a href="https://github.com/zebbern"><img src="https:&#x2F;&#x2F;github.com&#x2F;zebbern.png" width="60px" alt="User avatar: " /></a><a href="https://github.com/avineetbespin"><img src="https:&#x2F;&#x2F;github.com&#x2F;avineetbespin.png" width="60px" alt="User avatar: Avineet" /></a><a href="https://github.com/invictus-1"><img src="https:&#x2F;&#x2F;github.com&#x2F;invictus-1.png" width="60px" alt="User avatar: Chris" /></a><!-- all-sponsors -->
 
-## 🌟 Contributors
+========================== can be skipped if you are new to claude code and python ============================
+## 📋 Prerequisites & Installation
 
-[![anythingllm contributors](https://contrib.rocks/image?repo=mintplex-labs/anything-llm)](https://github.com/mintplex-labs/anything-llm/graphs/contributors)
+### Required Software
 
-[![Star History Chart](https://api.star-history.com/svg?repos=mintplex-labs/anything-llm&type=Timeline)](https://star-history.com/#mintplex-labs/anything-llm&Date)
+```bash
+# Core dependencies
+sudo apt update
+sudo apt install -y git python3 python3-pip espeak curl
 
-## 🔗 More Products
+# Docker (for modern infrastructure stack)
+sudo apt install -y docker.io docker-compose-plugin
+sudo usermod -aG docker $USER
 
-- **[VectorAdmin][vector-admin]:** An all-in-one GUI & tool-suite for managing vector databases.
-- **[OpenAI Assistant Swarm][assistant-swarm]:** Turn your entire library of OpenAI assistants into one single army commanded from a single agent.
+# Node.js (for frontend development)
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
 
-<div align="right">
+# For WSL users (Windows TTS support)
+# Ensure PowerShell.exe is accessible from WSL
 
-[![][back-to-top]](#readme-top)
+# For audio output (optional)
+sudo apt install -y alsa-utils pulseaudio
+```
 
-</div>
+### Python Dependencies
+
+The hooks use UV for dependency management, but you can also install manually:
+
+```bash
+# Option 1: Install UV (recommended)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Option 2: Manual pip installation
+pip3 install pyttsx3 python-dotenv gtts pygame
+
+# For backend development (modern stack)
+pip3 install fastapi uvicorn sqlalchemy asyncpg redis neo4j langgraph langchain opentelemetry-api
+```
+
+## 🚀 Setup Process
+
+```bash
+# 1. Copy scaffold to new project
+cp -r /path/to/sample_scaffold /path/to/new_project
+cd /path/to/new_project
+
+# 2. Initialize git repository
+git init
+git add .
+git commit -m "Initial scaffold setup with modern agentic system architecture"
+
+# 3. Configure environment
+cp sample_files/backend_template/.env.example .env
+cp sample_files/frontend_template/.env.example frontend.env
+# Edit .env files with your configuration
+
+# 4. Test hooks before setup
+python3 .claude/hooks/utils/tts/wsl_compatible_tts.py "Testing TTS system" normal
+
+# 5. Run setup script (creates worktrees and symlinks)
+./setup_project.sh
+
+# 6. Start development infrastructure
+cd sample_files/backend_template
+docker-compose up -d
+
+# 7. Test hook integration
+echo '{"tool_name": "Bash", "tool_input": {"command": "echo test"}}' | python3 .claude/hooks/pre_tool_use.py
+```
+
+## 🔒 Security Features
+
+### Automated Security Hooks
+
+The scaffold includes comprehensive security hooks that:
+
+- **🛡️ Block dangerous commands** (rm -rf, SQL injection, etc.)
+- **🔐 Protect sensitive files** (.env, system files, build directories)
+- **📢 Provide TTS notifications** for security events
+- **📝 Log all tool usage** for audit trails
+- **✅ Validate documentation compliance**
+
+### Hook Types
+
+1. **pre_tool_use.py**: Validates and blocks dangerous operations
+2. **post_tool_use.py**: Auto-formats code and provides notifications
+3. **stop.py**: Ensures documentation compliance before completion
+4. **subagent_stop.py**: Tracks subagent completion
+5. **notification.py**: Handles general notifications
+
+### TTS Notifications
+
+- **Critical alerts**: Dangerous command blocks, security violations
+- **Info notifications**: Code formatting, file modifications
+- **Success messages**: Task completion, tests passed
+- **Multiple fallbacks**: Windows TTS (WSL) → pyttsx3 → visual notifications
+
+## 📁 Structure Overview
+
+```
+project_root/
+├── .claude/
+│   ├── hooks/                    # Security and automation hooks
+│   │   ├── pre_tool_use.py      # Pre-execution validation
+│   │   ├── post_tool_use.py     # Post-execution automation
+│   │   ├── stop.py              # Session completion checks
+│   │   └── utils/tts/           # Text-to-speech utilities
+│   └── commands/                # Enhanced Claude commands
+│       ├── sprint-plan.md       # Sprint planning with auto-generation
+│       ├── task-status.md       # Project health monitoring
+│       └── workhere.md          # Smart branch context detection
+├── shared/                      # Shared resources
+│   ├── docs/                   # Project documentation
+│   │   └── task_management/    # Task tracking system
+│   │       ├── TASK_MASTER.md  # Central task registry
+│   │       ├── TASK_BOARD.md   # Active sprint board
+│   │       └── task_breakdown/ # Detailed task breakdowns
+│   ├── scripts/                # Shared automation scripts
+│   └── backend/frontend/       # Domain-specific configs
+├── worktrees/                  # Git worktree branches
+│   ├── backend/               # Backend development
+│   └── frontend/              # Frontend development
+└── sample_files/              # Template files with modern architecture
+    ├── backend_template/      # FastAPI + LangGraph + OpenTelemetry
+    │   ├── app/               # Modern application structure
+    │   │   ├── agents/        # Multi-agent coordination
+    │   │   ├── workflows/     # LangGraph workflow definitions
+    │   │   ├── tools/         # Categorized tool ecosystem
+    │   │   ├── interfaces/    # Standard interfaces (IAgent, ITool, IWorkflow)
+    │   │   ├── core/          # Database, config, and core services
+    │   │   └── observability/ # OpenTelemetry tracing setup
+    │   ├── docker-compose.yml # PostgreSQL, Redis, Neo4j, Jaeger
+    │   ├── Dockerfile         # Production-ready container
+    │   └── requirements.txt   # Modern Python dependencies
+    └── frontend_template/     # React 18 + TanStack Query + Tailwind
+        ├── src/
+        │   ├── components/    # Reusable UI components
+        │   ├── pages/         # Application pages
+        │   ├── store/         # Zustand state management
+        │   ├── services/      # API integration layer
+        │   └── hooks/         # Custom React hooks
+        └── package.json       # Modern React dependencies
+```
+
+## 🛠️ Configuration
+
+### Customizing Hooks
+
+Edit hook files in `.claude/hooks/` to customize:
+
+- Security policies in `pre_tool_use.py`
+- Auto-formatting rules in `post_tool_use.py`
+- Documentation requirements in `stop.py`
+- TTS notification messages in `utils/tts/coordination_tts.py`
+
+### TTS Configuration
+
+Test and configure TTS:
+
+```bash
+# Test Windows TTS (WSL)
+.claude/hooks/utils/tts/wsl_compatible_tts.py "Hello World" normal
+
+# Test pyttsx3
+.claude/hooks/utils/tts/pyttsx3_tts.py "Testing pyttsx3"
+
+# Test coordination TTS
+.claude/hooks/utils/tts/coordination_tts.py "tests_passed" '{"message": "All tests passed!", "priority": "normal"}'
+```
+
+### Environment Setup
+
+1. **Update shared/CLAUDE.md** with your project details
+2. **Configure domain-specific files**:
+   - `shared/backend/BACKEND_SPECIFIC.md`
+   - `shared/frontend/FRONTEND_SPECIFIC.md`
+3. **Add infrastructure configs** in `shared/infrastructure/config/`
+
+## 🚦 Complete Development Workflow
+
+### New Team Member Onboarding
+
+Follow this exact sequence for your first setup:
+
+#### Step 1: Understand the Project Structure
+1. **Read the scaffold documentation** - This README and `shared/CLAUDE.md`
+2. **Check current status** - See `shared/docs/ROADMAP.md` for what's built
+3. **Understand git worktree setup** - Multiple development branches isolated
+
+#### Step 2: Create Your Development Branch
+
+```bash
+# From project root (/path/to/your_project)
+cd /path/to/your_project
+
+# Create foundation branch first (if not exists)
+git worktree add worktrees/backend/backend_framework_first -b backend_framework_first
+
+# Create new backend branch (follow v0p1 naming convention)
+git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_framework_first
+
+# Copy modern template to your worktree
+cp -r sample_files/backend_template/* worktrees/backend/backend_v0p1_p1_content/
+cp sample_files/backend_template/.env.example worktrees/backend/backend_v0p1_p1_content/.env
+
+# Or create frontend branch
+git worktree add worktrees/frontend/frontend_v0p1_p4_builder -b frontend_v0p1_p4_builder frontend_framework_first
+
+# Examples for different phases:
+# git worktree add worktrees/backend/backend_v0p1_p1_podcast -b backend_v0p1_p1_podcast backend_framework_first
+# git worktree add worktrees/backend/backend_v0p1_p2_analytics -b backend_v0p1_p2_analytics backend_framework_first
+# git worktree add worktrees/backend/backend_v0p1_p3_reddit -b backend_v0p1_p3_reddit backend_framework_first
+
+# Verify the folder was created
+ls -la worktrees/backend/backend_v0p1_p1_content
+```
+
+#### Step 3: Setup Development Infrastructure
+
+```bash
+# Setup all Claude commands and symlinks for ALL worktrees
+bash shared/scripts/install-commands.sh
+
+# This creates symlinks for:
+# - ./bin/claude-doc-start (environment setup helper)
+# - ./CLAUDE.md -> shared/CLAUDE.md
+# - ./docs_shared -> shared/docs
+# - ./refs_shared -> shared/refs
+# - ./.claude/commands -> .claude/commands (workhere.md, resumebranch.md, branchstatus.md, devgo.md, testgo.md)
+# - ./venv -> worktrees/backend/venv (backend only)
+# - ./test_plans/shared_test_plans -> shared/test_plans
+
+# Verify symlinks are created
+ls -la worktrees/backend/backend_v0p1_p1_content/
+```
+
+#### Step 4: Initialize Your Development Environment
+
+```bash
+# Navigate to your new worktree
+cd worktrees/backend/backend_v0p1_p1_content
+
+# For Backend: Setup modern development environment
+cd worktrees/backend/backend_v0p1_p1_content
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# Install modern dependencies
+pip install -r requirements.txt
+
+# Setup environment variables
+cp .env.example .env
+# Edit .env with your configuration (API keys, database URLs, etc.)
+
+# Start infrastructure (PostgreSQL, Redis, Neo4j, Jaeger)
+docker-compose up -d
+
+# Wait for services to be ready
+docker-compose logs -f
+
+# Start the development server
+python main.py
+
+# Verify setup
+ls -la ./bin/
+ls -la ./.claude/commands/  # Should show workhere.md, resumebranch.md, branchstatus.md, devgo.md, testgo.md
+
+# Get branch context and start working
+/workhere
+
+# Test database connection (if needed)
+python -c "from app.core.database import get_db; print('Database connection OK')"
+
+# Optional: Run environment setup helper to check everything
+./bin/claude-doc-start
+```
+
+### Daily Development Workflow
+
+#### Start Coding Session
+
+```bash
+# Navigate to your worktree
+cd worktrees/backend/backend_your_feature_name
+
+# For Backend: Always activate virtual environment first
+source venv/bin/activate
+
+# Start infrastructure if not running
+docker-compose up -d
+
+# Start development server (in one terminal)
+python main.py
+
+# In another terminal, monitor infrastructure
+docker-compose logs -f
+
+# View Jaeger tracing UI
+open http://localhost:16686
+
+# Start Claude Code with hooks enabled (in another terminal)
+claude
+
+# In Claude session, use enhanced command system:
+/workhere      # Auto-detect branch context and get guidance
+/devgo         # Branch-specific development workflow and test management
+/testgo        # Execute tests and update branch progress
+/checkpoint    # Context-aware progress saving (project vs branch level)
+/stage-complete # Mark stages officially complete and update roadmap
+/branchstatus  # View cross-branch progress matrix
+/resumebranch  # Switch between available branches
+```
+
+#### Feature Development Process
+
+**🛑 MANDATORY: Follow the 7-Step Process**
+
+1. **Research Phase**
+   - Research 2-3 potential approaches
+   - Use existing codebase, documentation, and external resources
+   - Document options and trade-offs
+
+2. **Architecture Consultation**
+   - Check current architecture docs in `shared/docs/architecture/`
+   - Ensure alignment with project patterns
+   - Consider long-term maintainability
+
+3. **Test-Drive Implementation**
+   - Build skeleton/proof-of-concept first
+   - Validate core concepts work
+   - Fail fast if approach doesn't work
+
+4. **Full Implementation**
+   - Add descriptive comments to key functions
+   - Keep files under 1500 lines (split if needed)
+   - Check for existing similar functionality first
+   - Use clean, modular architecture
+
+5. **Testing**
+   ```bash
+   # Check development status and run tests
+   /devgo    # Updates branch progress and creates test plans
+   /testgo   # Execute tests and update results
+   
+   # If tests fail, analyze and get fixes
+   /devgo    # Provides fix recommendations
+   
+   # Repeat until tests pass
+   /testgo
+   ```
+
+6. **Documentation Updates**
+   ```bash
+   # Update documentation
+   ./bin/claude-doc-quick-push "Added feature X with Y capability"
+   
+   # Update daily journal
+   ./bin/claude-doc-daily
+   ```
+
+7. **Commit Process**
+   ```bash
+   # Check git status first - verify only your changes
+   git status
+   
+   # Add files selectively (never git add .)
+   git add specific/files/only.py
+   
+   # Check what will be committed
+   git diff --cached
+   
+   # Commit with descriptive message
+   git commit -m "Implement feature X
+   
+   - Added Y capability
+   - Tests passing (8/8)
+   - Documentation updated
+   
+   🤖 Generated with [Claude Code](https://claude.ai/code)
+   
+   Co-Authored-By: Claude <noreply@anthropic.com>"
+   
+   # Push to your branch
+   git push -u origin backend_your_feature_name
+   ```
+
+### Safe Git Practices
+
+#### 🔍 Best Practices for Root Commits
+
+**⚠️ CRITICAL: When working in project root for shared changes**
+
+```bash
+# Always check status first
+git status
+
+# Only add shared changes (never git add .)
+git add shared/docs/specific_file.md
+git add shared/scripts/updated_script.sh
+
+# Check what will be committed
+git diff --cached
+
+# Use descriptive commit messages
+git commit -m "Update shared documentation
+
+- Enhanced onboarding guide
+- Fixed script permissions
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
+#### Stage Gate Process
+
+**🛑 STOP AND WAIT FOR APPROVAL AFTER EACH STAGE**
+
+When completing development stages:
+
+1. Run all tests for that stage
+2. Update `shared/docs/WORKING_JOURNAL.md` with completion status
+3. Create/update stage-specific test plan in `shared/test_plans/`
+4. **STOP and inform team that stage is complete**
+5. **WAIT for explicit approval before proceeding**
+
+Example completion message:
+```
+✅ Stage 1.1 (Feature X) Complete!
+- All tests passing (12/12)
+- Documentation updated
+- Test plan executed: shared/test_plans/v01_s1_test_plan.md
+🛑 Awaiting approval to proceed to Stage 1.2
+```
+
+### Understanding the Claude Commands
+
+#### Core Development Commands
+- **`./bin/claude-doc-start`**: Environment setup helper and validation
+- **`./bin/claude-doc-quick-push "message"`**: Quick documentation updates
+- **`./bin/claude-doc-daily`**: Update working journal with daily progress
+- **`/devgo`** (in Claude): Branch-specific development workflow and test plan management
+- **`/testgo`** (in Claude): Execute test plans and update branch progress
+- **`/stage-complete`** (in Claude): Mark stages officially complete and update roadmap
+- **`/workhere`** (in Claude): Auto-detect branch context and get guidance
+- **`/branchstatus`** (in Claude): View cross-branch progress matrix
+
+#### Enhanced Task Management Workflow
+```bash
+# 1. Check project health and task status
+/task-status # Shows overall progress, identifies issues, missing files
+
+# 2. Plan next sprint (auto-creates missing breakdown files)
+/sprint-plan # Analyzes TODO tasks, estimates capacity, creates sprint
+
+# 3. Get branch-specific context and guidance
+/workhere    # Auto-detects current branch and provides context
+
+# 4. Execute development and testing
+/devgo       # Creates test plans if needed, shows remaining tasks
+/testgo      # Runs tests specific to current stage and updates progress
+
+# 5. Complete stage when all tests pass
+/stage-complete  # Mark stage officially complete and update shared roadmap
+```
+
+#### Task Management System
+The scaffold includes a comprehensive task management system:
+
+- **TASK_MASTER.md**: Central registry with all tasks organized by phases
+- **TASK_BOARD.md**: Active sprint board with current tasks and progress
+- **Task Breakdowns**: Detailed task files with subtasks and technical notes
+- **Auto-Generation**: `/sprint-plan` automatically creates missing breakdown files
+- **Progress Tracking**: Real-time project health monitoring with `/task-status`
+
+### Project-Specific Customization
+
+#### Update Project Context
+1. **Customize `shared/CLAUDE.md`** with your project details
+2. **Update domain-specific configs**:
+   - `shared/backend/BACKEND_SPECIFIC.md` - Backend setup and guidelines
+   - `shared/frontend/FRONTEND_SPECIFIC.md` - Frontend setup and guidelines
+3. **Add infrastructure configs** in `shared/infrastructure/config/`
+4. **Update sample files** in `sample_files/` with your project templates
+
+#### Environment Configuration
+```bash
+# Backend configuration
+cp sample_files/backend_template/.env.example .env
+vim .env  # Configure:
+# - DATABASE_URL (PostgreSQL)
+# - REDIS_URL 
+# - NEO4J credentials
+# - OPENAI_API_KEY / ANTHROPIC_API_KEY
+# - OTEL_EXPORTER_OTLP_ENDPOINT (Jaeger)
+# - SECRET_KEY (change default!)
+
+# Frontend configuration
+cp sample_files/frontend_template/.env.example frontend.env
+vim frontend.env  # Configure:
+# - VITE_API_BASE_URL
+# - VITE_APP_NAME
+
+# Note: .env files are protected by security hooks
+```
+
+### Verifying Setup
+
+Test the complete system:
+
+```bash
+# 1. Test hook security
+echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | python3 .claude/hooks/pre_tool_use.py
+# Should block and announce via TTS
+
+# 2. Test documentation compliance
+echo '{"session_id": "test", "stop_hook_active": true}' | python3 .claude/hooks/stop.py
+# Should check for required documentation
+
+# 3. Test TTS system
+.claude/hooks/utils/tts/wsl_compatible_tts.py "Setup complete!" normal
+# Should speak the message
+```
+
+## 🐛 Troubleshooting
+
+### TTS Issues
+
+```bash
+# WSL: Ensure PowerShell.exe is accessible
+powershell.exe -Command "echo 'PowerShell accessible'"
+
+# Linux: Install espeak
+sudo apt install espeak
+espeak "Test message"
+
+# Check audio system
+aplay /usr/share/sounds/alsa/Front_Left.wav  # May not work in WSL
+```
+
+### Hook Issues
+
+```bash
+# Check hook permissions
+ls -la .claude/hooks/*.py
+# Should be executable (+x)
+
+# Test individual hooks
+python3 .claude/hooks/pre_tool_use.py --help
+python3 .claude/hooks/post_tool_use.py --help
+```
+
+### Log Files
+
+Check logs for debugging:
+
+```bash
+# Hook execution logs
+ls -la logs/
+cat logs/pre_tool_use.json
+cat logs/post_tool_use.json
+cat logs/stop.json
+```
+
+## 📚 Documentation
+
+- **ROADMAP.md**: Project roadmap and feature tracking
+- **WORKING_JOURNAL.md**: Development notes and decisions
+- **CLAUDE.md**: Claude-specific project context
+- **Hook documentation**: See `.claude/hooks/hook_setup.md`
+
+## 🔄 Updates
+
+To update the scaffold with new features:
+
+```bash
+# Pull latest hooks from main project
+cp -r /path/to/main_project/.claude/hooks/* .claude/hooks/
+
+# Test updated hooks
+python3 .claude/hooks/utils/tts/wsl_compatible_tts.py "Hooks updated" normal
+```
 
 ---
 
-Copyright © 2025 [Mintplex Labs][profile-link]. <br />
-This project is [MIT](./LICENSE) licensed.
+## ⚠️ Important Notes
 
-<!-- LINK GROUP -->
+- **Security**: The hooks provide defensive security but are not a substitute for proper security practices
+- **TTS Privacy**: Audio notifications contain project information - use appropriate volume in shared spaces
+- **WSL Compatibility**: Designed specifically for WSL environments with Windows TTS fallback
+- **Documentation**: Keep required documentation updated to avoid completion blocks
 
-[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-222628?style=flat-square
-[profile-link]: https://github.com/mintplex-labs
-[vector-admin]: https://github.com/mintplex-labs/vector-admin
-[assistant-swarm]: https://github.com/Mintplex-Labs/openai-assistant-swarm
-[docker-btn]: ./images/deployBtns/docker.png
-[docker-deploy]: ./docker/HOW_TO_USE_DOCKER.md
-[aws-btn]: ./images/deployBtns/aws.png
-[aws-deploy]: ./cloud-deployments/aws/cloudformation/DEPLOY.md
-[gcp-btn]: https://deploy.cloud.run/button.svg
-[gcp-deploy]: ./cloud-deployments/gcp/deployment/DEPLOY.md
-[do-btn]: https://www.deploytodo.com/do-btn-blue.svg
-[do-deploy]: ./cloud-deployments/digitalocean/terraform/DEPLOY.md
-[render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/anything-llm&branch=render
-[render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Mintplex-Labs/anything-llm&branch=render
-[railway-btn]: https://railway.app/button.svg
-[railway-deploy]: https://railway.app/template/HNSCS1?referralCode=WFgJkn
-[repocloud-btn]: https://d16t0pc4846x52.cloudfront.net/deploylobe.svg
-[repocloud-deploy]: https://repocloud.io/details/?app_id=276
-[elestio-btn]: https://elest.io/images/logos/deploy-to-elestio-btn.png
-[elestio-deploy]: https://elest.io/open-source/anythingllm
+Start coding with confidence! 🚀
