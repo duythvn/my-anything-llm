@@ -1,5 +1,17 @@
-# Agentic System - Claude Code Configuration
-## Follow TDD approach.  Build and verify results yourself first before asking me to check myself. Try making the code modular so we can reuse if possible.
+# JobDisco - Claude Code Configuration
+
+## 🤖 Sub-Agent Development Workflow
+
+This project uses three specialized Claude Code sub-agents for enhanced development:
+
+1. **Planner Agent** (`@planner`) - Technical architecture and planning
+2. **Coder Agent** (`@coder`) - TDD implementation and coding
+3. **Tester Agent** (`@tester`) - Quality assurance and testing
+
+Use `/dev-cycle [feature]` for complete plan→code→test workflow.
+
+## Core Principles
+Follow TDD approach. Build and verify results yourself first before asking me to check myself. Try making the code modular so we can reuse if possible.
 
 
 ## Documentation Update Checklist
