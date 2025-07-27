@@ -3,33 +3,47 @@
 This scaffold provides a complete project structure template for building modern agentic systems with  multi-agent coordination, and comprehensive observability. Features git worktree-based development, Claude Code integration, defensive security hooks, and automated TTS notifications.
 
 
-## About this project:
-A prompt manager that allows users to create & manage  prompt templates.
-It gives some useful features such as available as a chrome ext, on the go (phone app or PWA) and allow users to plug in LLM API to use LLM to optimise their prompt further or to execute the prompt for them.
-We may also build up additional features to target niche markets (users who need a "movie script builder" companion or users who want to build up prompt workflow pipeline)
 
-
-## Note:
-The current frontend branch was built with React Native and Expo framework, although we don't necessary need to stick with that
-PWA can be consider as an option (as it's easier to implement and maintain), 
-Some ref projects under / demo_projects that we can use to build our app if we decide to go with Web / PWA route
-- next_js: good one, it's a full scale web app
-- vite_demo: good one,  it's a full scale web app with some demonstration of the chrome ext
-- vite_demo_with_demo_components: this is a light weight web app (fewer features) but it has  "demo" page with all the style/components with 4 different schemes
-If we decide to build up the web app with the PWA route, it's strongly recommend to follow the style guideline here, and build up the layout similar to next_js or vite_demo or something else
 
 
 ## 🚀 QUICK ONBOARDING
 
-### Vibe coding with the project
-Ask Claude Code to analyse the feature to be build
-Ask Claude Code to review the ROADMAP  shared/docs/ROADMAP.md
-Ask Claude code to update the ROADMAP, TASKS, and Task Break Down in shared/docs/task_management accordingly
-Follow Roadmap to create new worktree from the current main branch (e.g: frontend_main) to work on the new stage/feature 
-Then commit git to that branch 
-Then come back to the main worktree (e.g: frontend_main) and merge to that tree
-Also ensure to ask Claude to update ROADMAP and TASK list to ensure they are up-to-date
-Rinse and repeate
+### Enhanced Development with Sub-Agents
+
+JobDisco uses specialized Claude Code sub-agents for better development workflow:
+
+1. **Planning Phase** - Use `@planner` agent to:
+   - Analyze feature requirements
+   - Research implementation approaches
+   - Create technical specifications
+   - Update ROADMAP in shared/docs/ROADMAP.md
+
+2. **Implementation Phase** - Use `@coder` agent to:
+   - Implement features using TDD approach
+   - Write clean, modular code
+   - Create comprehensive tests
+   - Follow technical specifications
+
+3. **Review Phase** - Use `@tester` agent to:
+   - Review code quality and standards
+   - Run and enhance test coverage
+   - Check security and performance
+   - Validate against specifications
+
+4. **Quick Commands**:
+   ```bash
+   /dev-cycle [feature]  # Runs complete plan→code→test cycle
+   /plan [feature]       # Just planning phase
+   /implement [feature]  # Just coding phase
+   /review [feature]     # Just testing phase
+   ```
+
+5. **Workflow**:
+   - Create worktree from main branch (e.g: backend_main)
+   - Use agents to develop feature with high quality
+   - Commit to feature branch
+   - Merge back to main worktree
+   - Update ROADMAP and documentation
 
 
 ### Git Worktree Structure & Development Process
@@ -76,15 +90,15 @@ git branch frontend_main
 
 **2. Create Git Worktree for New Feature**
 ```bash
-# From project root - create backend feature branch
-git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_main
+# From project root - create backend feature branch  (sample name used)
+git worktree add worktrees/backend/backend_v0p1_p1 -b backend_v0p1_p1 backend_main
 
-# Or create frontend feature branch  
-git worktree add worktrees/frontend/frontend_v0p1_p4_builder -b frontend_v0p1_p4_builder frontend_main
+# Or create frontend feature branch   (sample name used)
+git worktree add worktrees/frontend/frontend_v0p1_p1 -b frontend_v0p1_p1 frontend_main
 
 # Verify worktree was created
 git worktree list
-ls -la worktrees/backend/backend_v0p1_p1_content/
+ls -la worktrees/backend/backend_v0p1_p1/
 ```
 
 **3. Set Up New Frontend Worktree**
@@ -193,6 +207,7 @@ git worktree repair
 
 ## 🆕 What's New in v2.0
 
+- **Sub-Agent Development**: Three specialized AI agents (planner, coder, tester) for enhanced workflow
 - **LangGraph Integration**: Complete workflow orchestration framework
 - **Multi-Agent Coordination**: Interface-driven agent management system
 - **Modern Architecture**: Updated FastAPI backend with async SQLAlchemy, Redis, Neo4j
@@ -201,6 +216,7 @@ git worktree repair
 - **Docker Compose Stack**: PostgreSQL, Redis, Neo4j, Jaeger out-of-the-box
 - **Tool Ecosystem**: Categorized tool framework for extensible functionality
 - **Configuration Management**: Secure environment variable handling with validation
+- **Agent Commands**: New `/plan`, `/implement`, `/review`, and `/dev-cycle` commands
 
 ## ⚡ Quick Start
 

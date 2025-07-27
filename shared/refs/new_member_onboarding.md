@@ -5,7 +5,7 @@
 ### 1. Setup Your Branch
 ```bash
 # Navigate to project root
-cd /path/to/your/agentic_system
+cd /path/to/your/jobdisco
 
 # Create your development branch
 git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_framework_first
@@ -16,15 +16,18 @@ bash /path/to/shared/scripts/install-commands.sh
 source venv/bin/activate
 ```
 
-### 2. Start Developing
+### 2. Start Developing with Sub-Agents
 ```bash
 # Get context and guidance
 /workhere
 
-# Development workflow
-/devgo      # Check development status and get guidance
-/testgo     # Execute tests for current stage
-/checkpoint # Save progress regularly
+# NEW: Use specialized sub-agents for development
+@planner Create technical spec for [your feature]
+@coder Implement [feature] using TDD approach
+@tester Review and validate the implementation
+
+# Or use the full development cycle
+/dev-cycle [your feature description]
 ```
 
 ### 3. Complete a Stage
@@ -36,6 +39,43 @@ source venv/bin/activate
 
 # Check overall progress
 /branchstatus                     # View cross-branch status
+```
+
+## 🤖 NEW: Sub-Agent Development Workflow
+
+### Understanding the Three Agents
+
+1. **Planner Agent** (`@planner`)
+   - Creates technical specifications
+   - Researches best approaches
+   - Breaks down work into tasks
+   - Updates project documentation
+
+2. **Coder Agent** (`@coder`)
+   - Implements features using TDD
+   - Writes clean, modular code
+   - Creates comprehensive tests
+   - Follows project standards
+
+3. **Tester Agent** (`@tester`)
+   - Reviews code quality
+   - Runs and writes tests
+   - Checks security and performance
+   - Validates specifications
+
+### Agent-Driven Development Commands
+
+```bash
+# Individual agent invocation
+@planner Analyze requirements for career page monitoring
+@coder Implement the Company model with tests
+@tester Review the scraping service implementation
+
+# Helper commands
+/plan [feature]      # Invokes planner for technical spec
+/implement [feature] # Invokes coder for implementation
+/review [feature]    # Invokes tester for quality check
+/dev-cycle [feature] # Runs complete plan→code→test cycle
 ```
 
 ---
@@ -187,6 +227,31 @@ claude
 
 # In Claude session, get context and guidance:
 /workhere    # Auto-detects branch and provides context
+```
+
+### 🆕 Agent-Driven Development Flow
+
+```bash
+# Step 1: Planning Phase (Morning)
+@planner Analyze the requirements for [today's feature].
+Create a technical specification with implementation approach.
+
+# Step 2: Implementation Phase (Midday)
+@coder Implement [feature] following the technical spec.
+Use TDD approach and create comprehensive tests.
+
+# Step 3: Review Phase (Afternoon)
+@tester Review the implementation of [feature].
+Check code quality, test coverage, and security.
+
+# Alternative: Use the automated cycle
+/dev-cycle [feature description]
+# This runs all three agents in sequence automatically
+```
+
+### Traditional Command Flow (Still Available)
+
+```bash
 /devgo       # Check development status and get guided workflow
 /testgo      # Execute tests specific to current stage
 /checkpoint  # Create development checkpoint regularly
@@ -316,4 +381,129 @@ worktrees/backend/backend_v0p1_p1_content/
 - **Automatic Updates**: Documentation stays current with development
 - **Official Completions**: `/stage-complete` provides formal stage tracking
 
-This enhanced onboarding process ensures new team members can quickly become productive while maintaining proper documentation and progress tracking across all development streams.
+## 🎯 Sub-Agent Best Practices
+
+### When to Use Each Agent
+
+**Use Planner Agent When:**
+- Starting a new feature or module
+- Facing complex architectural decisions
+- Need to research multiple approaches
+- Breaking down large tasks
+- Creating API specifications
+
+**Use Coder Agent When:**
+- Have a clear technical specification
+- Implementing new features
+- Writing tests (TDD approach)
+- Refactoring existing code
+- Creating reusable components
+
+**Use Tester Agent When:**
+- Code is ready for review
+- Need comprehensive test coverage
+- Checking security vulnerabilities
+- Validating performance
+- Before merging to main branch
+
+### Effective Agent Prompts
+
+**Good Planner Prompts:**
+```bash
+@planner Research and design a web scraping service that handles:
+- Multiple career page formats
+- Rate limiting and retries
+- Australia/Remote keyword detection
+Compare BeautifulSoup vs Playwright approaches.
+```
+
+**Good Coder Prompts:**
+```bash
+@coder Implement the Company model with:
+- SQLAlchemy ORM mapping
+- Pydantic schema for validation
+- Full CRUD operations
+- Comprehensive pytest tests
+Follow the technical spec from planner.
+```
+
+**Good Tester Prompts:**
+```bash
+@tester Review the web scraping implementation:
+- Check error handling for network failures
+- Validate rate limiting effectiveness
+- Test with 5 different career page formats
+- Verify security against malicious HTML
+```
+
+### Common Workflows
+
+**Feature Development:**
+```bash
+# Day 1: Planning
+@planner Design the job duplicate detection system
+
+# Day 2: Implementation
+@coder Implement duplicate detection using the spec
+
+# Day 3: Testing & Refinement
+@tester Review duplicate detection implementation
+@coder Fix issues found in review
+@tester Validate fixes
+```
+
+**Bug Fixing:**
+```bash
+# Quick fix flow
+@tester Analyze bug report #123 and identify root cause
+@coder Fix the identified issue with tests
+@tester Verify the fix resolves the issue
+```
+
+**Refactoring:**
+```bash
+@planner Analyze current scraping code and design refactoring plan
+@coder Refactor scraping service following the plan
+@tester Ensure refactoring maintains functionality
+```
+
+## 📈 Measuring Success with Sub-Agents
+
+### Key Metrics to Track
+
+1. **Planning Quality**
+   - Spec completeness (% of features covered)
+   - Implementation accuracy (spec vs actual)
+   - Rework rate due to planning gaps
+
+2. **Development Velocity**
+   - Features completed per week
+   - Time from spec to implementation
+   - Test coverage achieved
+
+3. **Code Quality**
+   - Review pass rate (first time)
+   - Bugs found post-review
+   - Security issues identified
+
+### Weekly Retrospective Format
+
+```markdown
+## Week X Retrospective
+
+### Agent Performance
+- **Planner**: [Specs created, quality rating]
+- **Coder**: [Features implemented, test coverage]
+- **Tester**: [Issues found, reviews completed]
+
+### Improvements
+- [What worked well]
+- [What needs adjustment]
+- [Agent prompt refinements]
+
+### Next Week Focus
+- [Priority features]
+- [Agent utilization plan]
+```
+
+This enhanced onboarding process with sub-agents ensures new team members can quickly become productive while maintaining high code quality through specialized AI assistance at each development phase.
