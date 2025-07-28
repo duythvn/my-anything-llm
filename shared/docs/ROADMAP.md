@@ -1,34 +1,63 @@
 # AnythingLLM B2B E-commerce Chat Solution Roadmap
 
+## 🚨 Critical Path & Project Status
+
+### Current Status: Phase 1 Planning
+- **Active Phase**: Week 1-2 MVP (27 tasks, 0% complete)
+- **Critical Milestones**: 
+  - Day 2: Core API infrastructure ⚠️
+  - Day 4: Knowledge management system ⚠️  
+  - Day 7: Widget operational ⚠️
+  - Day 14: MVP ready ⚠️
+- **Blockers**: None identified
+- **Risk Items**: AnythingLLM fork complexity, Vector DB dependencies
+- **Task Tracking**: See `task_management/TASK_TRACKING.md` for detailed status
+
+### Critical Features for MVP Success
+1. **Multi-source data ingestion** - Core differentiator
+2. **Real-time RAG with source attribution** - Quality foundation  
+3. **Embeddable widget** - Client deployment requirement
+4. **E-commerce product queries** - Immediate business value
+
+---
+
 ## Project Overview
 Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce businesses, starting with knowledge management and gradually adding transactional features.
 
 ### Timeline Overview
-- **Week 1-2**: MVP for internal testing (Knowledge & Product Info Focus)
-- **Week 3-4**: First client-ready version (single-tenant)
+- **Week 1-2**: MVP for internal testing (Knowledge & Product Info with enhanced data sources)
+- **Week 3-4**: First client-ready version (single-tenant with multi-source support)
 - **Week 5-6**: E-commerce transaction features & Multi-tenant prep
 - **Week 7-10**: Production ready & Enterprise features
+- **Week 11-12**: Advanced monitoring, evaluation & real-time integrations
+- **Week 13-14**: Enterprise data management & platform excellence
 
-### MVP Scope (Narrowed Focus)
-- **Phase 1 (Week 1-2)**: Knowledge queries, policies, product information
-- **Phase 2 (Week 3-4)**: Client-ready with customization
-- **Phase 3 (Week 5-6)**: E-commerce transactions (orders, status)
+### MVP Scope (Progressive Enhancement)
+- **Phase 1 (Week 1-2)**: Knowledge queries with multi-source data ingestion
+- **Phase 2 (Week 3-4)**: Client-ready with Google Docs & API integrations
+- **Phase 3 (Week 5-6)**: E-commerce transactions with basic notifications
 - **Phase 4 (Week 7-10)**: Multi-tenant, enterprise, production ready
+- **Phase 5 (Week 11-12)**: Quality evaluation, monitoring & real-time updates
+- **Phase 6 (Week 13-14)**: Advanced platform features & scale optimization
 
-### Core Requirements
+### Core Requirements (Enhanced)
 - **API-First**: Backend API that supports multiple frontend implementations
 - **Embeddable**: JavaScript widget for client websites/webstores
 - **Full LLM Control**: Custom knowledge, behavior, guardrails, RAG
 - **Turn-key Solution**: We deploy and manage for B2B clients
 - **Progressive Enhancement**: Start simple, add features gradually
+- **Multi-Source Data**: Support websites, documents, APIs, Google Docs
+- **Auto-Updates**: Configurable sync schedules and push updates
+- **Quality Assurance**: LLM-as-judge evaluation and monitoring
+- **Notifications**: Email, webhooks, and in-app alerts
 
 ## Week 1-2: MVP for Internal Testing (Days 1-14)
-**Focus: Knowledge Management & Product Information**
+**Focus: Knowledge Management & Product Information with Enhanced Data Sources**
 
 ### Week 1 - Core Knowledge Chat System (Days 1-7)
 
 #### Phase 1.1: Core API Infrastructure (Days 1-2)
-**Goal**: Basic chat API with knowledge focus
+**Goal**: Basic chat API with knowledge focus + data source foundations
 
 1. **Essential API Setup**
    - [ ] Fork and setup AnythingLLM development environment
@@ -36,22 +65,28 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Build core chat API endpoints (`/api/v1/chat`, `/api/v1/messages`)
    - [ ] Implement basic JWT authentication
    - [ ] Add API key management for widget access
+   - [ ] Create webhook receiver endpoint for push updates
 
 2. **Knowledge Management Schema**
    - [ ] Create knowledge base structure (policies, FAQs, guides)
    - [ ] Add product information schema (descriptions, specs, details)
    - [ ] Implement category/tag system for content
    - [ ] Add version control for knowledge updates
+   - [ ] Create data_sources table for multi-source tracking
+   - [ ] Add document metadata for source attribution
 
 #### Phase 1.2: RAG Implementation (Days 3-4)
-**Goal**: Effective retrieval for knowledge and product info
+**Goal**: Effective retrieval for knowledge and product info with multi-source support
 
-1. **Document Ingestion**
+1. **Enhanced Document Ingestion**
    - [ ] Build document upload system (PDF, DOCX, TXT)
    - [ ] Create product catalog CSV/JSON importer
    - [ ] Implement policy document parser
    - [ ] Add FAQ structure recognition
    - [ ] Create knowledge base versioning
+   - [ ] Add CSV/Excel parser with PDF link extraction
+   - [ ] Implement basic query/response logging
+   - [ ] Create sync schedule configuration per source
 
 2. **Vector Search Optimization**
    - [ ] Implement product description embeddings
@@ -59,6 +94,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Add category-based filtering
    - [ ] Implement relevance scoring
    - [ ] Create fallback responses for no matches
+   - [ ] Add source tracking for each embedded chunk
 
 #### Phase 1.3: Knowledge-Focused Prompts (Days 5-6)
 **Goal**: Optimize for informational queries
@@ -143,10 +179,10 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 ## Week 3-4: First Client Version (Days 15-28)
 **Focus: Polish & Client Deployment**
 
-### Week 3 - Client-Ready Polish (Days 15-21)
+### Week 3 - Client-Ready Polish with Data Integration (Days 15-21)
 
-#### Phase 3.1: Enhanced Admin Dashboard (Days 15-16)
-**Goal**: Professional knowledge management interface
+#### Phase 3.1: Enhanced Admin Dashboard & Data Sources (Days 15-16)
+**Goal**: Professional knowledge management with multi-source support
 
 1. **Knowledge Management Tools**
    - [ ] Bulk document upload interface
@@ -154,6 +190,9 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Product catalog bulk editor
    - [ ] Content approval workflow
    - [ ] Version history and rollback
+   - [ ] Google Docs integration (OAuth2 + API)
+   - [ ] Generic API connector configuration UI
+   - [ ] Batch processing queue for multiple sources
 
 2. **Analytics & Insights**
    - [ ] Popular queries dashboard
@@ -161,6 +200,8 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Response accuracy metrics
    - [ ] User satisfaction tracking
    - [ ] Product inquiry trends
+   - [ ] Query/response pair logging system
+   - [ ] Basic performance metrics dashboard
 
 #### Phase 3.2: Advanced Knowledge Features (Days 17-19)
 **Goal**: Sophisticated information retrieval
@@ -215,8 +256,8 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Widget installation guide
    - [ ] Training documentation
 
-#### Phase 4.2: Performance Tuning (Days 25-26)
-**Goal**: Optimize for client needs
+#### Phase 4.2: Performance Tuning & Notifications (Days 25-26)
+**Goal**: Optimize for client needs with basic alerts
 
 1. **Performance Optimization**
    - [ ] Response time optimization
@@ -224,13 +265,17 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Knowledge base indexing
    - [ ] Cache warming strategies
    - [ ] CDN configuration
+   - [ ] Enhanced sync scheduling per workspace
 
-2. **Monitoring Setup**
+2. **Monitoring & Notification Setup**
    - [ ] Basic monitoring dashboard
    - [ ] Error alerting
    - [ ] Usage analytics
    - [ ] Response quality tracking
    - [ ] Client reporting tools
+   - [ ] Basic email notifications (SMTP)
+   - [ ] Webhook dispatch for key events
+   - [ ] Sync failure notifications
 
 #### Phase 4.3: Client Launch (Days 27-28)
 **Goal**: Successful first deployment
@@ -712,4 +757,254 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 - [ ] Full documentation complete
 - [ ] Market launch ready
 
-This roadmap provides a progressive path from a simple knowledge-focused MVP to a full-featured B2B e-commerce chat solution over 10 weeks, with clear milestones and realistic scope management.
+## Week 11-12: Advanced Monitoring & Evaluation (Days 71-84)
+**Focus: Quality Assurance & Advanced Analytics**
+
+### Week 11 - Evaluation Framework (Days 71-77)
+
+#### Phase 11.1: LLM-as-Judge System (Days 71-73)
+**Goal**: Automated quality evaluation
+
+1. **Evaluation Infrastructure**
+   - [ ] Design evaluation criteria schema
+   - [ ] Implement LLM-based quality scoring
+   - [ ] Create custom evaluation metrics
+   - [ ] Build evaluation API endpoints
+   - [ ] Add human-in-the-loop validation
+
+2. **Quality Metrics**
+   - [ ] Response relevance scoring
+   - [ ] Accuracy assessment
+   - [ ] Completeness evaluation
+   - [ ] Tone and style analysis
+   - [ ] Hallucination detection
+
+#### Phase 11.2: Advanced Analytics (Days 74-75)
+**Goal**: Comprehensive insights dashboard
+
+1. **Analytics Platform**
+   - [ ] Real-time query analytics
+   - [ ] Response quality trends
+   - [ ] User satisfaction correlation
+   - [ ] Performance bottleneck analysis
+   - [ ] Custom report generation
+
+2. **A/B Testing Framework**
+   - [ ] Experiment configuration system
+   - [ ] Traffic splitting logic
+   - [ ] Result analysis tools
+   - [ ] Statistical significance testing
+   - [ ] Automated winner selection
+
+#### Phase 11.3: Advanced Monitoring (Days 76-77)
+**Goal**: Proactive system health
+
+1. **Monitoring Enhancement**
+   - [ ] Custom metric collection
+   - [ ] Anomaly detection algorithms
+   - [ ] Predictive alerting
+   - [ ] Resource usage forecasting
+   - [ ] SLA compliance tracking
+
+### Week 12 - Advanced Integrations (Days 78-84)
+
+#### Phase 12.1: Push-Based Updates (Days 78-80)
+**Goal**: Real-time data synchronization
+
+1. **Webhook Infrastructure**
+   - [ ] Webhook management system
+   - [ ] Event subscription logic
+   - [ ] Retry mechanism
+   - [ ] Dead letter queue
+   - [ ] Webhook security (HMAC)
+
+2. **Real-Time Processing**
+   - [ ] Event-driven architecture
+   - [ ] Stream processing pipeline
+   - [ ] Change data capture
+   - [ ] Conflict resolution
+   - [ ] Version reconciliation
+
+#### Phase 12.2: Advanced Notifications (Days 81-82)
+**Goal**: Intelligent alert system
+
+1. **Notification Engine**
+   - [ ] Rule-based notifications
+   - [ ] Channel orchestration
+   - [ ] Template management
+   - [ ] Delivery tracking
+   - [ ] Preference management
+
+2. **Alert Intelligence**
+   - [ ] Smart alert grouping
+   - [ ] Severity classification
+   - [ ] Escalation chains
+   - [ ] Quiet hours respect
+   - [ ] Alert fatigue prevention
+
+#### Phase 12.3: Platform Integration (Days 83-84)
+**Goal**: Seamless third-party connections
+
+1. **Integration Hub**
+   - [ ] OAuth2 provider support
+   - [ ] API gateway for partners
+   - [ ] Rate limiting per integration
+   - [ ] Usage tracking
+   - [ ] Partner dashboard
+
+2. **Data Pipeline**
+   - [ ] ETL job management
+   - [ ] Data transformation rules
+   - [ ] Schema validation
+   - [ ] Error recovery
+   - [ ] Audit trail
+
+## Week 13-14: Enterprise Features (Days 85-98)
+**Focus: Advanced Platform Capabilities**
+
+### Week 13 - Advanced Data Management (Days 85-91)
+
+#### Phase 13.1: Multi-Source Orchestration (Days 85-87)
+**Goal**: Unified data management
+
+1. **Data Source Manager**
+   - [ ] Source priority configuration
+   - [ ] Conflict resolution rules
+   - [ ] Data freshness tracking
+   - [ ] Source health monitoring
+   - [ ] Automatic failover
+
+2. **Advanced Sync Features**
+   - [ ] Incremental sync optimization
+   - [ ] Parallel processing
+   - [ ] Dependency management
+   - [ ] Cross-source deduplication
+   - [ ] Smart caching strategies
+
+#### Phase 13.2: Knowledge Graph Integration (Days 88-89)
+**Goal**: Enhanced understanding
+
+1. **Graph Database Setup**
+   - [ ] Neo4j integration
+   - [ ] Entity extraction pipeline
+   - [ ] Relationship mapping
+   - [ ] Graph querying API
+   - [ ] Visualization tools
+
+2. **Semantic Enhancement**
+   - [ ] Concept linking
+   - [ ] Contextual understanding
+   - [ ] Multi-hop reasoning
+   - [ ] Knowledge synthesis
+   - [ ] Fact validation
+
+#### Phase 13.3: Advanced Security (Days 90-91)
+**Goal**: Enterprise-grade protection
+
+1. **Security Hardening**
+   - [ ] Advanced encryption
+   - [ ] Key rotation system
+   - [ ] Audit logging enhancement
+   - [ ] Threat detection
+   - [ ] Compliance automation
+
+### Week 14 - Platform Excellence (Days 92-98)
+
+#### Phase 14.1: Performance at Scale (Days 92-94)
+**Goal**: Handle enterprise load
+
+1. **Optimization Suite**
+   - [ ] Query optimization engine
+   - [ ] Intelligent caching layers
+   - [ ] Resource pooling
+   - [ ] Connection management
+   - [ ] Memory optimization
+
+2. **Scale Testing**
+   - [ ] 10,000+ concurrent users
+   - [ ] Million+ documents
+   - [ ] Sub-second response time
+   - [ ] Zero downtime deployment
+   - [ ] Global distribution
+
+#### Phase 14.2: Advanced AI Features (Days 95-96)
+**Goal**: Cutting-edge capabilities
+
+1. **AI Enhancement**
+   - [ ] Multi-model ensemble
+   - [ ] Custom model fine-tuning
+   - [ ] Continuous learning
+   - [ ] Bias detection
+   - [ ] Explainable AI
+
+2. **Conversation Intelligence**
+   - [ ] Intent prediction
+   - [ ] Proactive suggestions
+   - [ ] Context persistence
+   - [ ] Multi-turn optimization
+   - [ ] Emotion detection
+
+#### Phase 14.3: Platform Maturity (Days 97-98)
+**Goal**: Production excellence
+
+1. **Operational Excellence**
+   - [ ] Chaos engineering
+   - [ ] Disaster recovery drills
+   - [ ] Performance baselines
+   - [ ] Cost optimization
+   - [ ] Carbon footprint tracking
+
+2. **Developer Experience**
+   - [ ] SDK development
+   - [ ] API versioning
+   - [ ] Developer portal
+   - [ ] Sample applications
+   - [ ] Community tools
+
+## Extended Success Metrics
+
+### Week 11-12 Success Criteria:
+1. **Quality Assurance**: 98%+ accuracy in evaluations
+2. **Real-Time Updates**: <500ms webhook latency
+3. **Monitoring**: 100% critical event capture
+4. **Analytics**: Actionable insights generation
+5. **Integration**: 5+ third-party platforms
+
+### Week 13-14 Success Criteria:
+1. **Scale**: 10,000+ concurrent users
+2. **Performance**: <200ms p99 response time
+3. **Reliability**: 99.99% uptime
+4. **Security**: Zero security incidents
+5. **AI Quality**: 95%+ user satisfaction
+
+## Summary of Multi-Source RAG Enhancements
+
+### Quick Wins (Added to Week 1-4)
+- ✅ **Basic data source tracking** - Database schema for multiple sources
+- ✅ **CSV/Excel PDF link extraction** - Parse and follow document links
+- ✅ **Query/response logging** - Foundation for evaluation
+- ✅ **Webhook receiver** - Accept push updates
+- ✅ **Per-source sync schedules** - Flexible update timing
+
+### Medium Effort (Added to Week 3-4)
+- ✅ **Google Docs integration** - OAuth2 + Drive API
+- ✅ **Generic API connectors** - Configurable data sources
+- ✅ **Batch processing** - Handle multiple sources efficiently
+- ✅ **Basic notifications** - Email + webhook alerts
+- ✅ **Performance dashboard** - Query metrics tracking
+
+### Advanced Features (Week 11-14)
+- ✅ **LLM-as-Judge evaluation** - Automated quality scoring
+- ✅ **Real-time push updates** - Event-driven architecture
+- ✅ **Advanced monitoring** - Predictive alerts & anomaly detection
+- ✅ **Intelligent notifications** - Rule-based with escalation
+- ✅ **Multi-source orchestration** - Unified data management
+
+### Key Benefits
+1. **MVP in 4 weeks** - Core functionality with enhanced data sources
+2. **Progressive enhancement** - Add features without disrupting service
+3. **Enterprise-ready by week 14** - Full monitoring, evaluation, and scale
+4. **Flexible architecture** - Support any data source type
+5. **Quality assurance built-in** - Not an afterthought
+
+This extended roadmap provides a comprehensive path from MVP to enterprise-grade platform over 14 weeks, incorporating all requested multi-source RAG features while maintaining the quick MVP delivery in the first 4 weeks.

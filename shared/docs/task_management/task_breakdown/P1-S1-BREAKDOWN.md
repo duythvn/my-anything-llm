@@ -213,13 +213,142 @@ Setting up the foundation for our B2B e-commerce chat solution by forking Anythi
 - Implement usage quotas
 - Consider key analytics
 
+---
+
+### P1-S1-T006: Create Webhook Receiver Endpoint
+**Status**: ⏳ TODO | **Estimate**: 3 hours | **Priority**: P1 | **Owner**: Backend
+
+#### Subtasks:
+1. **Research and Design** (30 mins)
+   - [ ] Design webhook payload structure
+   - [ ] Plan webhook security (HMAC signatures)
+   - [ ] Define webhook event types
+   - [ ] Design retry mechanism
+
+2. **Implementation** (2 hours)
+   - [ ] Create `/api/v1/webhooks/receive/:token` endpoint
+   - [ ] Implement HMAC signature validation
+   - [ ] Add webhook event processing queue
+   - [ ] Create webhook configuration storage
+   - [ ] Implement event routing logic
+   - [ ] Add webhook retry mechanism
+
+3. **Testing** (30 mins)
+   - [ ] Test webhook payload validation
+   - [ ] Verify signature checking
+   - [ ] Test event processing
+   - [ ] Validate error handling
+
+4. **Integration and Documentation** (30 mins)
+   - [ ] Document webhook integration
+   - [ ] Create webhook testing guide
+   - [ ] Add security guidelines
+   - [ ] Provide example payloads
+
+#### Dependencies:
+- **Requires**: P1-S1-T002 (Basic API)
+- **Blocks**: P5-S2-T001 (Advanced webhook system)
+
+#### Technical Considerations:
+- Implement async processing to avoid blocking
+- Add webhook event logging
+- Consider using Bull queue for reliability
+- Plan for webhook debugging tools
+
+---
+
+### P1-S1-T007: Create data_sources Table Schema
+**Status**: ⏳ TODO | **Estimate**: 2 hours | **Priority**: P1 | **Owner**: Backend
+
+#### Subtasks:
+1. **Research and Design** (30 mins)
+   - [ ] Design data source schema
+   - [ ] Plan source type enumeration
+   - [ ] Define configuration structure
+   - [ ] Plan relationships with workspaces
+
+2. **Implementation** (1 hour)
+   - [ ] Create Prisma schema for data_sources
+   - [ ] Add source type enum (api, file, google_docs, etc.)
+   - [ ] Add configuration JSONB field
+   - [ ] Create sync_schedule fields
+   - [ ] Add last_sync tracking
+   - [ ] Setup foreign key to workspaces
+
+3. **Testing** (15 mins)
+   - [ ] Test schema migration
+   - [ ] Verify CRUD operations
+   - [ ] Test relationship constraints
+   - [ ] Validate JSON configuration
+
+4. **Integration and Documentation** (15 mins)
+   - [ ] Document schema design
+   - [ ] Create configuration examples
+   - [ ] Add migration notes
+   - [ ] Update ER diagrams
+
+#### Dependencies:
+- **Requires**: P1-S1-T003 (Workspace model)
+- **Blocks**: P1-S2-T008 (Sync scheduling)
+
+#### Technical Considerations:
+- Use JSONB for flexible configuration
+- Index on workspace_id and type
+- Plan for source health tracking
+- Consider soft deletes
+
+---
+
+### P1-S1-T008: Add Document Metadata for Source Attribution
+**Status**: ⏳ TODO | **Estimate**: 2 hours | **Priority**: P1 | **Owner**: Backend
+
+#### Subtasks:
+1. **Research and Design** (30 mins)
+   - [ ] Analyze current document model
+   - [ ] Design metadata structure
+   - [ ] Plan source tracking fields
+   - [ ] Define attribution requirements
+
+2. **Implementation** (1 hour)
+   - [ ] Extend document model with source_id
+   - [ ] Add source_metadata JSONB field
+   - [ ] Create source_url tracking
+   - [ ] Add ingestion timestamp
+   - [ ] Implement source versioning
+   - [ ] Update document creation logic
+
+3. **Testing** (15 mins)
+   - [ ] Test metadata storage
+   - [ ] Verify source attribution
+   - [ ] Test query filtering by source
+   - [ ] Validate metadata updates
+
+4. **Integration and Documentation** (15 mins)
+   - [ ] Document metadata schema
+   - [ ] Create attribution examples
+   - [ ] Update API documentation
+   - [ ] Add source tracking guide
+
+#### Dependencies:
+- **Requires**: P1-S1-T007 (Data sources table)
+- **Blocks**: P1-S2-T009 (Source tracking for chunks)
+
+#### Technical Considerations:
+- Maintain backward compatibility
+- Index source_id for fast queries
+- Consider metadata size limits
+- Plan for source migration
+
 ## Stage Validation Checklist
 - [ ] Development environment fully functional
 - [ ] All API endpoints responding correctly
 - [ ] Authentication working for users and API keys
 - [ ] Workspace model supports e-commerce needs
+- [ ] Webhook receiver endpoint operational
+- [ ] Data sources schema implemented
+- [ ] Document metadata supports attribution
 - [ ] Documentation complete for all components
-- [ ] Ready for knowledge management implementation
+- [ ] Ready for enhanced knowledge management implementation
 
 ## Notes
 - Focus on reusing AnythingLLM's existing infrastructure
