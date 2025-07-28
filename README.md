@@ -12,38 +12,39 @@ This project transforms AnythingLLM into a comprehensive B2B LLM chat solution s
 
 This project uses specialized Claude Code sub-agents for enhanced development workflow:
 
-1. **Planning Phase** - Use `@planner` agent to:
-   - Analyze feature requirements
-   - Research implementation approaches
-   - Create technical specifications
-   - Update comprehensive 14-week ROADMAP in shared/docs/ROADMAP.md
+1. **Planning Phase** - Use `/plan` command or `@planner` agent to:
+   - **For Roadmap Stages**: `/plan Phase 1.1 Core API Infrastructure` → Creates detailed P1-S1-BREAKDOWN.md
+   - **For Features**: `@planner Multi-source data ingestion` → Creates technical specifications
+   - Research implementation approaches and update documentation
 
-2. **Implementation Phase** - Use `@coder` agent to:
+2. **Implementation Phase** - Use `/implement` command or `@coder` agent to:
    - Implement features using TDD approach
-   - Write clean, modular code
-   - Create comprehensive tests
-   - Follow technical specifications
+   - Follow technical specifications and task breakdowns
+   - Write clean, modular code with comprehensive tests
 
-3. **Review Phase** - Use `@tester` agent to:
-   - Review code quality and standards
-   - Run and enhance test coverage
-   - Check security and performance
-   - Validate against specifications
+3. **Review Phase** - Use `/review` command or `@tester` agent to:
+   - Review code quality and validate against specifications
+   - Run comprehensive tests and check security/performance
+   - Ensure completion criteria are met
 
-4. **Quick Commands**:
+4. **Essential Commands**:
    ```bash
-   /dev-cycle [feature]  # Runs complete plan→code→test cycle
-   /plan [feature]       # Just planning phase
-   /implement [feature]  # Just coding phase
-   /review [feature]     # Just testing phase
+   /workhere                    # Get current branch context
+   /plan [stage/feature]        # Create task breakdowns & specifications  
+   /implement [feature]         # Code implementation with TDD
+   /devgo                       # Post-implementation testing & validation
+   /dev-cycle [feature]         # Complete plan→code→test cycle
    ```
 
-5. **Workflow**:
-   - Create worktree from main branch (e.g: backend_main)
-   - Use agents to develop feature with high quality
-   - Commit to feature branch
-   - Merge back to main worktree
-   - Update ROADMAP and documentation
+5. **Development Workflow**:
+   ```bash
+   cd worktrees/backend/backend_v0p1_p1_content
+   /workhere                    # Get context
+   /plan Phase 1.1              # Create detailed task breakdown
+   /implement [specific task]   # Implement features
+   /devgo                       # Test and validate
+   /stage-complete             # Mark stage complete
+   ```
 
 
 ### Git Worktree Structure & Development Process

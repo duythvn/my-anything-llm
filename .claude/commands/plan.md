@@ -1,47 +1,32 @@
 # /plan
 
-Invoke the planner agent to analyze requirements and create detailed technical specifications.
+Invoke the planner agent to create technical specifications and task breakdowns.
 
 ## Usage
 
 ```
-/plan [feature description]
+/plan [feature or stage description]
 ```
 
 ## What it does
 
-1. Analyzes the specified feature or current task
-2. Researches multiple implementation approaches
-3. Evaluates technology choices and trade-offs
-4. Creates a detailed technical specification
-5. Updates task breakdowns in project documentation
+1. Analyzes features or roadmap stages
+2. Creates detailed task breakdowns (P1-S1-BREAKDOWN.md format)
+3. Updates project documentation
+4. Provides technical specifications with implementation steps
 
 ## Examples
 
 ```
-/plan Week 1 career page monitoring implementation
-
-/plan LinkedIn job scraping integration with duplicate detection
-
-/plan Create RSS feed monitoring system for company discovery
+/plan Phase 1.1 Core API Infrastructure
+/plan Multi-source data ingestion system
+/plan Document upload with validation
 ```
 
-## Process
+## When to use
 
-The planner agent will:
-1. Read relevant project documentation (ROADMAP.md, mvp_specs.md)
-2. Research best practices and implementation patterns
-3. Analyze the existing codebase for reusable components
-4. Create a comprehensive technical specification
-5. Break down work into manageable tasks with estimates
+- **Planning roadmap stages** - Break down high-level features into tasks
+- **Before implementation** - Get technical specs before coding
+- **Complex features** - Need research and architecture decisions
 
-## Output
-
-The agent provides:
-- Technical specification document
-- Architecture decisions and justifications
-- Task breakdown with time estimates
-- Risk assessment and mitigation strategies
-- Updated project documentation
-
-Use this command at the start of any new feature or when you need a detailed implementation plan.
+Use `/plan` for structured planning that updates documentation. Use `@planner` directly for quick analysis or custom planning needs.

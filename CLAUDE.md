@@ -2,13 +2,29 @@
 
 ## 🤖 Sub-Agent Development Workflow
 
-This project uses three specialized Claude Code sub-agents for enhanced development:
+This project uses specialized Claude Code sub-agents and commands for enhanced development:
 
-1. **Planner Agent** (`@planner`) - Technical architecture and planning
-2. **Coder Agent** (`@coder`) - TDD implementation and coding
+### **Planning System**
+- **`/plan [stage]`** - Creates detailed task breakdown files (P1-S1-BREAKDOWN.md format)
+- **`@planner [feature]`** - Creates technical specifications and feature analysis  
+- **`/dev-cycle [feature]`** - Complete plan→code→test workflow
+
+### **Specialized Agents**
+1. **Planner Agent** (`@planner`) - Technical architecture, research, and specifications
+2. **Coder Agent** (`@coder`) - TDD implementation and clean coding
 3. **Tester Agent** (`@tester`) - Quality assurance and testing
 
-Use `/dev-cycle [feature]` for complete plan→code→test workflow.
+### **Key Planning Workflow**
+```bash
+# For roadmap stages - creates task breakdown files
+/plan Phase 1.1 Core API Infrastructure
+
+# For feature specifications - creates technical specs  
+@planner Multi-source data ingestion system
+
+# For implementation - follows task breakdowns
+/implement [specific task from breakdown]
+```
 
 ## Core Principles
 Follow TDD approach. Build and verify results yourself first before asking me to check myself. Try making the code modular so we can reuse if possible.
@@ -70,13 +86,17 @@ bash /home/duyth/projects/agentic_system/shared/scripts/install-commands.sh
 
 ### **Step 4: Daily Workflow Commands**
 - **Context & Navigation**: `/workhere`, `/branchstatus`, `/resumebranch` for branch-aware guidance
-- **Development**: `/devgo` for development workflow and test plan creation
-- **Testing**: `/testgo` for test execution and validation
+- **Planning**: `/plan [stage]` for creating task breakdowns, `@planner [feature]` for technical specs
+- **Implementation**: `/implement [feature]` for TDD development workflow
+- **Testing & Validation**: `/devgo` for post-implementation testing, `/testgo` for test execution
 - **Progress**: `/checkpoint` for saving progress and updates
 - **Completion**: `/stage-complete` for marking stages complete
 
-### **Step 5: Complete Feature Development Process**
-Follow the **🎯 Feature Development Process** below for your first feature.
+### **Step 5: Enhanced Planning & Development Process**
+1. **Plan roadmap stages**: `/plan Phase 1.1` → Creates detailed P1-S1-BREAKDOWN.md
+2. **Analyze complex features**: `@planner [feature]` → Creates technical specifications
+3. **Implement tasks**: `/implement [task]` → TDD development following breakdowns
+4. **Validate completion**: `/devgo` → Test and validate implementations
 
 ---
 
@@ -96,18 +116,36 @@ Follow the **🎯 Feature Development Process** below for your first feature.
 - 🎯 Week 11-12: Advanced monitoring and LLM-as-judge evaluation
 - 🎯 Week 13-14: Enterprise excellence and platform maturity
 
-## 📊 Documentation Structure
+## 📊 Documentation Structure & Creation
 
 ### **Project-Level Documentation (Shared)**
 - **`/shared/docs/WORKING_JOURNAL.md`** - Strategic milestones, major completions, project health
 - **`/shared/docs/STAGE_STATUS.md`** - Cross-branch stage completion matrix 
 - **`/shared/docs/ROADMAP.md`** - Overall project roadmap with stage status
-- **`/shared/docs/COMMAND_RESPONSIBILITIES.md`** - Command roles and responsibilities
+- **`/shared/docs/task_management/task_breakdown/`** - Detailed task breakdown files
+
+### **Task Breakdown Documentation (Auto-Created)**
+- **`P[X]-S[Y]-BREAKDOWN.md`** - Created by `/plan [stage]` commands
+- **Format**: Phase 1 Stage 1 → `P1-S1-BREAKDOWN.md`
+- **Contents**: Detailed tasks, estimates, dependencies, implementation steps
+- **Location**: `/shared/docs/task_management/task_breakdown/`
 
 ### **Branch-Specific Documentation**
 - **`/worktrees/{stack}/{branch}/docs/STAGE_PROGRESS.md`** - Detailed stage implementation progress
 - **`/worktrees/{stack}/{branch}/docs/WORKING_JOURNAL.md`** - Daily development notes
 - **`/shared/test_plans/active/{stage}_test_plan.md`** - Stage-specific test plans
+
+### **Document Creation Workflow**
+```bash
+# Creates P1-S3-BREAKDOWN.md with detailed tasks
+/plan Phase 1.3 Widget Development  
+
+# Updates existing breakdown files with technical specs
+@planner Embeddable widget customization system
+
+# Updates branch-specific progress tracking
+/devgo  # After implementation to track progress
+```
 
 ## 📋 Command System
 

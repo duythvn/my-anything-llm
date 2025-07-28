@@ -711,33 +711,50 @@ cd /path/to/project/root
 
 **We have multiple levels of planning:**
 
-| Level | Purpose | Location | Example |
-|-------|---------|----------|---------|
-| **Roadmap** | High-level features | `/shared/docs/ROADMAP.md` | "Create simplified client/workspace model" |
-| **Task Breakdown** | Specific 4-hour tasks | `/shared/docs/task_management/task_breakdown/` | "Setup PostgreSQL", "Configure Redis" |
-| **/plan command** | Technical architecture | Via @planner agent | "How to modify AnythingLLM's models?" |
+| Level | Purpose | Location | Example | When Created |
+|-------|---------|----------|---------|--------------|
+| **Roadmap** | High-level features | `/shared/docs/ROADMAP.md` | "Phase 1.1: Core API Infrastructure" | Manual planning |
+| **Task Breakdown** | Specific 2-4 hour tasks | `/shared/docs/task_management/task_breakdown/` | P1-S1-BREAKDOWN.md with detailed tasks | Via `/plan [stage]` |
+| **Feature Specs** | Technical architecture | Various locations | Technical implementation details | Via `@planner [feature]` |
 
-**Use /plan when:**
-- ❌ **DON'T use** if detailed task breakdown already exists (like P1-S1-BREAKDOWN.md)
-- ✅ **DO use** when tasks are high-level and need architectural decisions
-- ✅ **DO use** for complex features that need technical specifications
+**Document Creation by Command:**
 
-**Example Decision Tree:**
+**`/plan [stage]` → Creates P[X]-S[Y]-BREAKDOWN.md files:**
 ```bash
-# Task: "Create simplified client/workspace model"
-
-# 1. Check if task breakdown exists
-ls /shared/docs/task_management/task_breakdown/P1-S1-BREAKDOWN.md
-
-# 2a. If detailed breakdown EXISTS:
-#     → Follow the breakdown tasks directly
-#     → Use /implement for specific subtasks
-
-# 2b. If NO detailed breakdown:
-#     → Use /plan to create technical specification
-#     → Then /implement following the spec
+/plan Phase 1.1 Core API Infrastructure
+# Creates: /shared/docs/task_management/task_breakdown/P1-S1-BREAKDOWN.md
+# Contains: Detailed tasks, estimates, dependencies, subtasks
 ```
 
-**Current Status:** P1-S1 and P1-S2 breakdowns already exist, so you likely don't need `/plan` for basic setup tasks, but you might need it for complex architectural decisions within those tasks.
+**`@planner [feature]` → Creates feature specifications:**
+```bash
+@planner Multi-source data ingestion system  
+# Creates: Technical specification document
+# Updates: Existing breakdown files with implementation details
+```
+
+**Use `/plan` when:**
+- ✅ **Planning roadmap stages** - Need detailed task breakdown files
+- ✅ **No breakdown exists** - Transform roadmap items into actionable tasks
+- ✅ **Stage planning** - Break down Phase 1.3, 1.4, 2.1, etc.
+
+**Use `@planner` when:**
+- ✅ **Feature analysis** - Need technical specifications for complex features
+- ✅ **Architecture decisions** - Research multiple implementation approaches
+- ✅ **Quick planning** - Custom planning needs without full documentation workflow
+
+**Example Workflow:**
+```bash
+# 1. Start with roadmap stage
+/plan Phase 1.3 Widget Development
+# → Creates P1-S3-BREAKDOWN.md with detailed tasks
+
+# 2. For complex features within that stage
+@planner Embeddable JavaScript widget with customization
+# → Creates technical specification for implementation
+
+# 3. Implement specific tasks
+/implement Widget core JavaScript SDK
+```
 
 This FAQ should help you navigate the development workflow efficiently while maintaining code quality and proper documentation.
