@@ -47,22 +47,25 @@ When completing features or making significant changes, ALWAYS update:
 3. **Understand structure** - See `docs/folder_and_git_tree_structure.md` for git worktree setup
 
 ### **Step 2: Set Up Your Development Environment**
-- **Backend developers**: Follow `backend/BACKEND_SPECIFIC.md` for Python/FastAPI setup
-- **Frontend developers**: Follow `frontend/FRONTEND_SPECIFIC.md` for React/TypeScript setup
+- **Backend developers**: Node.js/Express with AnythingLLM enhancement setup
+- **Frontend developers**: React/TypeScript for admin dashboard and widget development
 
 ### **Step 3: Create Your First Branch**
 ```bash
-# Create new branch (follow naming in folder_and_git_tree_structure.md)
-git worktree add worktrees/backend/backend_v04_s2 -b backend_v04_s2
+# Create new branch for current week focus
+git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_main
 
 # Navigate to your branch
-cd worktrees/backend/backend_v04_s2
+cd worktrees/backend/backend_v0p1_p1_content
+
+# Install dependencies for AnythingLLM
+npm install
 
 # Install all commands and setup symlinks
 bash /home/duyth/projects/agentic_system/shared/scripts/install-commands.sh
 
-# Initialize documentation and create test plan automatically
-./bin/claude-doc-start
+# Start development with context
+/workhere
 ```
 
 ### **Step 4: Daily Workflow Commands**
@@ -127,9 +130,10 @@ Follow the **🎯 Feature Development Process** below for your first feature.
 1. **See Available Work**: From worktrees folder, run `/resumebranch`
 2. **Navigate to Branch**: `cd backend_v0p1_p1_content` 
 3. **Start Working**: `/workhere` (auto-detects context from current path)
-4. **Daily Development**: `/devgo` for guidance, `/testgo` for validation
-5. **Save Progress**: `/checkpoint` for regular saves
-6. **Complete Stage**: `/stage-complete` when all tasks done
+4. **Use Sub-Agents**: `@planner`, `@coder`, `@tester` or `/dev-cycle [feature]`
+5. **Daily Development**: `/devgo` for guidance, `/testgo` for validation
+6. **Save Progress**: `/checkpoint` for regular saves
+7. **Complete Stage**: `/stage-complete` when all tasks done
 
 ### Directory-Aware Commands
 All commands work based on your current directory:
@@ -140,47 +144,53 @@ All commands work based on your current directory:
 
 ## 📊 Version and Phase Structure
 
-### Version 0.1: Framework-First MVP
-- **Phase 1 (v0p1.p1)**: LangGraph Foundation & Content
-  - content: Article generation workflows with LangGraph
-  - podcast: Blog-to-podcast conversion automation
-- **Phase 2 (v0p1.p2)**: Analytics Monitoring  
-  - analytics: GA4 integration and anomaly detection
-- **Phase 3 (v0p1.p3)**: Reddit & External Integrations
-  - reddit: Reddit marketing automation workflows
-  - external: n8n, Shopify, and API orchestration
-- **Phase 4 (v0p1.p4)**: Platform Features
-  - builder: Visual workflow designer (frontend)
-  - platform: Multi-tenant and billing (backend)
+### Week 1-2: Enhanced Knowledge MVP
+- **Multi-Source Data Ingestion**: Support websites, documents, APIs, Google Docs with real-time sync
+- **E-commerce Integration**: Product catalogs, order management, customer support context
+- **Embeddable Widget**: Client-deployable chat interface with customization
+- **Real-time RAG**: Enhanced search with source attribution and confidence scoring
+
+### Week 3-4: Client-Ready Platform
+- **White-label Customization**: Theme, branding, domain configuration
+- **Client Data Management**: Manual updates, automated sync schedules
+- **Performance Optimization**: Fast response times, efficient embedding updates
+- **Basic Analytics**: Usage tracking, conversation insights
+
+### Week 5-6: E-commerce Transaction Features
+- **Order Management**: Query orders, track shipments, handle returns
+- **Product Recommendations**: AI-driven product suggestions
+- **Customer Context**: Purchase history, preferences, support tickets
+- **Transaction Support**: Payment inquiries, billing questions
 
 ### Branch Naming Convention
-Format: `{stack}_{version}_{phase}_{feature}`
-- ✅ `backend_v0p1_p1_content`
-- ✅ `backend_v0p1_p1_podcast`
-- ✅ `backend_v0p1_p2_analytics`
-- ✅ `backend_v0p1_p3_reddit`
-- ✅ `frontend_v0p1_p4_builder`
-- ❌ `backend_week2_content` (don't use week numbers)
-- ❌ `backend_v0p1_p1_content_pipeline` (too long)
+Format: `{stack}_week{W}_{feature}` or `{stack}_v{major}p{minor}_{feature}`
+- ✅ `backend_week1_multi_source`
+- ✅ `backend_week2_widget_embed`
+- ✅ `frontend_week3_client_portal`
+- ✅ `backend_v1p0_production`
+- ❌ `backend_complicated_feature_name` (keep it short)
+- ❌ `backend_temp_testing` (use descriptive names)
 
 ### Feature Name Mapping
-- `content` → Content Generation Pipeline (articles, SEO, publishing)
-- `podcast` → Podcast Automation (TTS, audio processing, distribution)
-- `analytics` → GA4 Analytics Monitoring (anomaly detection, reporting)
-- `reddit` → Reddit Marketing Automation (monitoring, posting, engagement)
-- `external` → External Integrations (n8n, Shopify, API orchestration)
-- `builder` → Visual Workflow Builder UI (drag-and-drop designer)
-- `platform` → Platform Features (multi-tenant, billing, marketplace)
+- `multi_source` → Multi-source data ingestion (websites, docs, APIs)
+- `widget_embed` → Embeddable chat widget and customization
+- `client_portal` → Client management and white-label configuration
+- `ecommerce_integration` → Shopify, WooCommerce, product data sync
+- `evaluation_system` → LLM-as-judge and quality monitoring
+- `production_ready` → Multi-tenant, billing, enterprise features
 
 ### Manual Branch Creation
 ```bash
 # From project root, create new worktree
-git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_framework_first
+git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_main
 
 # Navigate and setup
 cd worktrees/backend/backend_v0p1_p1_content
 bash /home/duyth/projects/agentic_system/shared/scripts/install-commands.sh
 
+# Initialize and start development
+# Node.js setup for AnythingLLM
+npm install
 # Get context (auto-detects from path)
 /workhere
 ```
@@ -192,19 +202,18 @@ bash /home/duyth/projects/agentic_system/shared/scripts/install-commands.sh
 - **v2.0**: Major feature expansions and enterprise features
 
 **What We've Accomplished:**
-- ✅ Fixed SQLAlchemy metadata reserved keyword errors
-- ✅ Removed 70% of over-engineered complexity (170+ → 111 files)
-- ✅ Clean framework-first worktree branches created
-- ✅ Enhanced documentation structure with cross-branch tracking
+- ✅ Created clean development worktree structure
+- ✅ Updated project documentation to AnythingLLM B2B focus
+- ✅ Enhanced sub-agents with e-commerce context
 - ✅ Context-aware command system with branch-specific guidance
+- ✅ Comprehensive 14-week development roadmap
 
 **What We're Building On:**
-- ✅ LangGraph for workflow orchestration
-- ✅ Open Agent Platform (OAP) for tool management
-- ✅ AG UI for real-time workflow visualization
-- ✅ FastAPI backend structure (cleaned)
-- ✅ React admin UI foundation
-- ✅ PostgreSQL database with corrected models
+- ✅ AnythingLLM open-source foundation with multi-source RAG
+- ✅ Node.js/Express backend with enhanced API endpoints
+- ✅ React frontend with admin dashboard and embeddable widget
+- ✅ PostgreSQL + PGVector for advanced vector search
+- ✅ Real-time data sync and webhook infrastructure
 
 ### Tech Stack Overview
 
@@ -365,49 +374,62 @@ agentic-system/
 
 ### 🎯 Current Development
 
-#### v0p1.p1: LangGraph Foundation & Content
-**Goal**: Build framework-first foundation with real content generation workflows
-**Status**: Framework Setup (s1) in progress, Content Generation (s2) pending
+#### Week 1-2: Enhanced Knowledge MVP
+**Goal**: Multi-source data ingestion with real-time RAG capabilities
+**Status**: Multi-source ingestion (Day 1-4), Widget development (Day 5-10), Testing & polish (Day 11-14)
 
 **Key Features**:
-- LangGraph integration with state management and checkpointing
-- Content generation pipeline with topic research, article generation, SEO optimization
-- Podcast automation with TTS and audio processing
-- Real-time workflow monitoring with AG UI
+- Multi-source data connectors (websites, documents, APIs, Google Docs)
+- Enhanced RAG with source attribution and confidence scoring
+- Embeddable JavaScript widget for client websites
+- Real-time data synchronization and update notifications
 
 ### 🎯 Future Phases
 
-#### v0p1.p2: Analytics Monitoring (4-6 weeks)
-- **GA4 Integration**: Real-time analytics monitoring with anomaly detection
-- **Performance Tracking**: Content performance metrics and reporting
-- **Advanced Analytics**: Predictive analytics and custom alert routing
+#### Week 3-4: Client-Ready Platform
+- **White-label Customization**: Theme, branding, domain configuration for clients
+- **Client Data Management**: Manual updates, automated sync schedules
+- **Performance Optimization**: Sub-2-second response times, efficient updates
+- **Basic Analytics**: Usage tracking, conversation insights, client dashboards
 
-#### v0p1.p3: Reddit & External Integrations (4-6 weeks)
-- **Reddit Automation**: Marketing workflow with monitoring and engagement
-- **External APIs**: n8n, Shopify, and multi-step API orchestration
-- **Advanced Orchestration**: Workflow composition and human-in-the-loop
+#### Week 5-6: E-commerce Transaction Features
+- **Order Management**: Query orders, track shipments, handle returns
+- **Product Recommendations**: AI-driven product suggestions based on context
+- **Customer Context**: Purchase history, preferences, support ticket integration
+- **Transaction Support**: Payment inquiries, billing questions, refund processing
 
-#### v0p1.p4: Platform Productization (6-8 weeks)
-- **Visual Builder**: Drag-and-drop workflow designer
-- **Multi-Tenant**: User accounts, workspace isolation, billing
-- **Platform Features**: Workflow marketplace, API access, white-label options
+#### Week 7-14: Production & Enterprise Features
+- **Multi-Tenant**: User accounts, workspace isolation, billing integration
+- **Advanced Monitoring**: LLM-as-judge evaluation, quality scoring
+- **Enterprise Features**: SSO, advanced security, compliance reporting
+- **Platform Maturity**: Auto-scaling, advanced integrations, marketplace
 
 ## Environment Variables
 
 ```bash
-# Database
-DATABASE_URL=postgresql://user:pass@localhost/agentic
-REDIS_URL=redis://localhost:6379
-NEO4J_URL=bolt://localhost:7687
+# AnythingLLM Core
+SERVER_PORT=3001
+FRONTEND_PORT=3000
+JWT_SECRET=your-secret-here
+PASSWORD_SECRET=your-password-secret
+
+# Database (AnythingLLM uses SQLite by default)
+STORAGE_DIR=/app/server/storage
+DATABASE_PATH=/app/server/storage/anythingllm.db
 
 # AI Services
 OPENAI_API_KEY=your-key-here
+ANTHROPIC_API_KEY=your-key-here
 DEFAULT_MODEL=gpt-3.5-turbo
-REASONING_MODEL=gpt-4
 
-# External Services (for future integration)
-SHOPIFY_API_KEY=your-key
-N8N_API_URL=http://localhost:5678
+# E-commerce Integrations
+SHOPIFY_API_KEY=your-shopify-key
+WOOCOMMERCE_API_KEY=your-woocommerce-key
+GOOGLE_DOCS_API_KEY=your-google-api-key
+
+# Monitoring & Analytics
+LLM_EVALUATION_ENABLED=true
+REAL_TIME_SYNC_ENABLED=true
 ```
 
 ## Testing Strategy
@@ -430,37 +452,46 @@ N8N_API_URL=http://localhost:5678
 ```
 
 ### Prototype Validation
-- **SOP Matching Tests**: Verify correct SOP identification for various tasks
-- **LangGraph Workflows**: Test state management and node execution
-- **Content Generation**: Validate real content creation pipelines
-- **Performance**: <2 seconds for workflow orchestration
+- **Multi-Source Data Ingestion**: Test website scraping, document parsing, API connections
+- **Real-time RAG**: Validate search accuracy, source attribution, confidence scoring
+- **E-commerce Integration**: Test product sync, order queries, customer context
+- **Performance**: <2 seconds for chat responses, real-time data sync
 
 ### Example Test Scenarios
 ```yaml
-# Framework Foundation
-- LangGraph state management and checkpointing
-- OAP tool registry and agent coordination
-- AG UI real-time workflow monitoring
+# Multi-Source Data
+- Website content scraping and chunking
+- PDF/Word document processing
+- Shopify product catalog sync
+- Google Docs real-time updates
 
-# Content Generation
-- Topic research → content generation → SEO → publishing pipeline
-- Content quality validation and approval gates
-- Multi-platform publishing workflows
+# Chat Widget
+- Embeddable widget functionality
+- White-label customization
+- Mobile responsiveness
+- Cross-domain deployment
+
+# E-commerce Features
+- Product search and recommendations
+- Order status queries
+- Customer support context
+- Purchase history integration
 ```
 
 ## Important Notes
 
-- **Framework-First Approach**: Built on LangGraph + OAP + AG UI from day one
-- **Documentation-Driven**: Enhanced structure with cross-branch tracking
+- **AnythingLLM Foundation**: Built on proven open-source LLM platform
+- **Multi-Source Focus**: Priority on diverse data ingestion capabilities
 - **Context-Aware Commands**: All commands adapt to current branch/location
+- **Sub-Agent Development**: Specialized agents for planning, coding, and testing
 - **Stage Gate Process**: Mandatory approval between stages with `/stage-complete`
 - **Branch-Specific Progress**: Detailed tracking in STAGE_PROGRESS.md files
 - **Project-Level Visibility**: STAGE_STATUS.md provides cross-branch overview
-- **Production Ready Foundation**: Clean codebase prepared for real implementations
-- **LangGraph Workflows**: Use LangGraph for all workflow orchestration
-- **Real Value First**: Focus on immediate business value before complex features
+- **Production Ready Foundation**: Built for real client deployments
+- **E-commerce First**: Focus on immediate business value for e-commerce clients
+- **Real Value Delivery**: Client-ready features within 2 weeks
 
-This project aims to create an intelligent automation platform that delivers real value quickly while maintaining a solid technical foundation for future growth.
+This project aims to transform AnythingLLM into a comprehensive B2B e-commerce chat solution that delivers immediate value while maintaining scalability for enterprise growth.
 
 ---
 
@@ -468,6 +499,14 @@ This project aims to create an intelligent automation platform that delivers rea
 
 For technology-specific setup, development commands, and implementation details:
 
-- **Backend (Python/FastAPI)**: See `backend/BACKEND_SPECIFIC.md`
-- **Frontend (React/TypeScript)**: See `frontend/FRONTEND_SPECIFIC.md`
-- **Infrastructure**: See `infrastructure/` directory for Docker and monitoring configs
+- **Backend (Node.js/Express)**: AnythingLLM server enhancement with multi-source connectors
+- **Frontend (React/TypeScript)**: Admin dashboard and embeddable widget development
+- **Database**: PostgreSQL + PGVector for enhanced vector search capabilities
+- **Infrastructure**: Docker containerization for scalable client deployments
+
+## Quick Reference
+
+- **Project Documentation**: `/shared/docs/ROADMAP.md` - Primary development guide
+- **Sub-Agents**: Use `@planner`, `@coder`, `@tester` for specialized development
+- **Onboarding**: See `/shared/refs/new_member_onboarding.md` for complete setup
+- **Current Focus**: Week 1-2 Multi-source data ingestion and embeddable widget

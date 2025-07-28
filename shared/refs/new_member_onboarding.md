@@ -5,7 +5,6 @@
 ### 1. Setup Your Branch
 ```bash
 # Navigate to project root
-cd /path/to/your/jobdisco
 
 # Create your development branch
 git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_framework_first
@@ -507,3 +506,238 @@ Follow the technical spec from planner.
 ```
 
 This enhanced onboarding process with sub-agents ensures new team members can quickly become productive while maintaining high code quality through specialized AI assistance at each development phase.
+
+---
+
+## 🤔 FAQ: Commands vs Sub-Agents
+
+### Q: When should I use `/devgo` vs `/plan` command?
+
+**Use `/devgo` when:**
+- You've implemented a feature and want to check if tests pass/fail
+- You need to create test plans for completed implementation
+- You want to fix failed tests or get fix recommendations
+- You're in the post-implementation testing phase
+
+**Use `/plan` (or `@planner`) when:**
+- You're starting a new feature and need architectural design
+- You need technical specifications created
+- Multiple implementation approaches exist and need evaluation
+- You're at the beginning of the development cycle
+
+**Example Flow:**
+```bash
+# 1. Start new feature - plan first
+/plan Multi-source data ingestion for AnythingLLM
+
+# 2. Implement the planned feature
+/implement Data connectors following the technical spec
+
+# 3. Test completed implementation
+/devgo    # Creates test plan or fixes failed tests
+```
+
+### Q: When should I use `/testgo` vs `@tester` agent?
+
+**Use `/testgo` when:**
+- You want to run predefined test workflows for your current stage
+- You need test results automatically documented
+- You're following established testing processes
+- You want branch-specific test execution
+
+**Use `@tester` when:**
+- You need code review and quality assessment
+- You want custom test scenarios created
+- You need security and performance analysis
+- You want independent evaluation of implementations
+
+### Q: Do sub-agents share context? How do I isolate them?
+
+**Shared Context (Same Claude Session):**
+```bash
+# All agents share conversation history
+@planner Create spec for data ingestion
+@coder Implement the spec from planner     # Knows about planner's work
+@tester Review the implementation          # Knows about both previous agents
+```
+
+**Isolated Context (Separate Sessions):**
+```bash
+# Session 1: Planning only
+claude
+@planner Create detailed technical specification
+
+# Session 2: Independent coding (fresh context)
+claude  
+@coder Implement data ingestion following this spec: [paste spec]
+
+# Session 3: Independent review (fresh context)
+claude
+@tester Review this code without knowing implementation approach: [paste code]
+```
+
+**When to isolate:** Use separate sessions for unbiased code review, fresh perspectives, or simulating real team handoffs.
+
+### Q: What's the difference between commands and sub-agents?
+
+| Aspect | Commands (`/devgo`, `/testgo`) | Sub-Agents (`@planner`, `@coder`, `@tester`) |
+|--------|-------------------------------|---------------------------------------------|
+| **Purpose** | Workflow orchestration | Specialized expertise |
+| **Structure** | Predefined processes | Flexible conversation |
+| **Documentation** | Auto-updates project docs | Manual documentation |
+| **Context** | Branch/stage aware | Session-based memory |
+| **Use Case** | Process management | Creative problem solving |
+
+### Q: I'm at 0% complete on Day 1. What should I run first?
+
+**Recommended sequence from `/home/duyth/projects/anythingllm/worktrees/backend/backend_v0p1_p1_content`:**
+
+```bash
+# 1. Get context and current status
+/workhere
+
+# 2. Plan your first feature (Phase 1.1 Core API Infrastructure)
+/plan Core API infrastructure with multi-source data connectors
+
+# 3. Implement the planned feature
+/implement Core API following the technical specification
+
+# 4. Test your implementation
+/devgo    # Create test plan and run tests for completed work
+```
+
+### Q: How do I know which approach to use for my current task?
+
+**Decision Framework:**
+
+1. **Start with `/workhere`** - Always get context first
+2. **Use `/plan`** - If you're starting a new feature and need architectural design
+3. **Use `/implement`** - If you have clear specs and need implementation  
+4. **Use `/devgo`** - After implementation to create test plans or fix failed tests
+5. **Use `/testgo`** - To execute existing test plans and generate reports
+
+**Example for Phase 1.1:**
+- Roadmap says: "Create simplified client/workspace model"
+- **Step 1**: `/plan simplified client/workspace model for AnythingLLM B2B`
+- **Step 2**: `/implement client model following the technical specification`
+- **Step 3**: `/devgo` to create test plan for completed model
+- **Step 4**: `/testgo` to execute tests and verify implementation
+
+### Q: What if I need independent review without bias?
+
+**Use separate Claude sessions:**
+
+```bash
+# Session 1: Development work
+@coder Implement feature X
+
+# Session 2: Independent review (don't mention Session 1)
+claude
+@tester Review this implementation for security and performance: [paste code]
+```
+
+This gives you unbiased review since the tester agent doesn't know how the code was developed.
+
+### Q: Can I combine approaches?
+
+**Yes! Recommended hybrid workflow:**
+
+```bash
+# Daily workflow
+/workhere                    # Get context
+/plan [new feature]          # Design architecture  
+/implement [spec]            # Build features
+/devgo                       # Create test plans post-implementation
+/testgo                      # Execute test plans
+@tester [custom review]      # Additional quality checks (if needed)
+/checkpoint                  # Save progress
+```
+
+### Q: What if commands aren't working?
+
+**Troubleshooting:**
+
+1. **Check location**: Commands are path-aware, make sure you're in the right worktree
+2. **Reinstall commands**: `bash /home/duyth/projects/agentic_system/shared/scripts/install-commands.sh`
+3. **Check symlinks**: `ls -la .claude/commands/` should show command files
+4. **Verify setup**: `/workhere` should auto-detect your branch
+
+### Q: How do I track progress across the project?
+
+**Multi-level tracking:**
+
+- **Branch level**: `/devgo` updates your specific STAGE_PROGRESS.md
+- **Project level**: `/checkpoint` from project root updates shared docs
+- **Cross-branch**: `/branchstatus` shows overall progress matrix
+- **Stage completion**: `/stage-complete` marks official milestones
+
+**Example:**
+```bash
+# From your worktree
+/devgo                      # Update branch progress
+cd /path/to/project/root    
+/branchstatus              # See overall project status
+```
+
+### Q: What's the correct development sequence?
+
+**The Real Command Flow:**
+
+```bash
+# 🎯 CORRECT SEQUENCE
+/workhere          # 1. Get context
+/plan [feature]    # 2. Plan architecture (start of cycle)
+/implement [spec]  # 3. Build the feature  
+/devgo            # 4. Test/validate completed work (end of cycle)
+/testgo           # 5. Execute test plans
+/checkpoint       # 6. Save progress
+
+# 🚫 INCORRECT - Don't use /devgo to start development!
+# /devgo is for POST-implementation testing, not starting work
+```
+
+**Key Commands Clarified:**
+
+| Command | When to Use | Purpose |
+|---------|-------------|---------|
+| `/workhere` | First step always | Get branch context and status |
+| `/plan` | Start of feature | Architectural design via @planner |
+| `/implement` | After planning | Code implementation via @coder |
+| `/devgo` | After implementation | Create test plans, fix failed tests |
+| `/testgo` | When test plan exists | Execute tests, generate reports |
+| `/dev-cycle` | Complex features | Full plan→implement→test cycle |
+
+### Q: When do I use /plan vs existing task breakdowns?
+
+**We have multiple levels of planning:**
+
+| Level | Purpose | Location | Example |
+|-------|---------|----------|---------|
+| **Roadmap** | High-level features | `/shared/docs/ROADMAP.md` | "Create simplified client/workspace model" |
+| **Task Breakdown** | Specific 4-hour tasks | `/shared/docs/task_management/task_breakdown/` | "Setup PostgreSQL", "Configure Redis" |
+| **/plan command** | Technical architecture | Via @planner agent | "How to modify AnythingLLM's models?" |
+
+**Use /plan when:**
+- ❌ **DON'T use** if detailed task breakdown already exists (like P1-S1-BREAKDOWN.md)
+- ✅ **DO use** when tasks are high-level and need architectural decisions
+- ✅ **DO use** for complex features that need technical specifications
+
+**Example Decision Tree:**
+```bash
+# Task: "Create simplified client/workspace model"
+
+# 1. Check if task breakdown exists
+ls /shared/docs/task_management/task_breakdown/P1-S1-BREAKDOWN.md
+
+# 2a. If detailed breakdown EXISTS:
+#     → Follow the breakdown tasks directly
+#     → Use /implement for specific subtasks
+
+# 2b. If NO detailed breakdown:
+#     → Use /plan to create technical specification
+#     → Then /implement following the spec
+```
+
+**Current Status:** P1-S1 and P1-S2 breakdowns already exist, so you likely don't need `/plan` for basic setup tasks, but you might need it for complex architectural decisions within those tasks.
+
+This FAQ should help you navigate the development workflow efficiently while maintaining code quality and proper documentation.
