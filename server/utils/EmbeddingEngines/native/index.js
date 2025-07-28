@@ -34,7 +34,10 @@ class NativeEmbedder {
     this.modelInfo = this.getEmbedderInfo();
     this.cacheDir = path.resolve(
       process.env.STORAGE_DIR
-        ? path.resolve(process.env.STORAGE_DIR, `models`)
+        ? path.resolve(
+            process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+            `models`
+          )
         : path.resolve(__dirname, `../../../storage/models`)
     );
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
@@ -113,7 +116,10 @@ class NativeEmbedder {
   #tempfilePath() {
     const filename = `${v4()}.tmp`;
     const tmpPath = process.env.STORAGE_DIR
-      ? path.resolve(process.env.STORAGE_DIR, "tmp")
+      ? path.resolve(
+          process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+          "tmp"
+        )
       : path.resolve(__dirname, `../../../storage/tmp`);
     if (!fs.existsSync(tmpPath)) fs.mkdirSync(tmpPath, { recursive: true });
     return path.resolve(tmpPath, filename);

@@ -13,7 +13,10 @@ const fileUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
-        : path.resolve(process.env.STORAGE_DIR, `../../collector/hotdir`);
+        : path.resolve(
+            process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+            `../../collector/hotdir`
+          );
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {
@@ -33,7 +36,10 @@ const fileAPIUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
-        : path.resolve(process.env.STORAGE_DIR, `../../collector/hotdir`);
+        : path.resolve(
+            process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+            `../../collector/hotdir`
+          );
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {
@@ -50,7 +56,10 @@ const assetUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../storage/assets`)
-        : path.resolve(process.env.STORAGE_DIR, "assets");
+        : path.resolve(
+            process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+            "assets"
+          );
     fs.mkdirSync(uploadOutput, { recursive: true });
     return cb(null, uploadOutput);
   },
@@ -70,7 +79,10 @@ const pfpUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../storage/assets/pfp`)
-        : path.resolve(process.env.STORAGE_DIR, "assets/pfp");
+        : path.resolve(
+            process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+            "assets/pfp"
+          );
     fs.mkdirSync(uploadOutput, { recursive: true });
     return cb(null, uploadOutput);
   },

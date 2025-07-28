@@ -10,7 +10,11 @@ const {
 } = require("../../helpers/chat/LLMPerformanceMonitor");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "ppio")
+    ? path.resolve(
+        process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+        "models",
+        "ppio"
+      )
     : path.resolve(__dirname, `../../../storage/models/ppio`)
 );
 

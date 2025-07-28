@@ -26,7 +26,11 @@ class ContextWindowFinder {
 
   cacheLocation = path.resolve(
     process.env.STORAGE_DIR
-      ? path.resolve(process.env.STORAGE_DIR, "models", "context-windows")
+      ? path.resolve(
+          process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+          "models",
+          "context-windows"
+        )
       : path.resolve(__dirname, `../../../storage/models/context-windows`)
   );
   cacheFilePath = path.resolve(this.cacheLocation, "context-windows.json");

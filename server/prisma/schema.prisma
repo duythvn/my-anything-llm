@@ -148,6 +148,7 @@ model workspaces {
   threads                      workspace_threads[]
   workspace_agent_invocations  workspace_agent_invocations[]
   prompt_history               prompt_history[]
+  products                     products[]
 }
 
 model workspace_threads {
@@ -355,4 +356,29 @@ model prompt_history {
   user        users?     @relation(fields: [modifiedBy], references: [id])
 
   @@index([workspaceId])
+}
+
+model products {
+  id            Int      @id @default(autoincrement())
+  sku           String   @unique
+  name          String
+  description   String?
+  price         Float?
+  category      String?
+  specifications String? // JSON string
+  features      String? // JSON array as string
+  availability  String   @default("in_stock")
+  images        String? // JSON array as string
+  workspaceId   Int?
+  sourceSystem  String? // shopify, woocommerce, csv, etc.
+  sourceId      String? // External system ID
+  metadata      String? // JSON string for additional data
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+  workspace     workspaces? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  
+  @@index([workspaceId])
+  @@index([sku])
+  @@index([category])
+  @@index([sourceSystem])
 }

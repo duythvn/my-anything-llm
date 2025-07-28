@@ -13,7 +13,11 @@ const { defaultGeminiModels, v1BetaModels } = require("./defaultModels");
 const { safeJsonParse } = require("../../http");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "gemini")
+    ? path.resolve(
+        process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+        "models",
+        "gemini"
+      )
     : path.resolve(__dirname, `../../../storage/models/gemini`)
 );
 
