@@ -2,7 +2,7 @@
 # Install Claude Documentation Commands in all worktrees
 # Creates symlinks to make commands available from any worktree directory
 
-PROJECT_ROOT="/home/duyth/projects/agentic_system"
+PROJECT_ROOT="/home/duyth/projects/anythingllm"
 SHARED_SCRIPTS="$PROJECT_ROOT/shared/scripts"
 
 # Colors
@@ -106,6 +106,13 @@ for worktree_dir in $worktree_dirs; do
         relative_claude_commands_path=$(realpath --relative-to="$claude_dir" "$claude_commands_target")
         [ -L "$claude_commands_link" ] && rm "$claude_commands_link"
         ln -s "$relative_claude_commands_path" "$claude_commands_link"
+        
+        # Create .claude/agents symlink
+        claude_agents_link="$claude_dir/agents"
+        claude_agents_target="$PROJECT_ROOT/.claude/agents"
+        relative_claude_agents_path=$(realpath --relative-to="$claude_dir" "$claude_agents_target")
+        [ -L "$claude_agents_link" ] && rm "$claude_agents_link"
+        ln -s "$relative_claude_agents_path" "$claude_agents_link"
         
         relative_path=$(realpath --relative-to="$bin_dir" "$SHARED_SCRIPTS")
         
