@@ -185,9 +185,9 @@
 | F1-T001 | P1-S1-T001 to P1-S1-T008 | ✅ Complete | Day 2 |
 | F1-T002 | P1-S2-T001 to P1-S2-T005 | ⏳ In Progress | Day 4 |
 | F1-T003 | P1-S3 Prompts & Quality | ⏳ Planned | Day 6 |
-| F1-T004 | P1-S4 Admin Interface | ⏳ Planned | Day 7 |
+| F1-T004 | P1-S4 Admin API Endpoints | ⏳ Planned | Day 7 |
 | F1-T005 | P2-S1 Product Integration | ⏳ Planned | Day 10 |
-| F1-T006 | P2-S2 Widget Development | ⏳ Planned | Day 12 |
+| F1-T006 | P2-S2 Widget Backend APIs | ⏳ Planned | Day 12 |
 | F1-T007 | P2-S3 Internal Testing | ⏳ Planned | Day 14 |
 
 ### Success Criteria per Task
@@ -212,15 +212,32 @@
 | **Phase 1.1** | Week 1 | API Testing | `frontend_week1_api_testing` | `backend_week1_core_api` |
 | **Phase 1.2** | Week 1 | RAG Testing | `frontend_week1_rag_testing` | `backend_week1_rag_impl` |
 | **Phase 1.3** | Week 1 | Chat Testing | `frontend_week1_chat_testing` | `backend_week1_prompts` |
-| **Phase 1.4** | Week 1 | Admin Testing | `frontend_week1_admin_testing` | `backend_week1_admin` |
+| **Phase 1.4** | Week 1 | Admin API Testing | `frontend_week1_admin_testing` | `backend_phase1p4_admin_api` |
 | **Phase 2.1** | Week 2 | Product Testing | `frontend_week2_product_testing` | `backend_week2_product_data` |
-| **Phase 2.2** | Week 2 | Widget Testing | `frontend_week2_widget_testing` | `backend_week2_widget` |
+| **Phase 2.2** | Week 2 | Widget Testing | `frontend_week2_widget_testing` | `backend_phase2p2_widget_api` |
 | **Phase 2.3** | Week 2 | MVP Testing | `frontend_week2_mvp_testing` | `backend_week2_mvp_testing` |
+
+### Extended Phase Mappings (Week 3+)
+| Phase | Week | Feature | Frontend Branch | Backend Branch |
+|-------|------|---------|----------------|----------------|
+| **Phase 3.1** | Week 3 | Enhanced Admin | `frontend_phase3p1_admin_enhanced` | `backend_phase3p1_admin_enhanced` |
+| **Phase 3.3** | Week 3 | White-label API | `frontend_phase3p3_whitelabel` | `backend_phase3p3_whitelabel_api` |
+| **Phase 7.3** | Week 7 | Self-Service Portal | `frontend_phase7p3_self_service` | `backend_phase7p3_self_service_api` |
+| **Phase 10.2** | Week 10 | Go-to-Market | `frontend_phase10p2_go_to_market` | `backend_phase10p2_go_to_market_api` |
 
 ### Alternative Phase-Based Naming
 For precise phase tracking, use: `frontend_p{phase}s{stage}_{feature}`
 - **Example**: `frontend_p1s1_api_testing` (Phase 1, Stage 1, API Testing)
 - **Example**: `frontend_p2s3_mvp_testing` (Phase 2, Stage 3, MVP Testing)
+
+### Backend API Alignment (Updated)
+**Key Changes**: Several phases shifted from frontend UI development to backend API testing focus:
+- **Phase 1.4**: Now tests Admin API endpoints (`backend_phase1p4_admin_api`)
+- **Phase 2.2**: Now tests Widget Backend Services (`backend_phase2p2_widget_api`)
+- **Phase 3.1**: Now tests Enhanced Admin APIs (`backend_phase3p1_admin_enhanced`)
+- **Phase 3.3**: Now tests White-label Configuration APIs (`backend_phase3p3_whitelabel_api`)
+- **Phase 7.3**: Now tests Self-Service Portal APIs (`backend_phase7p3_self_service_api`)
+- **Phase 10.2**: Now tests Go-to-Market Support APIs (`backend_phase10p2_go_to_market_api`)
 
 ---
 
@@ -239,11 +256,11 @@ For precise phase tracking, use: `frontend_p{phase}s{stage}_{feature}`
 - **F1-T003**: Enhanced Chat Interface Testing (6h)
   - *Branch*: `frontend_week1_chat_testing` | *Backend*: `backend_week1_prompts`
 - **F1-T004**: Knowledge Admin Panel Testing (4h)
-  - *Branch*: `frontend_week1_admin_testing` | *Backend*: `backend_week1_admin`
+  - *Branch*: `frontend_week1_admin_testing` | *Backend*: `backend_phase1p4_admin_api`
 - **F1-T005**: Product Data Management Interface Testing (8h)
   - *Branch*: `frontend_week2_product_testing` | *Backend*: `backend_week2_product_data`
 - **F1-T006**: Widget Development & Testing Interface (6h)
-  - *Branch*: `frontend_week2_widget_testing` | *Backend*: `backend_week2_widget`
+  - *Branch*: `frontend_week2_widget_testing` | *Backend*: `backend_phase2p2_widget_api`
 - **F1-T007**: Complete MVP Testing Interface (6h)
   - *Branch*: `frontend_week2_mvp_testing` | *Backend*: `backend_week2_mvp_testing`
 
@@ -252,17 +269,17 @@ For precise phase tracking, use: `frontend_p{phase}s{stage}_{feature}`
 **Duration**: 14 days | **Tasks**: 6 | **Est. Hours**: 48h
 
 - **F2-T001**: Pilot-Ready Chat Interface (8h)
-  - *Branch*: `frontend_week3_pilot_chat` | *Backend*: `backend_week3_enhanced_admin`
+  - *Branch*: `frontend_week3_pilot_chat` | *Backend*: `backend_phase3p1_admin_enhanced`
 - **F2-T002**: White-Label Customization Enhancement (6h)
-  - *Branch*: `frontend_week3_white_label` | *Backend*: `backend_week3_data_sources`
+  - *Branch*: `frontend_week3_white_label` | *Backend*: `backend_phase3p3_whitelabel_api`
 - **F2-T003**: Mobile Optimization & Accessibility (8h)
-  - *Branch*: `frontend_week3_mobile_opt` | *Backend*: `backend_week3_self_service`
+  - *Branch*: `frontend_week3_mobile_opt` | *Backend*: `backend_phase7p3_self_service_api`
 - **F2-T004**: Advanced Analytics Dashboard (8h)
   - *Branch*: `frontend_week4_analytics` | *Backend*: `backend_week4_analytics`
 - **F2-T005**: Knowledge Base Management Enhancement (6h)
   - *Branch*: `frontend_week4_kb_mgmt` | *Backend*: `backend_week4_knowledge`
 - **F2-T006**: User Feedback Collection System (12h)
-  - *Branch*: `frontend_week4_feedback` | *Backend*: `backend_week4_feedback`
+  - *Branch*: `frontend_week4_feedback` | *Backend*: `backend_phase10p2_go_to_market_api`
 
 #### **Phase 3: Client Portal & Customization (Week 5-6)**
 **Goal**: White-label customization and client self-service capabilities

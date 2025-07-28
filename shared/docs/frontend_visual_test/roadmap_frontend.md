@@ -176,17 +176,18 @@
 
 ---
 
-### Phase 1.4: Basic Admin Interface (Day 7)
-**Backend Sync**: Test P1-S4 Basic Admin Interface completion
+### Phase 1.4: Admin API Endpoints Testing (Day 7)
+**Backend Sync**: Test P1-S4 Admin API Endpoints completion (`backend_phase1p4_admin_api`)
 
 #### F1-T004: Knowledge Admin Panel Testing
-**Estimate**: 4 hours | **Priority**: P0 | **Backend**: P1-S4 Knowledge Admin Panel
+**Estimate**: 4 hours | **Priority**: P0 | **Backend**: P1-S4 Admin API Endpoints (`backend_phase1p4_admin_api`)
 
 **API Testing Goals**:
-- Test document upload interface functionality
-- Validate product catalog management system
-- Test knowledge base browser and version control
-- Verify basic chat testing interface integration
+- Test document upload API endpoints (POST /api/documents)
+- Validate product catalog management APIs (CRUD operations)
+- Test knowledge base content API (GET /api/knowledge)
+- Verify content version control API endpoints
+- Test chat testing API for internal validation
 
 **Subtasks**:
 1. **Admin Interface Verification** (2 hours)
@@ -248,17 +249,19 @@
 
 ---
 
-### Phase 2.2: Embeddable Widget Testing (Days 11-12)
-**Backend Sync**: Test P2-S2 Embeddable Widget Development as it's built
+### Phase 2.2: Widget Backend Services Testing (Days 11-12)
+**Backend Sync**: Test P2-S2 Widget Backend Services & APIs as they're built (`backend_phase2p2_widget_api`)
 
 #### F1-T006: Widget Development & Testing Interface
-**Estimate**: 6 hours | **Priority**: P0 | **Backend**: P2-S2 Widget Core & Features
+**Estimate**: 6 hours | **Priority**: P0 | **Backend**: P2-S2 Widget Backend Services (`backend_phase2p2_widget_api`)
 
 **API Testing Goals**:
-- Test existing `anythingllm-chat-widget.min.js` with enhancements
-- Validate widget configuration and customization systems
-- Test product information display in widget
-- Verify widget installation and analytics
+- Test widget authentication API (API keys, JWT)
+- Validate widget configuration API (styling, behavior)
+- Test chat session management API
+- Verify widget analytics tracking endpoints
+- Test installation snippet generation API
+- Validate widget-specific chat endpoints
 
 **Subtasks**:
 1. **Widget Core Testing** (3 hours)

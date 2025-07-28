@@ -7,7 +7,7 @@
 **Estimate**: 4 hours  
 **Priority**: 🔴 Critical  
 **Branch**: `frontend_week1_admin_testing`  
-**Backend Dependency**: P1-S4 Knowledge Admin Panel complete (`backend_week1_admin`)  
+**Backend Dependency**: P1-S4 Admin API Endpoints complete (`backend_phase1p4_admin_api`)  
 
 ## 🎯 Objective
 
@@ -22,13 +22,13 @@ Test and validate the enhanced admin dashboard for knowledge management, ensurin
 
 ## 🔗 Backend API Dependencies
 
-### Required Backend APIs (P1-S4)
-- [ ] `/api/v1/admin/documents` - Enhanced document management
-- [ ] `/api/v1/admin/products` - Product catalog administration
-- [ ] `/api/v1/admin/knowledge` - Knowledge base browser and management
+### Required Backend APIs (P1-S4 - `backend_phase1p4_admin_api`)
+- [ ] `POST /api/documents` - Document upload API endpoints
+- [ ] `/api/v1/admin/products` - Product catalog management APIs (CRUD operations)
+- [ ] `GET /api/knowledge` - Knowledge base content API
+- [ ] `/api/v1/admin/versions` - Content version control API endpoints
+- [ ] `/api/v1/admin/chat/test` - Chat testing API for internal validation
 - [ ] `/api/v1/admin/settings` - Enhanced configuration settings
-- [ ] `/api/v1/admin/users` - User and workspace management
-- [ ] `/api/v1/admin/analytics` - Basic analytics and monitoring
 
 ## 📋 Detailed Subtasks
 

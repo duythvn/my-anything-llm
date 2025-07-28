@@ -12,7 +12,7 @@ git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_co
 # Setup development environment
 cd worktrees/backend/backend_v0p1_p1_content
 bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh
-npm install
+bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-modules.sh
 ```
 
 ### 2. Start Developing
@@ -79,6 +79,9 @@ bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh
 # - ./.claude/commands -> shared commands (devgo.md, testgo.md, checkpoint.md, etc.)
 # - ./.claude/agents -> shared agents (planner.md, coder.md, tester.md)
 
+# Setup shared node_modules for all backend worktrees (saves installation time)
+bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-modules.sh
+
 # Verify symlinks are created
 ls -la ./.claude/
 ```
@@ -89,8 +92,8 @@ ls -la ./.claude/
 # Navigate to your new worktree
 cd worktrees/backend/backend_v0p1_p1_content
 
-# Install AnythingLLM dependencies
-npm install
+# AnythingLLM dependencies already installed via shared node_modules
+# If you need to install additional packages: npm install package-name
 
 # Setup environment variables (copy from .env.example)
 cp .env.example .env
@@ -148,18 +151,25 @@ Follow this workflow for implementing features:
 # Start development server
 npm run dev
 
-# Install dependencies
-npm install
+# Dependencies already available via shared node_modules
+# To install new packages: npm install package-name
 
 # Environment setup
 cp .env.example .env
 # Edit .env with your API keys
 ```
 
+**Shared node_modules Info:**
+- All backend worktrees share the same node_modules via symlinks
+- Located at: `/home/duyth/projects/anythingllm/worktrees/backend/shared_node_modules`
+- Install new packages from any worktree: `npm install package-name`
+- Package will be available to all backend branches
+
 **Troubleshooting:**
 1. **Commands not found**: Re-run `bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh`
 2. **Symlinks broken**: Check `.claude/commands/` and `.claude/agents/` directories
-3. **Environment issues**: Verify `.env` file has correct API keys and database settings
+3. **node_modules missing**: Run `bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-modules.sh`
+4. **Environment issues**: Verify `.env` file has correct API keys and database settings
 
 ---
 
