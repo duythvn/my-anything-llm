@@ -2,3 +2,4 @@ worktrees/backend/shared_node_modules/node_modules/
 worktrees/backend/shared_node_modules/
 worktrees/backend/node_modules/
 .env
+worktrees/
