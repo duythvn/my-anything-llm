@@ -7,7 +7,7 @@
 **Estimate**: 6 hours  
 **Priority**: 🔴 Critical  
 **Branch**: `frontend_week2_widget_testing`  
-**Backend Dependency**: P2-S2 Embeddable Widget Development complete (`backend_week2_widget`)  
+**Backend Dependency**: P2-S2 Widget Backend Services & APIs complete (`backend_phase2p2_widget_api`)  
 
 ## 🎯 Objective
 
@@ -22,13 +22,14 @@ Test and validate the enhanced embeddable chat widget functionality, including p
 
 ## 🔗 Backend API Dependencies
 
-### Required Backend APIs (P2-S2)
-- [ ] `/api/v1/widget/config` - Widget configuration management
-- [ ] `/api/v1/widget/customize` - Theme and branding customization
-- [ ] `/api/v1/widget/embed` - Widget embedding and installation
-- [ ] `/api/v1/widget/analytics` - Widget usage analytics
-- [ ] `/api/v1/widget/domains` - Domain restrictions and security
-- [ ] `/api/v1/widget/products` - Product display in widget
+### Required Backend APIs (P2-S2 - `backend_phase2p2_widget_api`)
+- [ ] `/api/v1/widget/auth` - Widget authentication API (API keys, JWT)
+- [ ] `/api/v1/widget/config` - Widget configuration API (styling, behavior)
+- [ ] `/api/v1/widget/sessions` - Chat session management API
+- [ ] `/api/v1/widget/analytics` - Widget analytics tracking endpoints
+- [ ] `/api/v1/widget/install` - Installation snippet generation API
+- [ ] `/api/v1/widget/chat` - Widget-specific chat endpoints
+- [ ] `/api/v1/widget/metrics` - Widget usage metrics collection
 
 ## 📋 Detailed Subtasks
 

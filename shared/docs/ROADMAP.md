@@ -117,15 +117,15 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Implement follow-up question suggestions
    - [ ] Add clarification request logic
 
-#### Phase 1.4: Basic Admin Interface (`frontend_phase1p4_admin_basic`) (Day 7)
-**Goal**: Simple interface for knowledge management
+#### Phase 1.4: Admin API Endpoints (`backend_phase1p4_admin_api`) (Day 7)
+**Goal**: Backend API endpoints for knowledge management
 
-1. **Knowledge Admin Panel**
-   - [ ] Create document upload interface
-   - [ ] Add product catalog management
-   - [ ] Build knowledge base browser
-   - [ ] Implement content version control
-   - [ ] Add basic chat testing interface
+1. **Knowledge Management APIs**
+   - [ ] Document upload API endpoints (POST /api/documents)
+   - [ ] Product catalog management APIs (CRUD operations)
+   - [ ] Knowledge base content API (GET /api/knowledge)
+   - [ ] Content version control API endpoints
+   - [ ] Chat testing API for internal validation
 
 ### Week 2 - Widget & Product Integration (Days 8-14)
 
@@ -145,22 +145,22 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Product comparison capabilities
    - [ ] Stock status display (no ordering yet)
 
-#### Phase 2.2: Embeddable Widget Development (`frontend_phase2p2_widget_embed`) (Days 11-12)
-**Goal**: Simple chat widget for knowledge queries
+#### Phase 2.2: Widget API & Backend Services (`backend_phase2p2_widget_api`) (Days 11-12)
+**Goal**: Backend APIs and services for embeddable widget
 
-1. **Widget Core**
-   - [ ] Create lightweight JavaScript SDK
-   - [ ] Implement secure iframe embedding
-   - [ ] Add customizable chat bubble
-   - [ ] Build mobile-responsive design
-   - [ ] Create installation snippet generator
+1. **Widget Backend Services**
+   - [ ] Widget authentication API (API keys, JWT)
+   - [ ] Widget configuration API (styling, behavior)
+   - [ ] Chat session management API
+   - [ ] Widget analytics tracking endpoints
+   - [ ] Installation snippet generation API
 
-2. **Widget Features (Knowledge Focus)**
-   - [ ] Simple Q&A interface
-   - [ ] Product information display
-   - [ ] Policy/FAQ quick access
-   - [ ] Persistent chat sessions
-   - [ ] Basic styling customization
+2. **Widget Chat APIs**
+   - [ ] Widget-specific chat endpoints
+   - [ ] Session persistence API
+   - [ ] Widget-scoped knowledge retrieval
+   - [ ] Basic customization settings API
+   - [ ] Widget usage metrics collection
 
 #### Phase 2.3: Internal Testing & Refinement (`backend_phase2p3_testing_mvp`) (Days 13-14)
 **Goal**: Validate knowledge management MVP
@@ -184,27 +184,27 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 3 - Client-Ready Polish with Data Integration (Days 15-21)
 
-#### Phase 3.1: Enhanced Admin Dashboard & Data Sources (`frontend_phase3p1_admin_enhanced`) (Days 15-16)
-**Goal**: Professional knowledge management with multi-source support
+#### Phase 3.1: Enhanced Admin APIs & Data Sources (`backend_phase3p1_admin_enhanced`) (Days 15-16)
+**Goal**: Advanced backend APIs for knowledge management with multi-source support
 
-1. **Knowledge Management Tools**
-   - [ ] Bulk document upload interface
-   - [ ] Knowledge base organization tools
-   - [ ] Product catalog bulk editor
-   - [ ] Content approval workflow
-   - [ ] Version history and rollback
-   - [ ] Google Docs integration (OAuth2 + API)
-   - [ ] Generic API connector configuration UI
-   - [ ] Batch processing queue for multiple sources
+1. **Advanced Knowledge Management APIs**
+   - [ ] Bulk document upload API with batch processing
+   - [ ] Knowledge base organization APIs (categories, tags)
+   - [ ] Product catalog bulk operations API
+   - [ ] Content approval workflow API
+   - [ ] Version history and rollback endpoints
+   - [ ] Google Docs integration API (OAuth2 + sync)
+   - [ ] Generic API connector management endpoints
+   - [ ] Batch processing queue API for multiple sources
 
-2. **Analytics & Insights**
-   - [ ] Popular queries dashboard
-   - [ ] Knowledge gap analysis
-   - [ ] Response accuracy metrics
-   - [ ] User satisfaction tracking
-   - [ ] Product inquiry trends
-   - [ ] Query/response pair logging system
-   - [ ] Basic performance metrics dashboard
+2. **Analytics & Insights APIs**
+   - [ ] Query analytics API endpoints
+   - [ ] Knowledge gap analysis API
+   - [ ] Response accuracy metrics API
+   - [ ] User satisfaction tracking API
+   - [ ] Product inquiry trends API
+   - [ ] Query/response logging and retrieval API
+   - [ ] Performance metrics API endpoints
 
 #### Phase 3.2: Advanced Knowledge Features (`backend_phase3p2_knowledge_advanced`) (Days 17-19)
 **Goal**: Sophisticated information retrieval
@@ -223,22 +223,22 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Dynamic content insertion
    - [ ] Markdown support in responses
 
-#### Phase 3.3: White-Label Customization (`frontend_phase3p3_whitelabel`) (Days 20-21)
-**Goal**: Full branding control for clients
+#### Phase 3.3: White-Label Configuration APIs (`backend_phase3p3_whitelabel_api`) (Days 20-21)
+**Goal**: Backend APIs for client branding and customization
 
-1. **Branding System**
-   - [ ] Custom color schemes and fonts
-   - [ ] Logo and avatar customization
-   - [ ] Widget position and behavior options
-   - [ ] Custom greeting messages
-   - [ ] Branded email notifications
+1. **Branding Configuration APIs**
+   - [ ] Theme and styling configuration API
+   - [ ] Logo and avatar management endpoints
+   - [ ] Widget behavior configuration API
+   - [ ] Custom messaging configuration API
+   - [ ] Email notification branding API
 
-2. **Client-Specific Features**
-   - [ ] Custom domain support
-   - [ ] White-label admin panel
-   - [ ] Remove AnythingLLM branding
-   - [ ] Custom widget animations
-   - [ ] Client-specific API endpoints
+2. **Client Configuration APIs**
+   - [ ] Custom domain configuration API
+   - [ ] White-label settings management API
+   - [ ] Branding removal configuration endpoints
+   - [ ] Widget customization API
+   - [ ] Tenant-specific configuration endpoints
 
 ### Week 4 - Client Deployment (Days 22-28)
 
@@ -444,22 +444,22 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Overage handling
    - [ ] Trial management
 
-#### Phase 7.3: Self-Service Portal (`frontend_phase7p3_self_service`) (Days 48-49)
-**Goal**: Automated onboarding
+#### Phase 7.3: Self-Service APIs (`backend_phase7p3_self_service_api`) (Days 48-49)
+**Goal**: Backend APIs for automated client onboarding
 
-1. **Client Portal**
-   - [ ] Sign-up flow
-   - [ ] Workspace creation
-   - [ ] Platform detection
-   - [ ] Guided setup
-   - [ ] Demo data option
+1. **Client Onboarding APIs**
+   - [ ] Account registration API
+   - [ ] Workspace provisioning API
+   - [ ] Platform integration detection API
+   - [ ] Setup wizard configuration API
+   - [ ] Demo data seeding API
 
-2. **Management Tools**
-   - [ ] Billing management
-   - [ ] User management
-   - [ ] Usage dashboards
-   - [ ] Support tickets
-   - [ ] Documentation access
+2. **Management APIs**
+   - [ ] Billing management API endpoints
+   - [ ] User management API (CRUD operations)
+   - [ ] Usage metrics API
+   - [ ] Support ticket API
+   - [ ] Documentation metadata API
 
 ### Week 8 - Security & Compliance (Days 50-56)
 
@@ -586,22 +586,22 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Documentation review
    - [ ] Training completion
 
-#### Phase 10.2: Go-to-Market (`frontend_phase10p2_go_to_market`) (Days 67-68)
-**Goal**: Market launch
+#### Phase 10.2: Go-to-Market Backend (`backend_phase10p2_go_to_market_api`) (Days 67-68)
+**Goal**: Backend APIs for market launch and sales enablement
 
-1. **Marketing Preparation**
-   - [ ] Website launch
-   - [ ] Pricing page
-   - [ ] Demo environment
-   - [ ] Case studies
-   - [ ] Launch materials
+1. **Demo & Trial APIs**
+   - [ ] Demo environment provisioning API
+   - [ ] Trial account creation API
+   - [ ] Demo data management endpoints
+   - [ ] Case study data API
+   - [ ] Launch metrics tracking API
 
-2. **Sales Enablement**
-   - [ ] Sales deck
-   - [ ] ROI calculator
-   - [ ] Comparison sheets
-   - [ ] Demo scripts
-   - [ ] Objection handling
+2. **Sales Support APIs**
+   - [ ] ROI calculation API endpoints
+   - [ ] Product comparison data API
+   - [ ] Demo configuration API
+   - [ ] Customer onboarding tracking API
+   - [ ] Lead management integration API
 
 #### Phase 10.3: Support Infrastructure (`backend_phase10p3_support_infra`) (Days 69-70)
 **Goal**: Customer success
