@@ -13,7 +13,11 @@ const {
 } = require("../../helpers/chat/LLMPerformanceMonitor");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "novita")
+    ? path.resolve(
+        process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+        "models",
+        "novita"
+      )
     : path.resolve(__dirname, `../../../storage/models/novita`)
 );
 

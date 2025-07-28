@@ -18,7 +18,10 @@ class NativeEmbeddingReranker {
     this.model = "Xenova/ms-marco-MiniLM-L-6-v2";
     this.cacheDir = path.resolve(
       process.env.STORAGE_DIR
-        ? path.resolve(process.env.STORAGE_DIR, `models`)
+        ? path.resolve(
+            process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+            `models`
+          )
         : path.resolve(__dirname, `../../../storage/models`)
     );
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));

@@ -14,6 +14,7 @@ const {
   writeResponseChunk,
 } = require("../../../utils/helpers/chat/responses");
 const { ApiChatHandler } = require("../../../utils/chats/apiChatHandler");
+const { B2BChatHandler } = require("../../../utils/chats/b2bChatHandler");
 const { getModelTag } = require("../../utils");
 
 function apiWorkspaceEndpoints(app) {
@@ -994,6 +995,286 @@ function apiWorkspaceEndpoints(app) {
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
+      }
+    }
+  );
+
+  // Enhanced B2B Chat Endpoint
+  app.post(
+    "/v1/workspace/:slug/b2b-chat",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspaces']
+      #swagger.description = 'Execute an enhanced B2B chat with product query capabilities'
+      #swagger.parameters['slug'] = {
+          in: 'path',
+          description: 'Unique slug of workspace to chat with',
+          required: true,
+          type: 'string'
+      }
+      #swagger.requestBody = {
+        description: 'Enhanced B2B chat request with product awareness and source attribution',
+        required: true,
+        content: {
+          "application/json": {
+            example: {
+              message: "What are the features of product SKU-123?",
+              mode: "query | chat",
+              sessionId: "b2b-session-identifier",
+              attachments: [],
+              reset: false,
+              enableProductSearch: true
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                id: 'chat-uuid',
+                type: "textResponse",
+                textResponse: "Product SKU-123 features include...",
+                sources: [
+                  {
+                    title: "Product: Example Product",
+                    chunk: "Product details and specifications...",
+                    source: "product_catalog",
+                    sku: "SKU-123",
+                    confidence: 0.95
+                  }
+                ],
+                close: true,
+                error: null,
+                metadata: {
+                  isProductQuery: true,
+                  sourceAttribution: true,
+                  confidenceScore: 0.95
+                }
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[403] = {
+        schema: {
+          "$ref": "#/definitions/InvalidAPIKey"
+        }
+      }
+      */
+      try {
+        const { slug } = request.params;
+        const {
+          message,
+          mode = "chat",
+          sessionId = null,
+          attachments = [],
+          reset = false,
+          enableProductSearch = true,
+        } = reqBody(request);
+
+        const workspace = await Workspace.get({ slug: String(slug) });
+
+        if (!workspace) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Workspace ${slug} is not a valid workspace.`,
+          });
+          return;
+        }
+
+        if ((!message?.length || !VALID_CHAT_MODE.includes(mode)) && !reset) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: !message?.length
+              ? "Message is empty"
+              : `${mode} is not a valid mode.`,
+          });
+          return;
+        }
+
+        // Use B2B Chat Handler for enhanced processing
+        const b2bHandler = new B2BChatHandler();
+        const result = await b2bHandler.chatSync({
+          workspace,
+          message,
+          mode,
+          user: null,
+          thread: null,
+          sessionId: !!sessionId ? String(sessionId) : null,
+          attachments,
+          reset,
+        });
+
+        await Telemetry.sendTelemetry("sent_b2b_chat", {
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
+          isProductQuery: result.metadata?.isProductQuery || false,
+        });
+
+        await EventLogs.logEvent("api_sent_b2b_chat", {
+          workspaceName: workspace?.name,
+          chatModel: workspace?.chatModel || "System Default",
+          b2bEnhanced: true,
+          productQueryDetected: result.metadata?.isProductQuery || false,
+        });
+
+        return response.status(200).json({ ...result });
+      } catch (e) {
+        console.error("B2B Chat endpoint error:", e.message, e);
+        response.status(500).json({
+          id: uuidv4(),
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: e.message,
+        });
+      }
+    }
+  );
+
+  // Enhanced B2B Stream Chat Endpoint
+  app.post(
+    "/v1/workspace/:slug/b2b-stream-chat",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspaces']
+      #swagger.description = 'Execute a streamable enhanced B2B chat with product capabilities'
+      #swagger.requestBody = {
+        description: 'Enhanced B2B streaming chat request',
+        required: true,
+        content: {
+          "application/json": {
+            example: {
+              message: "Tell me about your wireless headphones",
+              mode: "chat",
+              sessionId: "b2b-stream-session"
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "text/event-stream": {
+            schema: {
+              type: 'array',
+              items: {
+                type: 'string'
+              },
+              example: [
+                {
+                  id: 'uuid-123',
+                  type: "textResponseChunk",
+                  textResponse: "Our wireless headphones feature...",
+                  sources: [],
+                  close: false,
+                  error: null
+                }
+              ]
+            }
+          }
+        }
+      }
+      */
+      try {
+        const { slug } = request.params;
+        const {
+          message,
+          mode = "chat",
+          sessionId = null,
+          attachments = [],
+          reset = false,
+        } = reqBody(request);
+
+        const workspace = await Workspace.get({ slug: String(slug) });
+
+        if (!workspace) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Workspace ${slug} is not a valid workspace.`,
+          });
+          return;
+        }
+
+        if ((!message?.length || !VALID_CHAT_MODE.includes(mode)) && !reset) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: !message?.length
+              ? "Message is empty"
+              : `${mode} is not a valid mode.`,
+          });
+          return;
+        }
+
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Content-Type", "text/event-stream");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Connection", "keep-alive");
+        response.flushHeaders();
+
+        const b2bHandler = new B2BChatHandler();
+        await b2bHandler.streamChat({
+          response,
+          workspace,
+          message,
+          mode,
+          user: null,
+          thread: null,
+          sessionId: !!sessionId ? String(sessionId) : null,
+          attachments,
+          reset,
+        });
+
+        await Telemetry.sendTelemetry("sent_b2b_stream_chat", {
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
+        });
+
+        await EventLogs.logEvent("api_sent_b2b_stream_chat", {
+          workspaceName: workspace?.name,
+          chatModel: workspace?.chatModel || "System Default",
+          b2bEnhanced: true,
+        });
+
+        response.end();
+      } catch (e) {
+        console.error("B2B Stream chat error:", e.message, e);
+        writeResponseChunk(response, {
+          id: uuidv4(),
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: e.message,
+        });
+        response.end();
       }
     }
   );

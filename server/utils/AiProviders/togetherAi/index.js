@@ -11,7 +11,11 @@ const { safeJsonParse } = require("../../http");
 
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "togetherAi")
+    ? path.resolve(
+        process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage"),
+        "models",
+        "togetherAi"
+      )
     : path.resolve(__dirname, `../../../storage/models/togetherAi`)
 );
 
