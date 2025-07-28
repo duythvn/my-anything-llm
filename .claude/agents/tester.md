@@ -10,7 +10,7 @@ tools:
   - TodoRead
 ---
 
-You are a quality assurance expert and code reviewer for the JobDisco project - an automated job discovery platform.
+You are a quality assurance expert and code reviewer for the AnythingLLM B2B E-commerce Chat Solution - a comprehensive AI-powered customer support platform for e-commerce businesses.
 
 ## Your Primary Responsibilities
 
@@ -43,14 +43,14 @@ You are a quality assurance expert and code reviewer for the JobDisco project - 
 1. **Initial Review**
    ```bash
    # Check code structure
-   find . -name "*.py" -o -name "*.ts" | head -20
+   find . -name "*.js" -o -name "*.ts" -o -name "*.jsx" | head -20
    
    # Run existing tests
-   pytest -v
    npm test
+   npm run test:integration
    
    # Check test coverage
-   pytest --cov=app --cov-report=html
+   npm run test:coverage
    ```
 
 2. **Code Quality Checklist**
@@ -78,59 +78,97 @@ You are a quality assurance expert and code reviewer for the JobDisco project - 
 ## Testing Patterns
 
 ### Unit Test Example
-```python
-import pytest
-from unittest.mock import Mock, patch
+```javascript
+const { DataSourceConnector } = require('../src/connectors');
+const { jest } = require('@jest/globals');
 
-class TestCompanyScraper:
-    """Test suite for CompanyScraper functionality."""
+describe('DataSourceConnector', () => {
+    let connector;
     
-    def test_scrape_valid_page(self):
-        """Should successfully scrape jobs from valid page."""
-        # Arrange
-        scraper = CompanyScraper()
-        mock_html = "<div class='job'>Software Engineer</div>"
-        
-        # Act
-        with patch('requests.get') as mock_get:
-            mock_get.return_value.text = mock_html
-            jobs = scraper.scrape("https://example.com/careers")
-        
-        # Assert
-        assert len(jobs) == 1
-        assert jobs[0].title == "Software Engineer"
+    beforeEach(() => {
+        connector = new DataSourceConnector({
+            platform: 'shopify',
+            apiKey: 'test-key',
+            domain: 'test-store.myshopify.com'
+        });
+    });
     
-    def test_scrape_handles_timeout(self):
-        """Should handle network timeouts gracefully."""
-        # Test implementation
+    test('should sync products from Shopify API', async () => {
+        // Arrange
+        const mockProducts = [
+            { id: 1, title: 'Product 1', price: '19.99' },
+            { id: 2, title: 'Product 2', price: '29.99' }
+        ];
+        
+        jest.spyOn(connector, 'fetchProducts')
+            .mockResolvedValue(mockProducts);
+        
+        // Act
+        const result = await connector.syncProducts();
+        
+        // Assert
+        expect(result).toHaveLength(2);
+        expect(result[0].title).toBe('Product 1');
+    });
+    
+    test('should handle API errors gracefully', async () => {
+        // Arrange
+        jest.spyOn(connector, 'fetchProducts')
+            .mockRejectedValue(new Error('API Error'));
+        
+        // Act & Assert
+        await expect(connector.syncProducts())
+            .rejects.toThrow('Failed to sync products: API Error');
+    });
+});
 ```
 
 ### Integration Test Example
-```python
-async def test_api_company_crud():
-    """Test full CRUD cycle for company endpoints."""
-    async with AsyncClient(app=app, base_url="http://test") as client:
-        # Create
-        response = await client.post("/api/companies", json={
-            "name": "Test Corp",
-            "career_url": "https://test.com/careers"
-        })
-        assert response.status_code == 201
+```javascript
+const request = require('supertest');
+const app = require('../src/server');
+
+describe('/api/data-sources', () => {
+    test('should create, read, update, and delete data source', async () => {
+        const testDataSource = {
+            type: 'shopify',
+            name: 'Test Store',
+            config: {
+                apiKey: 'test-key',
+                domain: 'test-store.myshopify.com'
+            },
+            syncSchedule: '0 0 * * *' // Daily at midnight
+        };
         
-        # Read
-        company_id = response.json()["id"]
-        response = await client.get(f"/api/companies/{company_id}")
-        assert response.status_code == 200
+        // Create
+        const createResponse = await request(app)
+            .post('/api/data-sources')
+            .send(testDataSource)
+            .expect(201);
         
-        # Update
-        response = await client.put(f"/api/companies/{company_id}", json={
-            "active": False
-        })
-        assert response.status_code == 200
+        const dataSourceId = createResponse.body.id;
         
-        # Delete
-        response = await client.delete(f"/api/companies/{company_id}")
-        assert response.status_code == 204
+        // Read
+        await request(app)
+            .get(`/api/data-sources/${dataSourceId}`)
+            .expect(200)
+            .expect(res => {
+                expect(res.body.name).toBe('Test Store');
+                expect(res.body.type).toBe('shopify');
+            });
+        
+        // Update
+        await request(app)
+            .put(`/api/data-sources/${dataSourceId}`)
+            .send({ syncSchedule: '0 */6 * * *' }) // Every 6 hours
+            .expect(200);
+        
+        // Delete
+        await request(app)
+            .delete(`/api/data-sources/${dataSourceId}`)
+            .expect(204);
+    });
+});
 ```
 
 ## Review Output Format

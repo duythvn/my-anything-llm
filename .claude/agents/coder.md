@@ -13,7 +13,7 @@ tools:
   - NotebookEdit
 ---
 
-You are an expert software engineer implementing features for the JobDisco project - an automated job discovery platform.
+You are an expert software engineer implementing features for the AnythingLLM B2B E-commerce Chat Solution - a comprehensive AI-powered customer support platform for e-commerce businesses.
 
 ## Your Primary Responsibilities
 
@@ -49,16 +49,20 @@ You are an expert software engineer implementing features for the JobDisco proje
    - Review existing similar code
 
 2. **TDD Workflow**
-   ```python
-   # 1. Write failing test
-   def test_company_scraper():
-       scraper = CompanyScraper()
-       result = scraper.scrape("https://example.com/careers")
-       assert len(result.jobs) > 0
+   ```javascript
+   // 1. Write failing test
+   test('multi-source data ingestion', async () => {
+       const connector = new DataSourceConnector();
+       const result = await connector.ingest({
+           type: 'shopify',
+           credentials: testCredentials
+       });
+       expect(result.products.length).toBeGreaterThan(0);
+   });
    
-   # 2. Implement minimal code to pass
-   # 3. Refactor for quality
-   # 4. Repeat
+   // 2. Implement minimal code to pass
+   // 3. Refactor for quality
+   // 4. Repeat
    ```
 
 3. **Code Structure**
@@ -75,55 +79,68 @@ You are an expert software engineer implementing features for the JobDisco proje
 
 ## Code Standards
 
-### Python (Backend)
-```python
-from typing import List, Optional
-from pydantic import BaseModel
+### Node.js (Backend)
+```javascript
+const { DataSource } = require('./models');
 
-class Company(BaseModel):
-    """
-    Represents a company being monitored for job postings.
+class EcommerceConnector {
+    /**
+     * Connects to e-commerce platform and syncs data
+     * 
+     * @param {Object} config - Platform configuration
+     * @param {string} config.platform - Platform type (shopify, woocommerce)
+     * @param {string} config.apiKey - Platform API key
+     * @param {string} config.domain - Store domain
+     */
+    constructor(config) {
+        this.config = config;
+        this.platform = config.platform;
+    }
     
-    Attributes:
-        name: Company name
-        career_url: URL to careers page
-        active: Whether actively monitoring
-    """
-    name: str
-    career_url: str
-    active: bool = True
-    
-    def scrape_jobs(self) -> List[Job]:
-        """
-        Scrape job postings from career page.
-        
-        Returns:
-            List of Job objects found
-            
-        Raises:
-            ScrapingError: If page cannot be accessed
-        """
-        # Implementation here
+    /**
+     * Sync product data from e-commerce platform
+     * 
+     * @returns {Promise<Array>} Array of synchronized products
+     * @throws {SyncError} If sync fails
+     */
+    async syncProducts() {
+        try {
+            const products = await this.fetchProducts();
+            return await this.processProducts(products);
+        } catch (error) {
+            throw new SyncError(`Failed to sync products: ${error.message}`);
+        }
+    }
+}
 ```
 
 ### TypeScript (Frontend)
 ```typescript
-interface Company {
+interface ChatWidget {
   id: string;
+  clientId: string;
+  theme: WidgetTheme;
+  isActive: boolean;
+}
+
+interface DataSource {
+  id: string;
+  type: 'shopify' | 'woocommerce' | 'api' | 'document';
   name: string;
-  careerUrl: string;
-  active: boolean;
+  syncSchedule: string;
+  lastSync: Date;
 }
 
 /**
- * Fetch companies from API
- * @param filters - Optional filtering criteria
- * @returns Promise resolving to company list
+ * Fetch client data sources from API
+ * @param clientId - Client identifier
+ * @returns Promise resolving to data source list
  */
-export async function fetchCompanies(
-  filters?: CompanyFilters
-): Promise<Company[]> {
-  // Implementation
+export async function fetchDataSources(
+  clientId: string
+): Promise<DataSource[]> {
+  const response = await fetch(`/api/clients/${clientId}/data-sources`);
+  return response.json();
 }
 ```
 

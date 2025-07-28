@@ -1,4 +1,4 @@
-# JobDisco - Claude Code Configuration
+# AnythingLLM B2B E-commerce Chat Solution - Claude Code Configuration
 
 ## 🤖 Sub-Agent Development Workflow
 
@@ -29,14 +29,15 @@ When completing features or making significant changes, ALWAYS update:
 
 ## Project Overview
 
-**Agentic System** is an intelligent automation platform that helps businesses automate their marketing, content creation, and analytics workflows - starting with real, immediate value.
+**AnythingLLM B2B E-commerce Chat Solution** transforms AnythingLLM into a comprehensive B2B LLM chat platform specifically designed for e-commerce businesses. It provides intelligent customer support through multi-source knowledge management, real-time data synchronization, and enterprise-grade monitoring.
 
-### Core Capabilities (Lean MVP Focus)
-- **Reddit Marketing Automation**: Monitor, post, and engage on Reddit automatically
-- **Content Creation Pipeline**: Generate blog posts and podcasts from keywords
-- **Analytics Monitoring**: Track GA4 metrics with anomaly detection
-- **Workflow Automation**: Visual workflow execution and monitoring
-- **Future**: E-commerce integrations, multi-tenant support, advanced AI orchestration
+### Core Capabilities (Enhanced MVP Focus)
+- **Multi-Source Knowledge Management**: Ingest data from websites, documents, APIs, Google Docs with real-time sync
+- **E-commerce Integration**: Deep integration with Shopify, WooCommerce, and custom platforms
+- **Embeddable Chat Widget**: Customizable widget for client websites with white-label options
+- **LLM-as-Judge Evaluation**: Automated quality assessment and continuous improvement
+- **Enterprise Monitoring**: Comprehensive analytics, alerts, and performance tracking
+- **Multi-Tenant Platform**: Scalable architecture supporting multiple clients with billing
 
 ## 🚀 New Team Member Quick Start
 
@@ -78,17 +79,19 @@ Follow the **🎯 Feature Development Process** below for your first feature.
 
 ## Development Context
 
-### Current Phase: Framework-First MVP - Content Creation Pipeline
+### Current Phase: Enhanced Knowledge MVP - Multi-Source RAG
 
-**Status**: ✅ FOUNDATION READY - Clean codebase prepared for LangGraph implementation
-**Pivot Date**: July 10, 2025
-**Latest Update**: July 11, 2025 - Enhanced documentation structure complete
+**Status**: ✅ ROADMAP ENHANCED - Comprehensive 14-week development plan ready
+**Project Focus**: AnythingLLM B2B E-commerce Chat Solution
+**Latest Update**: January 28, 2025 - Enhanced roadmap with multi-source capabilities
 
-**New Focus (Framework-First):**
-- 🎯 Phase 1 (v0p1.p1): LangGraph foundation & content workflows
-- 🎯 Phase 2 (v0p1.p2): Analytics monitoring (GA4 integration)
-- 🎯 Phase 3 (v0p1.p3): Reddit automation & external integrations
-- 🎯 Phase 4 (v0p1.p4): Platform productization
+**Development Phases (14-Week Plan):**
+- 🎯 Week 1-2: Enhanced Knowledge MVP with multi-source data ingestion
+- 🎯 Week 3-4: Client-ready platform with white-label customization
+- 🎯 Week 5-6: E-commerce integration and transaction features
+- 🎯 Week 7-10: Production-ready multi-tenant architecture
+- 🎯 Week 11-12: Advanced monitoring and LLM-as-judge evaluation
+- 🎯 Week 13-14: Enterprise excellence and platform maturity
 
 ## 📊 Documentation Structure
 
@@ -206,26 +209,28 @@ bash /home/duyth/projects/agentic_system/shared/scripts/install-commands.sh
 ### Tech Stack Overview
 
 #### Foundation Platform
-- **Open Agent Platform (OAP)**: LangChain's open-source agentic framework for multi-agent orchestration
-- **LangGraph**: Agent workflow orchestration and state management (core to OAP)
-- **LangChain**: LLM integration and tool connectivity
-- **LangSmith**: AI monitoring, debugging, and observability
+- **AnythingLLM**: Enhanced open-source LLM platform with multi-source RAG capabilities
+- **Node.js/Express**: Backend API with enhanced endpoints for multi-source integration
+- **React**: Admin dashboard and embeddable widget interface
+- **PostgreSQL + PGVector**: Database with vector embeddings for enhanced search
 
 #### Core Infrastructure
-- **PostgreSQL**: Tenant data, SOPs, task tracking (via OAP configuration)
-- **Redis**: Caching, task queues, session management
-- **FastAPI**: Custom API extensions and business logic layer on top of OAP
-- **React**: Web dashboard and testing interface
+- **Redis**: Caching, session management, and real-time sync queues
+- **Webhooks**: Real-time data synchronization and push updates
+- **Docker**: Containerized deployment for scalability
+- **CDN**: Fast widget delivery and static asset optimization
 
 #### AI & Intelligence
-- **Neo4j + Graphiti**: Knowledge graph and relationship learning (planned for future)
-- **OpenAI/Anthropic**: LLM providers for reasoning and analysis
-- **Embedding Models**: For semantic matching and SOP similarity
+- **OpenAI/Anthropic**: Primary LLM providers for chat and evaluation
+- **Embedding Models**: Advanced semantic search and source attribution
+- **LLM-as-Judge**: Automated quality evaluation and response scoring
+- **Confidence Scoring**: Response quality assessment and fallback handling
 
-#### Integrations
-- **MCP SDK**: Standardized tool connections following OAP patterns (planned)
-- **n8n**: Visual workflow automation (planned integration)
-- **Direct APIs**: Platform integrations (Shopify, GA4, etc.) - coming in v0.3
+#### E-commerce Integrations
+- **Shopify**: REST Admin API + Storefront API for complete integration
+- **WooCommerce**: REST API v3 for product and order management
+- **Custom APIs**: Generic connector framework for any e-commerce platform
+- **Google Docs**: OAuth2 + Drive API for document synchronization
 
 ### Architecture Principles
 
