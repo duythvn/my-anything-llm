@@ -1,12 +1,15 @@
 # AnythingLLM B2B E-commerce Chat Solution Roadmap
+## AI knowledge base chat solution /  LLM Chat solution  built upon Anything LLM https://github.com/Mintplex-Labs/anything-llm
+The functions are exposed as backend APIs and the frontend will tap on to utilise the functions
+
 
 ## 🚨 Critical Path & Project Status
 
-### Current Status: Phase 1 Planning
-- **Active Phase**: Week 1-2 MVP (27 tasks, 0% complete)
+### Current Status: Phase 1 Implementation
+- **Active Phase**: Week 1-2 MVP (27 tasks, ~25% complete)
 - **Critical Milestones**: 
-  - Day 2: Core API infrastructure ⚠️
-  - Day 4: Knowledge management system ⚠️  
+  - Day 2: Core API infrastructure ✅ COMPLETED
+  - Day 4: Knowledge management system ⚠️
   - Day 7: Widget operational ⚠️
   - Day 14: MVP ready ⚠️
 - **Blockers**: None identified
@@ -56,26 +59,27 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 1 - Core Knowledge Chat System (Days 1-7)
 
-#### Phase 1.1: Core API Infrastructure (Days 1-2)
+#### Phase 1.1: Core API Infrastructure (`backend_phase1p1_core_api`) (Days 1-2) ✅ COMPLETED
 **Goal**: Basic chat API with knowledge focus + data source foundations
+**Completed**: 2025-07-28 - Jest testing framework setup and AnythingLLM foundation stabilization complete
 
-1. **Essential API Setup**
-   - [ ] Fork and setup AnythingLLM development environment
-   - [ ] Create simplified client/workspace model (single-tenant first)
-   - [ ] Build core chat API endpoints (`/api/v1/chat`, `/api/v1/messages`)
-   - [ ] Implement basic JWT authentication
-   - [ ] Add API key management for widget access
-   - [ ] Create webhook receiver endpoint for push updates
+1. **Essential API Setup** ✅
+   - [✅] Fork and setup AnythingLLM development environment
+   - [✅] Create simplified client/workspace model (single-tenant first)
+   - [✅] Build core chat API endpoints (`/api/v1/chat`, `/api/v1/messages`)
+   - [✅] Implement basic JWT authentication
+   - [✅] Add API key management for widget access
+   - [✅] Create webhook receiver endpoint for push updates
 
-2. **Knowledge Management Schema**
-   - [ ] Create knowledge base structure (policies, FAQs, guides)
-   - [ ] Add product information schema (descriptions, specs, details)
-   - [ ] Implement category/tag system for content
-   - [ ] Add version control for knowledge updates
-   - [ ] Create data_sources table for multi-source tracking
-   - [ ] Add document metadata for source attribution
+2. **Knowledge Management Schema** ✅
+   - [✅] Create knowledge base structure (policies, FAQs, guides)
+   - [✅] Add product information schema (descriptions, specs, details)
+   - [✅] Implement category/tag system for content
+   - [✅] Add version control for knowledge updates
+   - [✅] Create data_sources table for multi-source tracking
+   - [✅] Add document metadata for source attribution
 
-#### Phase 1.2: RAG Implementation (Days 3-4)
+#### Phase 1.2: RAG Implementation (`backend_phase1p2_rag_system`) (Days 3-4)
 **Goal**: Effective retrieval for knowledge and product info with multi-source support
 
 1. **Enhanced Document Ingestion**
@@ -96,7 +100,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Create fallback responses for no matches
    - [ ] Add source tracking for each embedded chunk
 
-#### Phase 1.3: Knowledge-Focused Prompts (Days 5-6)
+#### Phase 1.3: Knowledge-Focused Prompts (`backend_phase1p3_knowledge_prompts`) (Days 5-6)
 **Goal**: Optimize for informational queries
 
 1. **Prompt Engineering**
@@ -113,7 +117,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Implement follow-up question suggestions
    - [ ] Add clarification request logic
 
-#### Phase 1.4: Basic Admin Interface (Day 7)
+#### Phase 1.4: Basic Admin Interface (`frontend_phase1p4_admin_basic`) (Day 7)
 **Goal**: Simple interface for knowledge management
 
 1. **Knowledge Admin Panel**
@@ -125,12 +129,11 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 2 - Widget & Product Integration (Days 8-14)
 
-#### Phase 2.1: Product Data Integration (Days 8-10)
+#### Phase 2.1: Product Data Integration (`backend_phase2p1_product_data`) (Days 8-10)
 **Goal**: Read-only product information access
 
 1. **Product Data Connectors**
-   - [ ] Shopify product catalog read-only integration
-   - [ ] WooCommerce product API connection
+   - [ ] Shopify product catalog read-only integration. Try using SHopify MCP > Shopify Graphql > Restful API
    - [ ] Generic CSV/JSON product importer
    - [ ] Product image handling
    - [ ] Category/collection mapping
@@ -142,7 +145,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Product comparison capabilities
    - [ ] Stock status display (no ordering yet)
 
-#### Phase 2.2: Embeddable Widget Development (Days 11-12)
+#### Phase 2.2: Embeddable Widget Development (`frontend_phase2p2_widget_embed`) (Days 11-12)
 **Goal**: Simple chat widget for knowledge queries
 
 1. **Widget Core**
@@ -159,7 +162,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Persistent chat sessions
    - [ ] Basic styling customization
 
-#### Phase 2.3: Internal Testing & Refinement (Days 13-14)
+#### Phase 2.3: Internal Testing & Refinement (`backend_phase2p3_testing_mvp`) (Days 13-14)
 **Goal**: Validate knowledge management MVP
 
 1. **Testing Suite**
@@ -181,7 +184,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 3 - Client-Ready Polish with Data Integration (Days 15-21)
 
-#### Phase 3.1: Enhanced Admin Dashboard & Data Sources (Days 15-16)
+#### Phase 3.1: Enhanced Admin Dashboard & Data Sources (`frontend_phase3p1_admin_enhanced`) (Days 15-16)
 **Goal**: Professional knowledge management with multi-source support
 
 1. **Knowledge Management Tools**
@@ -203,7 +206,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Query/response pair logging system
    - [ ] Basic performance metrics dashboard
 
-#### Phase 3.2: Advanced Knowledge Features (Days 17-19)
+#### Phase 3.2: Advanced Knowledge Features (`backend_phase3p2_knowledge_advanced`) (Days 17-19)
 **Goal**: Sophisticated information retrieval
 
 1. **Smart Search Features**
@@ -220,7 +223,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Dynamic content insertion
    - [ ] Markdown support in responses
 
-#### Phase 3.3: White-Label Customization (Days 20-21)
+#### Phase 3.3: White-Label Customization (`frontend_phase3p3_whitelabel`) (Days 20-21)
 **Goal**: Full branding control for clients
 
 1. **Branding System**
@@ -239,7 +242,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 4 - Client Deployment (Days 22-28)
 
-#### Phase 4.1: Deployment Preparation (Days 22-24)
+#### Phase 4.1: Deployment Preparation (`backend_phase4p1_deploy_prep`) (Days 22-24)
 **Goal**: Ready for first client
 
 1. **Infrastructure Setup**
@@ -256,7 +259,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Widget installation guide
    - [ ] Training documentation
 
-#### Phase 4.2: Performance Tuning & Notifications (Days 25-26)
+#### Phase 4.2: Performance Tuning & Notifications (`backend_phase4p2_performance`) (Days 25-26)
 **Goal**: Optimize for client needs with basic alerts
 
 1. **Performance Optimization**
@@ -277,7 +280,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Webhook dispatch for key events
    - [ ] Sync failure notifications
 
-#### Phase 4.3: Client Launch (Days 27-28)
+#### Phase 4.3: Client Launch (`backend_phase4p3_client_launch`) (Days 27-28)
 **Goal**: Successful first deployment
 
 1. **Launch Preparation**
@@ -299,7 +302,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 5 - E-commerce Transaction Features (Days 29-35)
 
-#### Phase 5.1: Order & Customer Integration (Days 29-31)
+#### Phase 5.1: Order & Customer Integration (`backend_phase5p1_order_customer`) (Days 29-31)
 **Goal**: Support order and customer queries
 
 1. **Order Management Integration**
@@ -316,7 +319,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Wishlist/favorites integration
    - [ ] Customer-specific pricing
 
-#### Phase 5.2: Shopping Experience Features (Days 32-33)
+#### Phase 5.2: Shopping Experience Features (`backend_phase5p2_shopping_features`) (Days 32-33)
 **Goal**: Enhanced shopping assistance
 
 1. **Product Recommendations**
@@ -333,7 +336,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Price calculation display
    - [ ] Shipping estimate queries
 
-#### Phase 5.3: Multi-Tenant Preparation (Days 34-35)
+#### Phase 5.3: Multi-Tenant Preparation (`backend_phase5p3_multitenant_prep`) (Days 34-35)
 **Goal**: Prepare for multiple clients
 
 1. **Data Isolation Design**
@@ -352,7 +355,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 6 - Advanced E-commerce & Testing (Days 36-42)
 
-#### Phase 6.1: Advanced Transaction Features (Days 36-37)
+#### Phase 6.1: Advanced Transaction Features (`backend_phase6p1_advanced_transactions`) (Days 36-37)
 **Goal**: Complete e-commerce functionality
 
 1. **Advanced Order Support**
@@ -369,12 +372,11 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Size/fit assistance
    - [ ] Availability notifications
 
-#### Phase 6.2: Integration Testing (Days 38-40)
+#### Phase 6.2: Integration Testing (`backend_phase6p2_integration_testing`) (Days 38-40)
 **Goal**: Ensure reliability with real data
 
 1. **E-commerce Platform Testing**
    - [ ] Full Shopify integration test
-   - [ ] WooCommerce integration test
    - [ ] Order flow testing
    - [ ] Customer data accuracy
    - [ ] Performance under load
@@ -386,7 +388,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Response accuracy metrics
    - [ ] Edge case handling
 
-#### Phase 6.3: Client Feedback Integration (Days 41-42)
+#### Phase 6.3: Client Feedback Integration (`backend_phase6p3_client_feedback`) (Days 41-42)
 **Goal**: Refine based on real usage
 
 1. **Feedback Implementation**
@@ -408,7 +410,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 7 - Multi-Tenant Implementation (Days 43-49)
 
-#### Phase 7.1: Multi-Tenant Architecture (Days 43-45)
+#### Phase 7.1: Multi-Tenant Architecture (`backend_phase7p1_multitenant_arch`) (Days 43-45)
 **Goal**: True multi-tenant system
 
 1. **Tenant Isolation**
@@ -425,7 +427,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Data export tools
    - [ ] Tenant migration utilities
 
-#### Phase 7.2: Billing System (Days 46-47)
+#### Phase 7.2: Billing System (`backend_phase7p2_billing`) (Days 46-47)
 **Goal**: Monetization ready
 
 1. **Subscription Management**
@@ -442,7 +444,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Overage handling
    - [ ] Trial management
 
-#### Phase 7.3: Self-Service Portal (Days 48-49)
+#### Phase 7.3: Self-Service Portal (`frontend_phase7p3_self_service`) (Days 48-49)
 **Goal**: Automated onboarding
 
 1. **Client Portal**
@@ -461,7 +463,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 8 - Security & Compliance (Days 50-56)
 
-#### Phase 8.1: Security Hardening (Days 50-52)
+#### Phase 8.1: Security Hardening (`backend_phase8p1_security`) (Days 50-52)
 **Goal**: Enterprise security
 
 1. **Authentication & Authorization**
@@ -478,7 +480,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] PII protection
    - [ ] Audit logging
 
-#### Phase 8.2: Compliance (Days 53-54)
+#### Phase 8.2: Compliance (`backend_phase8p2_compliance`) (Days 53-54)
 **Goal**: Industry standards
 
 1. **Compliance Features**
@@ -495,7 +497,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Security scanning
    - [ ] Penetration test prep
 
-#### Phase 8.3: Performance Optimization (Days 55-56)
+#### Phase 8.3: Performance Optimization (`backend_phase8p3_performance`) (Days 55-56)
 **Goal**: Scale readiness
 
 1. **System Optimization**
@@ -514,7 +516,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 9 - High Availability (Days 57-63)
 
-#### Phase 9.1: Infrastructure HA (Days 57-59)
+#### Phase 9.1: Infrastructure HA (`backend_phase9p1_infrastructure_ha`) (Days 57-59)
 **Goal**: 99.9% uptime
 
 1. **Redundancy**
@@ -531,7 +533,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] RTO/RPO targets
    - [ ] DR documentation
 
-#### Phase 9.2: Operational Excellence (Days 60-61)
+#### Phase 9.2: Operational Excellence (`backend_phase9p2_ops_excellence`) (Days 60-61)
 **Goal**: Smooth operations
 
 1. **Automation**
@@ -548,7 +550,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Post-mortems
    - [ ] Status page
 
-#### Phase 9.3: Advanced Features (Days 62-63)
+#### Phase 9.3: Advanced Features (`backend_phase9p3_advanced_features`) (Days 62-63)
 **Goal**: Competitive edge
 
 1. **AI Enhancements**
@@ -567,7 +569,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 10 - Launch Ready (Days 64-70)
 
-#### Phase 10.1: Final Testing (Days 64-66)
+#### Phase 10.1: Final Testing (`backend_phase10p1_final_testing`) (Days 64-66)
 **Goal**: Production validation
 
 1. **System Testing**
@@ -584,7 +586,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Documentation review
    - [ ] Training completion
 
-#### Phase 10.2: Go-to-Market (Days 67-68)
+#### Phase 10.2: Go-to-Market (`frontend_phase10p2_go_to_market`) (Days 67-68)
 **Goal**: Market launch
 
 1. **Marketing Preparation**
@@ -601,7 +603,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Demo scripts
    - [ ] Objection handling
 
-#### Phase 10.3: Support Infrastructure (Days 69-70)
+#### Phase 10.3: Support Infrastructure (`backend_phase10p3_support_infra`) (Days 69-70)
 **Goal**: Customer success
 
 1. **Support Systems**
@@ -658,10 +660,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 - **Queue**: Bull/Redis for async jobs
 
 ### E-commerce Integrations:
-- **Shopify**: REST Admin API + Storefront API
-- **WooCommerce**: REST API v3
-- **Magento**: REST/GraphQL APIs
-- **BigCommerce**: REST API v3
+- **Shopify**: Shopify MCP https://shopify.dev/docs/apps/build/storefront-mcp and/or REST Admin API and/or Storefront API
 - **Custom**: Webhook receivers
 
 ### Infrastructure:
@@ -762,7 +761,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 11 - Evaluation Framework (Days 71-77)
 
-#### Phase 11.1: LLM-as-Judge System (Days 71-73)
+#### Phase 11.1: LLM-as-Judge System (`backend_phase11p1_llm_judge`) (Days 71-73)
 **Goal**: Automated quality evaluation
 
 1. **Evaluation Infrastructure**
@@ -779,7 +778,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Tone and style analysis
    - [ ] Hallucination detection
 
-#### Phase 11.2: Advanced Analytics (Days 74-75)
+#### Phase 11.2: Advanced Analytics (`backend_phase11p2_analytics`) (Days 74-75)
 **Goal**: Comprehensive insights dashboard
 
 1. **Analytics Platform**
@@ -796,7 +795,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Statistical significance testing
    - [ ] Automated winner selection
 
-#### Phase 11.3: Advanced Monitoring (Days 76-77)
+#### Phase 11.3: Advanced Monitoring (`backend_phase11p3_monitoring`) (Days 76-77)
 **Goal**: Proactive system health
 
 1. **Monitoring Enhancement**
@@ -808,7 +807,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 12 - Advanced Integrations (Days 78-84)
 
-#### Phase 12.1: Push-Based Updates (Days 78-80)
+#### Phase 12.1: Push-Based Updates (`backend_phase12p1_push_updates`) (Days 78-80)
 **Goal**: Real-time data synchronization
 
 1. **Webhook Infrastructure**
@@ -825,7 +824,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Conflict resolution
    - [ ] Version reconciliation
 
-#### Phase 12.2: Advanced Notifications (Days 81-82)
+#### Phase 12.2: Advanced Notifications (`backend_phase12p2_notifications`) (Days 81-82)
 **Goal**: Intelligent alert system
 
 1. **Notification Engine**
@@ -842,7 +841,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Quiet hours respect
    - [ ] Alert fatigue prevention
 
-#### Phase 12.3: Platform Integration (Days 83-84)
+#### Phase 12.3: Platform Integration (`backend_phase12p3_platform_integration`) (Days 83-84)
 **Goal**: Seamless third-party connections
 
 1. **Integration Hub**
@@ -864,7 +863,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 13 - Advanced Data Management (Days 85-91)
 
-#### Phase 13.1: Multi-Source Orchestration (Days 85-87)
+#### Phase 13.1: Multi-Source Orchestration (`backend_phase13p1_multisource`) (Days 85-87)
 **Goal**: Unified data management
 
 1. **Data Source Manager**
@@ -881,7 +880,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Cross-source deduplication
    - [ ] Smart caching strategies
 
-#### Phase 13.2: Knowledge Graph Integration (Days 88-89)
+#### Phase 13.2: Knowledge Graph Integration (`backend_phase13p2_knowledge_graph`) (Days 88-89)
 **Goal**: Enhanced understanding
 
 1. **Graph Database Setup**
@@ -898,7 +897,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Knowledge synthesis
    - [ ] Fact validation
 
-#### Phase 13.3: Advanced Security (Days 90-91)
+#### Phase 13.3: Advanced Security (`backend_phase13p3_advanced_security`) (Days 90-91)
 **Goal**: Enterprise-grade protection
 
 1. **Security Hardening**
@@ -910,7 +909,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
 
 ### Week 14 - Platform Excellence (Days 92-98)
 
-#### Phase 14.1: Performance at Scale (Days 92-94)
+#### Phase 14.1: Performance at Scale (`backend_phase14p1_scale_performance`) (Days 92-94)
 **Goal**: Handle enterprise load
 
 1. **Optimization Suite**
@@ -927,7 +926,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Zero downtime deployment
    - [ ] Global distribution
 
-#### Phase 14.2: Advanced AI Features (Days 95-96)
+#### Phase 14.2: Advanced AI Features (`backend_phase14p2_advanced_ai`) (Days 95-96)
 **Goal**: Cutting-edge capabilities
 
 1. **AI Enhancement**
@@ -944,7 +943,7 @@ Transform AnythingLLM into a B2B LLM chat solution specifically for e-commerce b
    - [ ] Multi-turn optimization
    - [ ] Emotion detection
 
-#### Phase 14.3: Platform Maturity (Days 97-98)
+#### Phase 14.3: Platform Maturity (`backend_phase14p3_platform_maturity`) (Days 97-98)
 **Goal**: Production excellence
 
 1. **Operational Excellence**
