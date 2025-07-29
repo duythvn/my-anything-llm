@@ -6,6 +6,10 @@ const { storeVectorResult, cachedVectorInformation } = require("../../files");
 const { v4: uuidv4 } = require("uuid");
 const { sourceIdentifier } = require("../../chats");
 const { NativeEmbeddingReranker } = require("../../EmbeddingRerankers/native");
+const { SourceAttributionEnhancer } = require("../SourceAttributionEnhancer");
+const { CategoryFilter } = require("../CategoryFilter");
+const { RelevanceScorer } = require("../RelevanceScorer");
+const { FallbackSystem } = require("../FallbackSystem");
 
 /**
  * LancedDB Client connection object
@@ -288,6 +292,9 @@ const LanceDb = {
       if (!pageContent || pageContent.length == 0) return false;
 
       console.log("Adding new vectorized document into namespace", namespace);
+      
+      // Phase 1.2: Initialize source attribution enhancer
+      const sourceEnhancer = new SourceAttributionEnhancer();
       if (!skipCache) {
         const cacheResult = await cachedVectorInformation(fullFilePath);
         if (cacheResult.exists) {
@@ -297,11 +304,20 @@ const LanceDb = {
           const submissions = [];
 
           for (const chunk of chunks) {
-            chunk.forEach((chunk) => {
+            chunk.forEach((chunk, chunkIndex) => {
               const id = uuidv4();
-              const { id: _id, ...metadata } = chunk.metadata;
+              const { id: _id, ...originalMetadata } = chunk.metadata;
+              
+              // Phase 1.2: Enhance metadata with source attribution
+              const enhancedMetadata = sourceEnhancer.enhanceMetadata(
+                originalMetadata,
+                documentData,
+                chunkIndex,
+                chunk.metadata.text || ''
+              );
+              
               documentVectors.push({ docId, vectorId: id });
-              submissions.push({ id: id, vector: chunk.values, ...metadata });
+              submissions.push({ id: id, vector: chunk.values, ...enhancedMetadata });
             });
           }
 
@@ -340,22 +356,32 @@ const LanceDb = {
 
       if (!!vectorValues && vectorValues.length > 0) {
         for (const [i, vector] of vectorValues.entries()) {
+          const id = uuidv4();
+          
+          // Phase 1.2: Enhance metadata with source attribution
+          const enhancedMetadata = sourceEnhancer.enhanceMetadata(
+            metadata,
+            documentData,
+            i,
+            textChunks[i]
+          );
+          
           const vectorRecord = {
-            id: uuidv4(),
+            id: id,
             values: vector,
             // [DO NOT REMOVE]
             // LangChain will be unable to find your text if you embed manually and dont include the `text` key.
             // https://github.com/hwchase17/langchainjs/blob/2def486af734c0ca87285a48f1a04c057ab74bdf/langchain/src/vectorstores/pinecone.ts#L64
-            metadata: { ...metadata, text: textChunks[i] },
+            metadata: enhancedMetadata,
           };
 
           vectors.push(vectorRecord);
           submissions.push({
-            ...vectorRecord.metadata,
-            id: vectorRecord.id,
-            vector: vectorRecord.values,
+            ...enhancedMetadata,
+            id: id,
+            vector: vector,
           });
-          documentVectors.push({ docId, vectorId: vectorRecord.id });
+          documentVectors.push({ docId, vectorId: id });
         }
       } else {
         throw new Error(
@@ -452,6 +478,134 @@ const LanceDb = {
     return {
       message: `Namespace ${namespace} was deleted.`,
     };
+  },
+  /**
+   * Phase 1.2: Enhanced similarity search with multi-source retrieval optimization
+   * Includes category filtering, relevance scoring, and fallback handling
+   */
+  performEnhancedSimilaritySearch: async function ({
+    namespace = null,
+    input = "",
+    LLMConnector = null,
+    similarityThreshold = 0.25,
+    topN = 4,
+    filterIdentifiers = [],
+    rerank = false,
+    categoryFilter = null,
+    relevanceWeights = null,
+    enableFallback = true,
+    diversityBoost = false,
+  }) {
+    if (!namespace || !input || !LLMConnector)
+      throw new Error("Invalid request to performEnhancedSimilaritySearch.");
+
+    const { client } = await this.connect();
+    if (!(await this.namespaceExists(client, namespace))) {
+      return {
+        contextTexts: [],
+        sources: [],
+        message: "Invalid query - no documents found for workspace!",
+        fallbackUsed: false,
+      };
+    }
+
+    // Initialize Phase 1.2 components
+    const categoryFilterInstance = CategoryFilter;
+    const relevanceScorer = new RelevanceScorer({ weights: relevanceWeights });
+    const fallbackSystem = new FallbackSystem();
+
+    // Apply category filtering if specified
+    let searchParams = {
+      namespace,
+      similarityThreshold,
+      topN: topN * 3, // Get more results for scoring and filtering
+      filterIdentifiers,
+    };
+
+    if (categoryFilter) {
+      searchParams = categoryFilterInstance.applyFilter(searchParams, categoryFilter);
+    }
+
+    // Perform vector search
+    const queryVector = await LLMConnector.embedTextInput(input);
+    
+    // Get initial results
+    const initialResults = rerank
+      ? await this.rerankedSimilarityResponse({
+          client,
+          namespace,
+          query: input,
+          queryVector,
+          ...searchParams,
+        })
+      : await this.similarityResponse({
+          client,
+          namespace,
+          queryVector,
+          ...searchParams,
+        });
+
+    // Convert results to scoreable format
+    const scoreableResults = initialResults.sourceDocuments.map((doc, index) => ({
+      metadata: doc,
+      score: initialResults.scores[index],
+      text: initialResults.contextTexts[index],
+    }));
+
+    // Apply relevance scoring
+    const scoringContext = {
+      query: input,
+      categoryContext: categoryFilter?.categories?.[0],
+      diversityBoost,
+    };
+    
+    const scoredResults = relevanceScorer.scoreResults(scoreableResults, scoringContext);
+
+    // Take top N results after scoring
+    const topResults = scoredResults.slice(0, topN);
+
+    // Calculate overall confidence
+    const overallConfidence = topResults.length > 0
+      ? topResults.reduce((sum, r) => sum + r.relevanceScore, 0) / topResults.length
+      : 0;
+
+    // Prepare base response
+    let response = {
+      contextTexts: topResults.map(r => r.text),
+      sources: topResults.map(r => r.metadata),
+      scores: topResults.map(r => r.relevanceScore),
+      message: null,
+      confidence: overallConfidence,
+      fallbackUsed: false,
+    };
+
+    // Apply fallback if confidence is low and fallback is enabled
+    if (enableFallback && overallConfidence < 0.5) {
+      const fallbackResult = await fallbackSystem.processFallback(
+        {
+          query: input,
+          results: topResults,
+          confidence: overallConfidence,
+        },
+        { namespace, LLMConnector }
+      );
+
+      if (fallbackResult.fallbackUsed) {
+        response = {
+          ...response,
+          message: fallbackResult.response,
+          fallbackUsed: true,
+          fallbackStrategy: fallbackResult.strategy,
+          escalated: fallbackResult.escalated || false,
+        };
+      }
+    }
+
+    // Get category statistics
+    const categoryStats = categoryFilterInstance.getCategoryStats(topResults);
+    response.categoryDistribution = categoryStats.distribution;
+
+    return response;
   },
   reset: async function () {
     const { client } = await this.connect();
