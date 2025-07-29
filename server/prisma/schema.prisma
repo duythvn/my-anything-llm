@@ -32,10 +32,19 @@ model workspace_documents {
   metadata             String?
   pinned               Boolean?              @default(false)
   watched              Boolean?              @default(false)
+  // Phase 1.2 RAG Enhancements
+  sourceType           String?               @default("manual_upload") // manual_upload, api_sync, google_drive, csv_product, json_catalog, pdf_link, faq_extraction
+  syncMetadata         String?               // JSON: { last_sync, sync_schedule, sync_status, sync_url, retry_count }
+  businessContext      String?               // JSON: { category, product_line, priority, tags, department }
+  category             String?               // Main category for filtering
+  priority             Int?                  @default(0) // 0=normal, 1=high, 2=critical
   createdAt            DateTime              @default(now())
   lastUpdatedAt        DateTime              @default(now())
   workspace            workspaces            @relation(fields: [workspaceId], references: [id])
   document_sync_queues document_sync_queues?
+  // Links to other documents (parent-child relationships)
+  parent_links         document_links[]      @relation("ParentDocument")
+  child_links          document_links[]      @relation("ChildDocument")
 }
 
 model invites {
@@ -381,4 +390,49 @@ model products {
   @@index([sku])
   @@index([category])
   @@index([sourceSystem])
+}
+
+// Phase 1.2: Document relationship tracking for linked PDFs and parent-child structures
+model document_links {
+  id            Int                 @id @default(autoincrement())
+  parentDocId   Int                 // Document that contains the link
+  childDocId    Int                 // Document that was linked/extracted  
+  linkType      String              // pdf_extraction, faq_child, category_relation, etc.
+  linkMetadata  String?             // JSON: { original_url, extraction_method, confidence, position }
+  createdAt     DateTime            @default(now())
+  lastUpdatedAt DateTime            @default(now())
+  
+  parentDoc     workspace_documents @relation("ParentDocument", fields: [parentDocId], references: [id], onDelete: Cascade)
+  childDoc      workspace_documents @relation("ChildDocument", fields: [childDocId], references: [id], onDelete: Cascade)
+  
+  @@index([parentDocId])
+  @@index([childDocId])
+  @@index([linkType])
+}
+
+// Phase 1.2: Query logging for LLM-as-judge evaluation
+model query_logs {
+  id             Int       @id @default(autoincrement())
+  workspaceId    Int       // Workspace where query was made
+  userId         Int?      // User who made the query (optional for API usage)
+  sessionId      String?   // Session identifier for grouping related queries
+  query          String    // The user's question/input
+  retrievedDocs  String?   // JSON array of retrieved document IDs and scores
+  response       String    // The LLM's response
+  llmProvider    String?   // Which LLM provider was used (openai, anthropic, etc.)
+  llmModel       String?   // Specific model name (gpt-4, claude-3, etc.)
+  responseTime   Int?      // Response time in milliseconds
+  confidence     Float?    // Confidence score of the response (0.0-1.0)
+  sources        String?   // JSON array of source documents with metadata
+  metadata       String?   // JSON: additional metadata (user agent, retrieval method, etc.)
+  feedback       String?   // JSON: user feedback (helpful, accurate, rating, etc.)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now())
+  
+  @@index([workspaceId])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([llmProvider])
+  @@index([confidence])
 }

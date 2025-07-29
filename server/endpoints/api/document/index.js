@@ -32,9 +32,9 @@ function apiDocumentEndpoints(app) {
     async (request, response) => {
       /*
     #swagger.tags = ['Documents']
-    #swagger.description = 'Upload a new file to AnythingLLM to be parsed and prepared for embedding.'
+    #swagger.description = 'Upload a new file to AnythingLLM to be parsed and prepared for embedding with enhanced multi-source support.'
     #swagger.requestBody = {
-      description: 'File to be uploaded.',
+      description: 'File to be uploaded with optional source metadata.',
       required: true,
       content: {
         "multipart/form-data": {
@@ -50,6 +50,37 @@ function apiDocumentEndpoints(app) {
               addToWorkspaces: {
                 type: 'string',
                 description: 'comma-separated text-string of workspace slugs to embed the document into post-upload. eg: workspace1,workspace2',
+              },
+              sourceType: {
+                type: 'string',
+                description: 'Type of source: manual_upload, api_sync, google_drive, csv_product, json_catalog, pdf_link, faq_extraction',
+                default: 'api_upload'
+              },
+              sourceUrl: {
+                type: 'string',
+                description: 'Original URL or location of the document'
+              },
+              category: {
+                type: 'string',
+                description: 'Document category for filtering and organization'
+              },
+              priority: {
+                type: 'integer',
+                description: 'Priority level: 0=normal, 1=high, 2=critical',
+                default: 0
+              },
+              syncEnabled: {
+                type: 'boolean',
+                description: 'Enable automatic sync for this document',
+                default: false
+              },
+              syncSchedule: {
+                type: 'string',
+                description: 'Cron-like schedule for syncing (e.g., "0 9 * * *" for daily at 9am)'
+              },
+              businessContext: {
+                type: 'string',
+                description: 'JSON string with business context metadata'
               }
             },
             required: ['file']
@@ -94,7 +125,17 @@ function apiDocumentEndpoints(app) {
       try {
         const Collector = new CollectorApi();
         const { originalname } = request.file;
-        const { addToWorkspaces = "" } = reqBody(request);
+        const { 
+          addToWorkspaces = "",
+          sourceType = "api_upload",
+          sourceUrl = null,
+          category = null,
+          priority = 0,
+          syncEnabled = false,
+          syncSchedule = null,
+          businessContext = null
+        } = reqBody(request);
+        
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
@@ -108,8 +149,16 @@ function apiDocumentEndpoints(app) {
           return;
         }
 
+        // Process document with enhanced metadata
         const { success, reason, documents } =
-          await Collector.processDocument(originalname);
+          await Collector.processDocument(originalname, {
+            sourceType,
+            sourceUrl,
+            category,
+            priority: parseInt(priority) || 0,
+            businessContext: businessContext ? JSON.parse(businessContext) : null
+          });
+          
         if (!success) {
           response
             .status(500)
@@ -119,22 +168,61 @@ function apiDocumentEndpoints(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`
+          `Document ${originalname} uploaded, processed and successfully embedded with source type: ${sourceType}. It is now available in documents.`
         );
-        await Telemetry.sendTelemetry("document_uploaded");
+        
+        await Telemetry.sendTelemetry("document_uploaded", {
+          sourceType,
+          category: category || "uncategorized",
+          hasBusinessContext: !!businessContext
+        });
+        
         await EventLogs.logEvent("api_document_uploaded", {
           documentName: originalname,
+          sourceType,
+          sourceUrl,
+          category,
+          priority,
+          syncEnabled
         });
 
-        if (!!addToWorkspaces)
-          await Document.api.uploadToWorkspace(
+        // Handle workspace embedding with enhanced metadata
+        if (!!addToWorkspaces) {
+          const uploadResult = await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
+            {
+              sourceType,
+              sourceUrl,
+              category,
+              priority,
+              syncEnabled,
+              syncSchedule,
+              businessContext
+            }
           );
-        response.status(200).json({ success: true, error: null, documents });
+          
+          if (!uploadResult) {
+            console.warn(`Failed to embed document ${originalname} into workspaces: ${addToWorkspaces}`);
+          }
+        }
+        
+        response.status(200).json({ 
+          success: true, 
+          error: null, 
+          documents: documents.map(doc => ({
+            ...doc,
+            sourceType,
+            category,
+            priority
+          }))
+        });
       } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+        console.error("Enhanced document upload error:", e.message, e);
+        response.status(500).json({
+          success: false,
+          error: `Failed to process document: ${e.message}`
+        }).end();
       }
     }
   );
@@ -1059,6 +1147,472 @@ function apiDocumentEndpoints(app) {
         response
           .status(500)
           .json({ success: false, message: "Failed to move files." });
+      }
+    }
+  );
+
+  // Phase 1.2: Product Catalog Upload Endpoint
+  app.post(
+    "/v1/document/upload-catalog",
+    [validApiKey, handleAPIFileUpload],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Documents - Phase 1.2']
+      #swagger.description = 'Upload and process product catalog CSV or JSON files with structured data extraction'
+      #swagger.requestBody = {
+        description: 'Product catalog file (CSV or JSON) with optional configuration',
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              type: 'object',
+              required: ['file'],
+              properties: {
+                file: {
+                  type: 'string',
+                  format: 'binary',
+                  description: 'CSV or JSON catalog file'
+                },
+                addToWorkspaces: {
+                  type: 'string',
+                  description: 'Comma-separated workspace slugs'
+                },
+                catalogType: {
+                  type: 'string',
+                  enum: ['csv', 'json'],
+                  description: 'Type of catalog file'
+                },
+                category: {
+                  type: 'string',
+                  description: 'Product category',
+                  default: 'product_catalog'
+                },
+                fieldMappings: {
+                  type: 'string',
+                  description: 'JSON string with custom field mappings'
+                }
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                success: true,
+                productsProcessed: 150,
+                documentsCreated: 5,
+                errors: []
+              }
+            }
+          }
+        }
+      }
+      */
+      try {
+        const { originalname, buffer } = request.file;
+        const { 
+          addToWorkspaces = "",
+          catalogType = null,
+          category = "product_catalog",
+          fieldMappings = null
+        } = reqBody(request);
+
+        // Determine file type
+        const fileType = catalogType || (originalname.endsWith('.csv') ? 'csv' : 'json');
+        
+        if (!['csv', 'json'].includes(fileType)) {
+          return response.status(400).json({
+            success: false,
+            error: 'Only CSV and JSON catalog files are supported'
+          });
+        }
+
+        // Parse custom field mappings if provided
+        let parsedFieldMappings = {};
+        if (fieldMappings) {
+          try {
+            parsedFieldMappings = JSON.parse(fieldMappings);
+          } catch (error) {
+            return response.status(400).json({
+              success: false,
+              error: 'Invalid field mappings JSON format'
+            });
+          }
+        }
+
+        // Process catalog file
+        let parseResult;
+        if (fileType === 'csv') {
+          const { CSVProductParser } = require('../../../utils/files/parsers/csvProductParser');
+          const parser = new CSVProductParser({ 
+            columnMappings: parsedFieldMappings,
+            maxRows: 10000
+          });
+          parseResult = await parser.parseFromData(buffer);
+        } else {
+          const { JSONProductParser } = require('../../../utils/files/parsers/jsonProductParser');
+          const parser = new JSONProductParser({
+            fieldMappings: parsedFieldMappings,
+            maxProducts: 10000
+          });
+          parseResult = await parser.parseFromString(buffer.toString());
+        }
+
+        if (!parseResult.success) {
+          return response.status(500).json({
+            success: false,
+            error: 'Failed to parse catalog file',
+            details: parseResult.error,
+            parseErrors: parseResult.errors || []
+          });
+        }
+
+        const { products } = parseResult;
+        
+        if (products.length === 0) {
+          return response.status(400).json({
+            success: false,
+            error: 'No valid products found in catalog file'
+          });
+        }
+
+        // Convert products to document chunks for embedding
+        const documents = [];
+        products.forEach((product, index) => {
+          let content = `Product: ${product.name}`;
+          if (product.sku) content += ` (SKU: ${product.sku})`;
+          if (product.category) content += `\nCategory: ${product.category}`;
+          if (product.description) content += `\nDescription: ${product.description}`;
+          if (product.price) content += `\nPrice: $${product.price}`;
+          content += `\nAvailability: ${product.availability}`;
+
+          if (product.specifications) {
+            content += '\nSpecifications:\n';
+            if (typeof product.specifications === 'object') {
+              for (const [key, value] of Object.entries(product.specifications)) {
+                content += `- ${key}: ${value}\n`;
+              }
+            }
+          }
+
+          documents.push({
+            title: product.name,
+            pageContent: content,
+            docSource: `Product catalog: ${originalname}`,
+            chunkSource: `product_${product.sku || index}`,
+            metadata: {
+              sku: product.sku,
+              category: product.category,
+              price: product.price,
+              availability: product.availability,
+              sourceType: 'product_catalog',
+              catalogFile: originalname
+            }
+          });
+        });
+
+        // Save and embed documents if workspaces specified
+        const results = {
+          success: true,
+          productsProcessed: products.length,
+          documentsCreated: documents.length,
+          errors: parseResult.errors || [],
+          workspaceResults: {}
+        };
+
+        if (addToWorkspaces) {
+          const { Workspace } = require('../../../models/workspace');
+          const slugs = addToWorkspaces.split(',').map(s => s.trim().toLowerCase());
+          const workspaces = await Workspace.where({ slug: { in: slugs } });
+
+          for (const workspace of workspaces) {
+            try {
+              // Create temporary files for each document chunk and embed them
+              const fs = require('fs');
+              const path = require('path');
+              const tempDir = path.join(documentsPath, 'temp_catalogs');
+              
+              if (!fs.existsSync(tempDir)) {
+                fs.mkdirSync(tempDir, { recursive: true });
+              }
+
+              const catalogFiles = [];
+              for (let i = 0; i < documents.length; i++) {
+                const doc = documents[i];
+                const tempFile = path.join(tempDir, `${originalname}_product_${i}.json`);
+                
+                fs.writeFileSync(tempFile, JSON.stringify(doc, null, 2));
+                catalogFiles.push(tempFile.replace(documentsPath + '/', ''));
+              }
+
+              const embedResult = await Document.addDocuments(
+                workspace,
+                catalogFiles,
+                null,
+                {
+                  sourceType: 'product_catalog',
+                  category,
+                  priority: 1,
+                  businessContext: {
+                    catalog_file: originalname,
+                    total_products: products.length
+                  }
+                }
+              );
+
+              results.workspaceResults[workspace.slug] = {
+                embedded: embedResult.embedded.length,
+                failed: embedResult.failedToEmbed.length,
+                errors: embedResult.errors
+              };
+
+              // Clean up temp files
+              catalogFiles.forEach(file => {
+                try {
+                  fs.unlinkSync(path.join(documentsPath, file));
+                } catch (e) {
+                  console.warn(`Failed to cleanup temp file: ${file}`);
+                }
+              });
+
+            } catch (error) {
+              console.error(`Failed to process catalog for workspace ${workspace.slug}:`, error);
+              results.workspaceResults[workspace.slug] = {
+                embedded: 0,
+                failed: documents.length,
+                errors: [error.message]
+              };
+            }
+          }
+        }
+
+        await EventLogs.logEvent("product_catalog_uploaded", {
+          catalogFile: originalname,
+          catalogType: fileType,
+          productsProcessed: products.length,
+          workspaces: addToWorkspaces || 'none'
+        });
+
+        response.status(200).json(results);
+
+      } catch (error) {
+        console.error("Product catalog upload error:", error);
+        response.status(500).json({
+          success: false,
+          error: `Failed to process product catalog: ${error.message}`
+        });
+      }
+    }
+  );
+
+  // Phase 1.2: PDF Link Extraction and Download Endpoint
+  app.post(
+    "/v1/document/extract-links",
+    [validApiKey, handleAPIFileUpload],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Documents - Phase 1.2']
+      #swagger.description = 'Extract PDF links from Excel/CSV files and queue them for automatic download'
+      #swagger.requestBody = {
+        description: 'Excel or CSV file containing PDF links',
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              type: 'object',
+              required: ['file'],
+              properties: {
+                file: {
+                  type: 'string',
+                  format: 'binary',
+                  description: 'Excel (.xlsx, .xls) or CSV file'
+                },
+                addToWorkspaces: {
+                  type: 'string',
+                  description: 'Comma-separated workspace slugs for extracted PDFs'
+                },
+                parentDocId: {
+                  type: 'integer',
+                  description: 'ID of parent document to link extracted PDFs'
+                },
+                autoDownload: {
+                  type: 'boolean',
+                  description: 'Automatically download and process found PDFs',
+                  default: true
+                },
+                confidenceThreshold: {
+                  type: 'number',
+                  description: 'Minimum confidence score for link extraction (0.0-1.0)',
+                  default: 0.5
+                }
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                success: true,
+                linksExtracted: 25,
+                linksQueued: 20,
+                downloadJobs: ["job123", "job456"],
+                lowConfidenceLinks: 5
+              }
+            }
+          }
+        }
+      }
+      */
+      try {
+        const { originalname, buffer } = request.file;
+        const { 
+          addToWorkspaces = "",
+          parentDocId = null,
+          autoDownload = true,
+          confidenceThreshold = 0.5
+        } = reqBody(request);
+
+        // Determine file type
+        const fileExtension = path.extname(originalname).toLowerCase();
+        let fileType;
+        
+        if (['.xlsx', '.xls'].includes(fileExtension)) {
+          fileType = 'excel';
+        } else if (fileExtension === '.csv') {
+          fileType = 'csv';
+        } else {
+          return response.status(400).json({
+            success: false,
+            error: 'Only Excel (.xlsx, .xls) and CSV files are supported'
+          });
+        }
+
+        // Extract links from the file
+        const { LinkExtractor } = require('../../../utils/files/parsers/linkExtractor');
+        const extractor = new LinkExtractor({
+          maxUrls: 1000,
+          // Focus on PDF links for Phase 1.2
+          urlPatterns: [/https?:\/\/[^\s]+\.pdf(\?[^\s]*)?/gi]
+        });
+
+        let extractionResult;
+        if (fileType === 'csv') {
+          extractionResult = await extractor._extractFromCSVData(buffer);
+        } else {
+          extractionResult = await extractor._extractFromExcelData(buffer);
+        }
+
+        if (!extractionResult.success) {
+          return response.status(500).json({
+            success: false,
+            error: 'Failed to extract links from file',
+            details: extractionResult.error
+          });
+        }
+
+        const { links } = extractionResult;
+        
+        if (links.length === 0) {
+          return response.status(200).json({
+            success: true,
+            message: 'No PDF links found in the file',
+            linksExtracted: 0,
+            linksQueued: 0,
+            extractionMetadata: extractionResult.metadata
+          });
+        }
+
+        // Filter by confidence threshold
+        const highConfidenceLinks = links.filter(link => 
+          link.confidence >= parseFloat(confidenceThreshold)
+        );
+        const lowConfidenceLinks = links.filter(link => 
+          link.confidence < parseFloat(confidenceThreshold)
+        );
+
+        console.log(`Link Extraction - Found ${links.length} total links, ${highConfidenceLinks.length} above confidence threshold`);
+
+        const results = {
+          success: true,
+          linksExtracted: links.length,
+          linksQueued: 0,
+          downloadJobs: [],
+          lowConfidenceLinks: lowConfidenceLinks.length,
+          extractionMetadata: extractionResult.metadata,
+          links: links.map(link => ({
+            url: link.url,
+            confidence: link.confidence,
+            linkType: link.linkType,
+            sourceLocation: `${link.sourceSheet} - ${link.cellAddress}`,
+            willDownload: link.confidence >= parseFloat(confidenceThreshold) && autoDownload
+          }))
+        };
+
+        // Queue high-confidence links for download if autoDownload is enabled
+        if (autoDownload && highConfidenceLinks.length > 0) {
+          const { PDFDownloader } = require('../../../utils/BackgroundWorkers/pdfDownloader');
+          
+          // Create download jobs
+          const downloadJobs = highConfidenceLinks.map(link => ({
+            url: link.url,
+            parentDocId: parentDocId ? parseInt(parentDocId) : null,
+            linkType: 'pdf_extraction',
+            confidence: link.confidence,
+            sourceContext: {
+              originalFile: originalname,
+              sheet: link.sourceSheet,
+              cell: link.cellAddress,
+              row: link.row,
+              column: link.column,
+              originalText: link.cellContent
+            },
+            priority: link.confidence > 0.8 ? 'high' : (link.confidence > 0.6 ? 'medium' : 'low'),
+            maxRetries: 3
+          }));
+
+          // Start download processing
+          const downloader = await PDFDownloader.processQueue(downloadJobs);
+          
+          results.linksQueued = downloadJobs.length;
+          results.downloadJobs = downloadJobs.map(job => job.id || 'generated');
+          results.downloadStatus = downloader.getStatus();
+
+          console.log(`PDF Downloader - Queued ${downloadJobs.length} PDF downloads`);
+        }
+
+        // Log the extraction event
+        await EventLogs.logEvent("pdf_links_extracted", {
+          sourceFile: originalname,
+          fileType: fileType,
+          totalLinks: links.length,
+          highConfidenceLinks: highConfidenceLinks.length,
+          autoDownload: autoDownload,
+          parentDocId: parentDocId,
+          workspaces: addToWorkspaces || 'none'
+        });
+
+        // If workspace is specified, we'll need to track the downloads
+        // and add the PDFs to workspaces once they're downloaded
+        if (addToWorkspaces && autoDownload) {
+          results.note = `Downloads queued. PDFs will be automatically added to workspaces: ${addToWorkspaces} once downloaded.`;
+        }
+
+        response.status(200).json(results);
+
+      } catch (error) {
+        console.error("PDF link extraction error:", error);
+        response.status(500).json({
+          success: false,
+          error: `Failed to extract PDF links: ${error.message}`
+        });
       }
     }
   );

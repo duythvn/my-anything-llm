@@ -7,7 +7,7 @@ const { safeJsonParse } = require("../utils/http");
 const { getModelTag } = require("../endpoints/utils");
 
 const Document = {
-  writable: ["pinned", "watched", "lastUpdatedAt"],
+  writable: ["pinned", "watched", "lastUpdatedAt", "sourceType", "syncMetadata", "businessContext", "category", "priority"],
   /**
    * @param {import("@prisma/client").workspace_documents} document - Document PrismaRecord
    * @returns {{
@@ -80,7 +80,7 @@ const Document = {
     }
   },
 
-  addDocuments: async function (workspace, additions = [], userId = null) {
+  addDocuments: async function (workspace, additions = [], userId = null, enhancedMetadata = {}) {
     const VectorDb = getVectorDbClass();
     if (additions.length === 0) return { failed: [], embedded: [] };
     const { fileData } = require("../utils/files");
@@ -94,17 +94,42 @@ const Document = {
 
       const docId = uuidv4();
       const { pageContent, ...metadata } = data;
+      
+      // Build enhanced document data with Phase 1.2 metadata
       const newDoc = {
         docId,
         filename: path.split("/")[1],
         docpath: path,
         workspaceId: workspace.id,
         metadata: JSON.stringify(metadata),
+        // Phase 1.2 enhancements
+        sourceType: enhancedMetadata.sourceType || 'manual_upload',
+        category: enhancedMetadata.category || null,
+        priority: enhancedMetadata.priority || 0,
+        syncMetadata: enhancedMetadata.syncEnabled ? Document.createSyncMetadata({
+          sync_schedule: enhancedMetadata.syncSchedule,
+          sync_url: enhancedMetadata.sourceUrl,
+          sync_status: 'idle'
+        }) : null,
+        businessContext: enhancedMetadata.businessContext ? Document.createBusinessContext(enhancedMetadata.businessContext) : null
+      };
+
+      // Add enhanced metadata to vector data for improved retrieval
+      const vectorData = {
+        ...data,
+        docId,
+        metadata: {
+          ...metadata,
+          sourceType: newDoc.sourceType,
+          category: newDoc.category,
+          priority: newDoc.priority,
+          sourceUrl: enhancedMetadata.sourceUrl
+        }
       };
 
       const { vectorized, error } = await VectorDb.addDocumentToNamespace(
         workspace.slug,
-        { ...data, docId },
+        vectorData,
         path
       );
 
@@ -121,8 +146,14 @@ const Document = {
       try {
         await prisma.workspace_documents.create({ data: newDoc });
         embedded.push(path);
+        
+        // Log enhanced metadata for debugging
+        if (enhancedMetadata.sourceType && enhancedMetadata.sourceType !== 'manual_upload') {
+          console.log(`Document ${newDoc.filename} added with enhanced metadata: sourceType=${newDoc.sourceType}, category=${newDoc.category}`);
+        }
       } catch (error) {
-        console.error(error.message);
+        console.error("Failed to create workspace document:", error.message);
+        errors.add(error.message);
       }
     }
 
@@ -132,15 +163,24 @@ const Document = {
       VectorDbSelection: process.env.VECTOR_DB || "lancedb",
       TTSSelection: process.env.TTS_PROVIDER || "native",
       LLMModel: getModelTag(),
+      // Phase 1.2 telemetry enhancements
+      sourceType: enhancedMetadata.sourceType || 'manual_upload',
+      hasCategory: !!enhancedMetadata.category,
+      hasBusinessContext: !!enhancedMetadata.businessContext
     });
+    
     await EventLogs.logEvent(
       "workspace_documents_added",
       {
         workspaceName: workspace?.name || "Unknown Workspace",
         numberOfDocumentsAdded: additions.length,
+        sourceType: enhancedMetadata.sourceType || 'manual_upload',
+        category: enhancedMetadata.category,
+        priority: enhancedMetadata.priority || 0
       },
       userId
     );
+    
     return { failedToEmbed, errors: Array.from(errors), embedded };
   },
 
@@ -253,6 +293,129 @@ const Document = {
   },
 
   /**
+   * Phase 1.2: Enhanced metadata parsing with multi-source support
+   * Parse sync metadata from JSON string
+   * @param {string|null} syncMetadataJson 
+   * @returns {object|null}
+   */
+  parseSyncMetadata: function (syncMetadataJson) {
+    return safeJsonParse(syncMetadataJson, null);
+  },
+
+  /**
+   * Parse business context from JSON string
+   * @param {string|null} businessContextJson 
+   * @returns {object|null}
+   */
+  parseBusinessContext: function (businessContextJson) {
+    return safeJsonParse(businessContextJson, null);
+  },
+
+  /**
+   * Create sync metadata object for storage
+   * @param {object} syncData - { last_sync, sync_schedule, sync_status, sync_url, retry_count }
+   * @returns {string}
+   */
+  createSyncMetadata: function (syncData = {}) {
+    const defaultSync = {
+      last_sync: null,
+      sync_schedule: null,
+      sync_status: 'idle',
+      sync_url: null,
+      retry_count: 0,
+      ...syncData
+    };
+    return JSON.stringify(defaultSync);
+  },
+
+  /**
+   * Create business context object for storage
+   * @param {object} contextData - { category, product_line, priority, tags, department }
+   * @returns {string}
+   */
+  createBusinessContext: function (contextData = {}) {
+    const defaultContext = {
+      category: null,
+      product_line: null,
+      priority: 0,
+      tags: [],
+      department: null,
+      ...contextData
+    };
+    return JSON.stringify(defaultContext);
+  },
+
+  /**
+   * Get documents by category with optional filtering
+   * @param {number} workspaceId 
+   * @param {string|string[]} categories 
+   * @param {object} filters - Additional filters
+   * @returns {Promise<Array>}
+   */
+  getByCategory: async function (workspaceId, categories = [], filters = {}) {
+    const categoryFilter = Array.isArray(categories) 
+      ? { in: categories }
+      : categories;
+
+    const whereClause = {
+      workspaceId,
+      ...(categories.length > 0 ? { category: categoryFilter } : {}),
+      ...filters
+    };
+
+    return await this.where(whereClause);
+  },
+
+  /**
+   * Get unique categories for a workspace
+   * @param {number} workspaceId 
+   * @returns {Promise<string[]>}
+   */
+  getCategories: async function (workspaceId) {
+    try {
+      const results = await prisma.workspace_documents.findMany({
+        where: { workspaceId, category: { not: null } },
+        select: { category: true },
+        distinct: ['category']
+      });
+      return results.map(r => r.category).filter(Boolean);
+    } catch (error) {
+      console.error("Failed to get categories:", error.message);
+      return [];
+    }
+  },
+
+  /**
+   * Update document with enhanced metadata
+   * @param {number} docId 
+   * @param {object} enhancedData - Contains sourceType, syncMetadata, businessContext, etc.
+   * @returns {Promise<object>}
+   */
+  updateEnhanced: async function (docId, enhancedData = {}) {
+    const validData = {};
+    
+    // Process enhanced fields
+    if (enhancedData.sourceType) validData.sourceType = enhancedData.sourceType;
+    if (enhancedData.category) validData.category = enhancedData.category;
+    if (enhancedData.priority !== undefined) validData.priority = enhancedData.priority;
+    
+    // Handle JSON fields
+    if (enhancedData.syncMetadata) {
+      validData.syncMetadata = typeof enhancedData.syncMetadata === 'string' 
+        ? enhancedData.syncMetadata 
+        : JSON.stringify(enhancedData.syncMetadata);
+    }
+    
+    if (enhancedData.businessContext) {
+      validData.businessContext = typeof enhancedData.businessContext === 'string'
+        ? enhancedData.businessContext
+        : JSON.stringify(enhancedData.businessContext);
+    }
+
+    return await this.update(docId, validData);
+  },
+
+  /**
    * Functions for the backend API endpoints - not to be used by the frontend or elsewhere.
    * @namespace api
    */
@@ -262,9 +425,10 @@ const Document = {
      * functionality should only be used by the backend /v1/documents/upload endpoints for post-upload embedding.
      * @param {string} wsSlugs - The slugs of the workspaces to embed the document into, will be comma-separated list of workspace slugs
      * @param {string} docLocation - The location/path of the document that was uploaded
+     * @param {object} enhancedMetadata - Optional enhanced metadata for Phase 1.2 features
      * @returns {Promise<boolean>} - True if the document was uploaded successfully, false otherwise
      */
-    uploadToWorkspace: async function (wsSlugs = "", docLocation = null) {
+    uploadToWorkspace: async function (wsSlugs = "", docLocation = null, enhancedMetadata = {}) {
       if (!docLocation)
         return console.log(
           "No document location provided for embedding",
@@ -289,14 +453,16 @@ const Document = {
       for (const workspace of workspaces) {
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           workspace,
-          [docLocation]
+          [docLocation],
+          null, // userId
+          enhancedMetadata // Pass enhanced metadata to addDocuments
         );
         if (failedToEmbed.length > 0)
           return console.log(
             `Failed to embed document into workspace ${workspace.slug}`,
             errors
           );
-        console.log(`Document embedded into workspace ${workspace.slug}...`);
+        console.log(`Document embedded into workspace ${workspace.slug} with enhanced metadata...`);
       }
 
       return true;
