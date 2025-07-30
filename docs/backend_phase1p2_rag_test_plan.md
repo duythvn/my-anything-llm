@@ -35,28 +35,16 @@ This test plan validates the Phase 1.2 RAG implementation for AnythingLLM B2B E-
 
 ## Test Environment
 
-### Requirements
-- Node.js 18.x
-- PostgreSQL with PGVector extension
-- LanceDB vector database
-- Test workspace with sample documents
-- API testing tools (curl/Postman)
 
 ### Setup Instructions
 ```bash
 # 1. Navigate to test environment
 cd /home/duyth/projects/anythingllm/worktrees/backend/backend_phase1p2_rag_system
 
-# 2. Install dependencies
-npm install
-
-# 3. Run database migrations for new tables
-npx prisma migrate dev
-
-# 4. Start the server
+# 2. Start the server
 npm run dev:server
 
-# 5. Verify server is running on port 3001
+# 3. Verify server is running on port 3001
 curl http://localhost:3001/api/ping
 ```
 
