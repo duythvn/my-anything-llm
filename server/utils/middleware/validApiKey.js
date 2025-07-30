@@ -7,6 +7,7 @@ async function validApiKey(request, response, next) {
 
   const auth = request.header("Authorization");
   const bearerKey = auth ? auth.split(" ")[1] : null;
+  console.log("Bearer Key:", bearerKey);
   if (!bearerKey) {
     response.status(403).json({
       error: "No valid api key found.",
@@ -15,6 +16,7 @@ async function validApiKey(request, response, next) {
   }
 
   if (!(await ApiKey.get({ secret: bearerKey }))) {
+    console.log("API Key not found in DB for bearerKey:", bearerKey);
     response.status(403).json({
       error: "No valid api key found.",
     });

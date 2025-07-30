@@ -1,0 +1,13 @@
+This is a test product catalog.
+
+Product A: Wireless Charger
+SKU: WC001
+Price: $25.99
+Category: Electronics
+Description: Fast wireless charging for compatible devices.
+
+Product B: Bluetooth Headphones
+SKU: BH002
+Price: $79.99
+Category: Audio
+Description: High-quality sound with noise cancellation.
