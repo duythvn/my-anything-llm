@@ -1,12 +1,39 @@
-v-env
+
+# Environment files
 .env
+*.env
 !.env.example
 
+# Dependencies
 node_modules
-__pycache__
 v-env
-.DS_Store
-aws_cf_deploy_anything_llm.json
 yarn.lock
-*.bak
+
+# IDE files
 .idea
+.DS_Store
+
+# Build files
+*.bak
+aws_cf_deploy_anything_llm.json
+
+# Logs
+*.log
+logs/
+server.log
+server/*.log
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Security files
+*.key
+*.pem
+*.p12
+*secret*
+*credential*
+
+# Python
+__pycache__
