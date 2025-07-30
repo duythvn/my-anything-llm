@@ -22,7 +22,10 @@
     "test:phase1p2:integration": "jest --testPathPatterns=tests/phase1p2/integration",
     "test:performance:phase1p2": "node tests/phase1p2/performance/search-performance.test.js",
     "setup:test-api-key": "node test_setup/create-test-api-key.js",
-    "check:phase1p2": "node ../test-scripts/phase1p2-status-check.js"
+    "check:phase1p2": "node ../test-scripts/phase1p2-status-check.js",
+    "shared-deps:link": "bash ../../setup-shared-node-modules.sh",
+    "shared-deps:check": "ls -la node_modules/ | grep \"^l\" || echo \"No symlinks found\"",
+    "shared-deps:status": "echo \"Shared deps status for server\" && npm list --depth=0 2>/dev/null | grep \"deduped\" || echo \"No deduped packages\""
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -110,5 +113,9 @@
     "node-html-markdown": "^1.3.0",
     "nodemon": "^2.0.22",
     "prettier": "^3.0.3"
+  },
+  "x-shared-dependencies": {
+    "note": "This worktree uses shared node_modules. Run npm run shared-deps:link to update symlinks.",
+    "shared-location": "/home/duyth/projects/anythingllm/worktrees/backend/shared_node_modules"
   }
 }
