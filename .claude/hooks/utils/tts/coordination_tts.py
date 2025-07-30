@@ -17,10 +17,11 @@ def speak_message(message, priority="normal"):
         wsl_tts_script = Path(__file__).parent / "wsl_compatible_tts.py"
         if wsl_tts_script.exists():
             subprocess.run([
+                "python3",
                 str(wsl_tts_script), 
                 message, 
                 priority
-            ], capture_output=True, timeout=10)
+            ], timeout=10)
         else:
             # Fallback to pyttsx3
             import pyttsx3

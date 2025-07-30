@@ -21,10 +21,11 @@ def trigger_tts_notification(notification_type, data):
         tts_script = Path(__file__).parent / "utils" / "tts" / "coordination_tts.py"
         if tts_script.exists():
             subprocess.run([
+                "python3",
                 str(tts_script), 
                 notification_type, 
                 json.dumps(data)
-            ], capture_output=True, timeout=5)
+            ], timeout=5)
     except Exception:
         pass  # Fail silently if TTS unavailable
 

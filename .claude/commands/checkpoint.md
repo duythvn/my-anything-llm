@@ -34,9 +34,23 @@ You need to create a checkpoint commit based on the current context:
    - Create commit with generated message
    - Push to origin/{current_branch}
 
-4. **Provide feedback**:
+4. **Update documentation for major changes**:
+   - If custom message contains keywords like "milestone", "major", "complete", "release", "phase":
+     - Update `/shared/docs/task_management/UPDATE_SUMMARY.md` with change entry
+     - Add date, change description, and files affected
+     - Use this format:
+       ```
+       ### [Date] - [Custom Message Title]
+       **Type**: Major Milestone  
+       **Trigger**: Checkpoint with major completion
+       **Changes Made**: [Generated from git status]
+       **Files Updated**: [List of modified files]
+       ```
+
+5. **Provide feedback**:
    - Show working directory used
    - Show commit message created
+   - If UPDATE_SUMMARY.md was updated, mention it
    - Confirm completion
 
 Use the Bash tool to execute the necessary git commands step by step.

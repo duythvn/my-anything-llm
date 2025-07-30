@@ -31,18 +31,26 @@ Mark the current stage as complete and update shared documentation:
    - If yes, ask for "Brief completion description:"
 
 4. **Update shared roadmap**:
-   - Read `/home/duyth/projects/agentic_system/shared/docs/ROADMAP.md`
+   - Find project root by looking for shared/ directory
+   - Read `shared/docs/ROADMAP.md`
    - Mark detected stage as ✅ completed
    - Update with user's completion description
 
-5. **Update task master**:
-   - Read `/home/duyth/projects/agentic_system/shared/docs/task_management/TASK_MASTER.md`
+5. **Update task tracking**:
+   - Read `shared/docs/task_management/TASK_TRACKING.md`
    - Mark corresponding tasks as ✅ DONE
 
-6. **Archive test plans**:
-   - Copy test plans to `/home/duyth/projects/agentic_system/shared/test_plans/archived/`
+6. **Update TASK_OVERVIEW.md**:
+   - Read `/shared/docs/task_management/TASK_OVERVIEW.md`
+   - Update phase progress for completed stage
+   - Update "Completed This Week" section with stage completion
+   - Update critical path status if this was a critical stage
+   - Add completion to velocity metrics
 
-7. **Create checkpoint commit**:
+7. **Archive test plans**:
+   - Copy test plans to shared test_plans/archived/ directory
+
+8. **Create checkpoint commit**:
    - Commit changes with message including stage completion
    - Include Claude Code signature
 

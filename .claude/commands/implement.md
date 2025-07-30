@@ -10,11 +10,18 @@ Invoke the coder agent to implement features using test-driven development.
 
 ## What it does
 
-1. Reads the technical specification (from planner or provided)
-2. Implements features using TDD approach
-3. Creates clean, modular code following project standards
-4. Ensures comprehensive test coverage
-5. Updates progress tracking
+1. Reads the technical specification from shared breakdown files.
+2. Implements features using TDD approach.  
+3. Creates clean, modular code following project standards.
+4. Test the new codes. Ensures comprehensive test coverage.
+5. Updates progress tracking.
+
+## File References
+
+**READS BREAKDOWN FILES FROM**: 
+- `shared/docs/task_management/task_breakdown/P[X]-S[Y]-BREAKDOWN.md`
+- Never reads from branch-local duplicate files
+- Uses the same shared files created by `/plan` command
 
 ## Examples
 
