@@ -1,0 +1,29 @@
+[36m[EncryptionManager][0m Self-assigning key & salt for encrypting arbitrary data.
+[35m[TokenManager][0m Initialized new TokenManager instance for model: gpt-3.5-turbo
+[33m[ContextWindowFinder][0m Pulling remote model map...
+[35m[TokenManager][0m Returning existing instance for model: gpt-3.5-turbo
+[33m[TELEMETRY STUBBED][0m Anonymous Telemetry stubbed in development.
+[36m[CommunicationKey][0m RSA key pair generated for signed payloads within AnythingLLM services.
+[36m[EncryptionManager][0m Loaded existing key & salt for encrypting arbitrary data.
+Primary server in HTTP mode listening on port 3001
+prisma:info Starting a sqlite pool with 13 connections.
+prisma:error 
+Invalid `prisma.system_settings.findFirst()` invocation in
+/home/duyth/projects/anythingllm/worktrees/backend/backend_phase1p2_rag_system/server/models/systemSettings.js:303:52
+
+  300 
+  301 get: async function (clause = {}) {
+  302   try {
+→ 303     const setting = await prisma.system_settings.findFirst(
+The table `main.system_settings` does not exist in the current database.
+
+Invalid `prisma.system_settings.findFirst()` invocation in
+/home/duyth/projects/anythingllm/worktrees/backend/backend_phase1p2_rag_system/server/models/systemSettings.js:303:52
+
+  300 
+  301 get: async function (clause = {}) {
+  302   try {
+→ 303     const setting = await prisma.system_settings.findFirst(
+The table `main.system_settings` does not exist in the current database.
+[36m[BackgroundWorkerService][0m Feature is not enabled and will not be started.
+[33m[ContextWindowFinder][0m Remote model map synced and cached
