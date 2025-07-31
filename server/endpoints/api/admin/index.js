@@ -9,8 +9,20 @@ const { canModifyAdmin } = require("../../../utils/helpers/admin");
 const { multiUserMode, reqBody } = require("../../../utils/http");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 
+// Phase 1.4 Admin API Endpoints
+const { adminKnowledgeEndpoints } = require("./knowledge");
+const { adminDocumentEndpoints } = require("./documents");
+const { adminChatTestingEndpoints } = require("./chat-testing");
+
 function apiAdminEndpoints(app) {
   if (!app) return;
+
+  // Initialize Phase 1.4 Admin API endpoints
+  console.log('Loading Phase 1.4 Admin API endpoints...');
+  adminKnowledgeEndpoints(app);
+  adminDocumentEndpoints(app);
+  adminChatTestingEndpoints(app);
+  console.log('Phase 1.4 Admin API endpoints loaded successfully');
 
   app.get("/v1/admin/is-multi-user-mode", [validApiKey], (_, response) => {
     /*
