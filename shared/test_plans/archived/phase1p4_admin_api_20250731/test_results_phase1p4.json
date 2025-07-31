@@ -1,0 +1,126 @@
+{
+  "timestamp": "2025-07-31T03:45:56.949Z",
+  "phase": "Phase 1.4 Admin API",
+  "summary": {
+    "total": 14,
+    "passed": 1,
+    "failed": 13,
+    "criticalFailures": 0,
+    "successRate": "7.1%",
+    "overallResult": "PASSED"
+  },
+  "details": [
+    {
+      "name": "Knowledge API - GET /admin/knowledge",
+      "status": "FAIL",
+      "message": "Knowledge API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Knowledge API - GET /admin/knowledge/search",
+      "status": "FAIL",
+      "message": "Search API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Knowledge API - GET /admin/knowledge/stats",
+      "status": "FAIL",
+      "message": "Stats API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Knowledge API - POST /admin/knowledge/validate",
+      "status": "FAIL",
+      "message": "Validation API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Documents API - POST /admin/documents/bulk-update",
+      "status": "FAIL",
+      "message": "Bulk update API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Documents API - DELETE /admin/documents/bulk",
+      "status": "FAIL",
+      "message": "Bulk delete API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Documents API - POST /admin/documents/merge",
+      "status": "FAIL",
+      "message": "Document merge API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Documents API - GET /admin/documents/duplicates",
+      "status": "FAIL",
+      "message": "Duplicates API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Chat API - POST /admin/chat/test",
+      "status": "FAIL",
+      "message": "Chat test API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Chat API - POST /admin/chat/test/batch",
+      "status": "FAIL",
+      "message": "Batch test API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Chat API - GET /admin/chat/test/history",
+      "status": "FAIL",
+      "message": "Test history API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Chat API - POST /admin/chat/analyze",
+      "status": "FAIL",
+      "message": "Response analysis API status: 403",
+      "data": {
+        "error": "No valid api key found."
+      }
+    },
+    {
+      "name": "Integration - System Status",
+      "status": "PASS",
+      "message": "System status: 200",
+      "data": "\n       <!DOCTYPE html>\n        <html lang=\"en\">\n          <head>\n            <meta charset=\"UTF-8\" />\n            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n            <link type=\"image/svg+xml\" href=\"/favicon.png\" >\n<title >AnythingLLM | Your personal LLM trained on anything</title>\n<meta name=\"title\" content=\"AnythingLLM | Your personal LLM trained on anything\" >\n<meta description=\"title\" content=\"AnythingLLM | Your personal LLM trained on anything\" >\n<meta property=\"og:type\" content=\"website\" >\n<meta property=\"og:url\" content=\"https://anythingllm.com\" >\n<meta property=\"og:title\" content=\"AnythingLLM | Your personal LLM trained on anything\" >\n<meta property=\"og:description\" content=\"AnythingLLM | Your personal LLM trained on anything\" >\n<meta property=\"og:image\" content=\"https://raw.githubusercontent.com/Mintplex-Labs/anything-llm/master/images/promo.png\" >\n<meta property=\"twitter:card\" content=\"summary_large_image\" >\n<meta property=\"twitter:url\" content=\"https://anythingllm.com\" >\n<meta property=\"twitter:title\" content=\"AnythingLLM | Your personal LLM trained on anything\" >\n<meta property=\"twitter:description\" content=\"AnythingLLM | Your personal LLM trained on anything\" >\n<meta property=\"twitter:image\" content=\"https://raw.githubusercontent.com/Mintplex-Labs/anything-llm/master/images/promo.png\" >\n<link rel=\"icon\" href=\"/favicon.png\" >\n<link rel=\"apple-touch-icon\" href=\"/favicon.png\" >\n            <script type=\"module\" crossorigin src=\"/index.js\"></script>\n            <link rel=\"stylesheet\" href=\"/index.css\">\n          </head>\n          <body>\n            <div id=\"root\" class=\"h-screen\"></div>\n          </body>\n        </html>"
+    },
+    {
+      "name": "Integration - Existing API Compatibility",
+      "status": "FAIL",
+      "message": "Workspace API compatibility: 403"
+    }
+  ],
+  "notes": [
+    "Tests focus on server stability and API structure",
+    "404 responses are expected for unimplemented endpoints",
+    "Critical failures indicate server crashes or network issues"
+  ]
+}
