@@ -1,0 +1,17 @@
+[
+  {
+    "session_id": "test-session",
+    "stop_hook_active": true,
+    "transcript_path": ""
+  },
+  {
+    "session_id": "final-test",
+    "stop_hook_active": true,
+    "transcript_path": ""
+  },
+  {
+    "session_id": "test-audio",
+    "stop_hook_active": true,
+    "transcript_path": ""
+  }
+]

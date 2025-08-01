@@ -1,10 +1,23 @@
-# AnythingLLM B2B E-commerce Chat Solution - Frontend Development Roadmap
+# Frontend Visual Testing Roadmap - Internal Testing Interface
+## AnythingLLM Backend Validation Frontend
 
-## 🎯 Frontend Development Strategy (REVISED: Leverage AnythingLLM)
+**Updated**: January 31, 2025  
+**Purpose**: Build internal testing interface for Phase 1 backend validation  
+**Timeline**: 4 weeks  
+**Approach**: Fork and simplify existing AnythingLLM frontend
 
-**Mission**: Leverage AnythingLLM's production-ready frontend (90% reuse) and build only e-commerce-specific extensions (10% custom) to deliver a complete B2B chat solution in record time.
+---
 
-**Strategic Decision**: Build on AnythingLLM's proven foundation rather than from scratch, reducing development time from 8+ weeks to 2-4 weeks.
+## 🎯 Internal Testing Focus
+
+### Goals
+1. **Primary**: Validate all Phase 1 backend APIs through UI
+2. **Secondary**: Create simple interface for internal testing
+3. **Not Required**: Production UI, advanced features, or external users
+
+### Scope
+- **In Scope**: Chat, document upload, knowledge browser, admin tools
+- **Out of Scope**: Billing, user management, advanced analytics, production polish
 
 ---
 

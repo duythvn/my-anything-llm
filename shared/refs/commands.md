@@ -123,13 +123,13 @@ gemini --model gemini-2.5-flash
    As a tester, you have been asked to follow a test plan and test & provide reports including finding and major issues 
    You have been asked NOT TO FIX or UPDATE our code
    
-   The plan is to test/verify our code for @shared/docs/task_management/task_breakdown/P1-S1-BREAKDOWN.md
-   Please see the test plan here @test_plans/shared_test_plans/active/backend_v0p1_p1_content_phase1_test_plan.md
+   The plan is to test/verify our code for @sshared/docs/task_management/task_breakdown/P1-S4-BREAKDOWN.md
+   Please see the test plan here @test_plans/shared_test_plans/active/backend_phase1p4_admin_api_external_test_plan.md
    Please ensure you are only test, do not attempt to update or fix our code
    Don't trust and claims that the tests have passed. 
 
 
-
+claude --dangerously-skip-permissions
 
      For the application to work with PostgreSQL, you would need:
 

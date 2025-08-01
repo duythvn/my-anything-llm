@@ -1,16 +1,21 @@
 # New Member Onboarding Guide
 
+**Current Project Status (July 30, 2025)**:
+- ✅ **Phase 1.1 & 1.2 Complete**: Core API + Enhanced RAG system with source attribution
+- 🎯 **Next Phase**: Phase 1.3 Knowledge-Focused Prompts (Days 5-6)
+- 📊 **Progress**: 59% complete (16/27 tasks) in Phase 1 MVP
+
 ## Quick Start (5 Minutes)
 
 ### 1. Setup Your Branch
 ```bash
 # Navigate to project root
 
-# Create your development branch
-git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_main
+# Create your development branch (use current phase naming)
+git worktree add worktrees/backend/backend_phase1p3_knowledge_prompts -b backend_phase1p3_knowledge_prompts
 
 # Setup development environment
-cd worktrees/backend/backend_v0p1_p1_content
+cd worktrees/backend/backend_phase1p3_knowledge_prompts
 bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh
 bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-modules.sh
 ```
@@ -54,20 +59,21 @@ bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-module
 cd /home/duyth/projects/anythingllm
 
 # Create new backend branch for AnythingLLM B2B development
-git worktree add worktrees/backend/backend_v0p1_p1_content -b backend_v0p1_p1_content backend_main
+# Current active phases (as of July 30, 2025):
+git worktree add worktrees/backend/backend_phase1p3_knowledge_prompts -b backend_phase1p3_knowledge_prompts backend_main
 
-# Examples for different stages:
-# git worktree add worktrees/backend/backend_v0p1_p2_widget -b backend_v0p1_p2_widget backend_main
-# git worktree add worktrees/backend/backend_v0p1_p3_ecommerce -b backend_v0p1_p3_ecommerce backend_main
+# Examples for other phases:
+# git worktree add worktrees/backend/backend_phase1p4_admin_api -b backend_phase1p4_admin_api  
+# git worktree add worktrees/backend/backend_phase2p1_product_data -b backend_phase2p1_product_data
 
 # Verify the folder was created
-ls -la worktrees/backend/backend_v0p1_p1_content
+ls -la worktrees/backend/backend_phase1p3_knowledge_prompts
 ```
 
 ### Step 3: Setup Development Infrastructure
 
 ```bash
-cd worktrees/backend/backend_v0p1_p1_content
+cd worktrees/backend/backend_phase1p3_knowledge_prompts
 
 # Setup all Claude commands and symlinks
 bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh
@@ -79,8 +85,7 @@ bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh
 # - ./.claude/commands -> shared commands (devgo.md, testgo.md, checkpoint.md, etc.)
 # - ./.claude/agents -> shared agents (planner.md, coder.md, tester.md)
 
-# Setup shared node_modules for all backend worktrees (saves installation time)
-bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-modules.sh
+# AnythingLLM project uses standard npm install (no shared node_modules setup needed)
 
 # Verify symlinks are created
 ls -la ./.claude/
@@ -90,17 +95,14 @@ ls -la ./.claude/
 
 ```bash
 # Navigate to your new worktree
-cd worktrees/backend/backend_v0p1_p1_content
-
-# AnythingLLM dependencies already installed via shared node_modules
-# If you need to install additional packages: npm install package-name
+cd worktrees/backend/backend_phase1p3_knowledge_prompts
 
 # Setup environment variables (copy from .env.example)
 cp .env.example .env
 # Edit .env with your API keys and database settings
 
 # Start AnythingLLM development server
-npm run dev
+npm run dev:server
 
 # Verify setup
 ls -la ./.claude/commands/  # Should show devgo.md, testgo.md, workhere.md, etc.
@@ -114,11 +116,11 @@ ls -la ./.claude/commands/  # Should show devgo.md, testgo.md, workhere.md, etc.
 Follow this workflow for implementing features:
 
 ```bash
-# 1. Plan your work
-/plan Phase 1.1 Core API Infrastructure  # Create detailed task breakdown
+# 1. Plan your work (current focus: Phase 1.3)
+/plan Phase 1.3 Knowledge-Focused Prompts  # Create detailed task breakdown
 
 # 2. Implement specific tasks
-/implement P1-S1-T002 PostgreSQL Database # Implement from breakdown
+/implement P1-S3-T001 Knowledge-focused system prompts # Implement from breakdown
 
 # 3. Validate implementation
 /devgo                                    # Create test plan and validate
@@ -148,27 +150,30 @@ Follow this workflow for implementing features:
 
 **AnythingLLM Development:**
 ```bash
-# Start development server
-npm run dev
+# Install dependencies
+npm install
 
-# Dependencies already available via shared node_modules
-# To install new packages: npm install package-name
+# Start development server
+npm run dev:server
+
+# For frontend development
+npm run dev:frontend
 
 # Environment setup
 cp .env.example .env
-# Edit .env with your API keys
+# Edit .env with your API keys and database settings
 ```
 
-**Shared node_modules Info:**
-- All backend worktrees share the same node_modules via symlinks
-- Located at: `/home/duyth/projects/anythingllm/worktrees/backend/shared_node_modules`
-- Install new packages from any worktree: `npm install package-name`
-- Package will be available to all backend branches
+**Development Info:**
+- Each worktree has its own node_modules installation
+- Standard AnythingLLM development workflow applies
+- Database: PostgreSQL with PGVector for embeddings
+- Backend: Node.js/Express enhanced with multi-source RAG
 
 **Troubleshooting:**
 1. **Commands not found**: Re-run `bash /home/duyth/projects/anythingllm/shared/scripts/install-commands.sh`
 2. **Symlinks broken**: Check `.claude/commands/` and `.claude/agents/` directories
-3. **node_modules missing**: Run `bash /home/duyth/projects/anythingllm/worktrees/backend/setup-shared-node-modules.sh`
+3. **node_modules missing**: Run `npm install` in your worktree directory
 4. **Environment issues**: Verify `.env` file has correct API keys and database settings
 
 ---
@@ -189,9 +194,9 @@ cp .env.example .env
 /checkpoint            # 6. Save progress
 /stage-complete        # 7. Mark stage complete when all tests pass
 
-# ✅ EXAMPLE WORKFLOW:
-/plan Phase 1.1 Core API Infrastructure     # Creates P1-S1-BREAKDOWN.md
-/implement P1-S1-T002 PostgreSQL Database   # Implements specific task
+# ✅ EXAMPLE WORKFLOW (Current Phase 1.3):
+/plan Phase 1.3 Knowledge-Focused Prompts   # Creates P1-S3-BREAKDOWN.md
+/implement P1-S3-T001 Knowledge system prompts # Implements specific task
 /devgo                                       # Validates completion, creates test plan
 /testgo                                      # Executes test plan, generates report
 ```
@@ -212,7 +217,7 @@ cp .env.example .env
 **✅ ALWAYS use `/devgo` first, then `/testgo`**
 
 ```bash
-/implement P1-S1-T002 PostgreSQL Database  # Implement task
+/implement P1-S3-T001 Knowledge system prompts  # Implement task
 /devgo                                      # NEXT: Validate & create test plan
 /testgo                                     # THEN: Execute the test plan
 ```
@@ -270,16 +275,16 @@ cp .env.example .env
 
 **Example Workflow:**
 ```bash
-# 1. Start with roadmap stage
-/plan Phase 1.3 Widget Development
+# 1. Start with roadmap stage (current focus)
+/plan Phase 1.3 Knowledge-Focused Prompts
 # → Creates P1-S3-BREAKDOWN.md with detailed tasks
 
 # 2. For complex features within that stage
-@planner Embeddable JavaScript widget with customization
+@planner Source citation and response quality system
 # → Creates technical specification for implementation
 
 # 3. Implement specific tasks
-/implement Widget core JavaScript SDK
+/implement P1-S3-T003 Source citation in responses
 ```
 
 This FAQ should help you navigate the development workflow efficiently while maintaining code quality and proper documentation.

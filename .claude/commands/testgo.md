@@ -2,6 +2,7 @@
 DO NOT ATTEMPT TO IMPLEMENT NEW CODE CHANGES OR MOVE TO THE NEXT STAGE
 ## Purpose
 Execute test plans and generate pass/fail reports.
+## DO NOT FIX ERRORS
 
 ## Usage
 ```
